@@ -20,7 +20,7 @@ const PlanSchema = new Schema({
   lastUpdate                      : { type: Date, require: true }
 });
 
-const Plan = mongoose.model( dbPrefix + '_Plan', PlanSchema );
+const Plan = mongoose.model( dbPrefix + '_plan', PlanSchema );
 
 module.exports.getPlansByCompany = async company => {
   return await Plan.find({ company: company }).lean();
