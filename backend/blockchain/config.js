@@ -1,0 +1,1 @@
+module.exports.dbPrefix = 'db1';
