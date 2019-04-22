@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { dbPrefix } = require('../config');
+const { dbPrefix } = require('../../config');
 
 /*
 CREATE: no reference

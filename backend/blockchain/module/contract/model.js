@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { dbPrefix } = require('../config');
+const { dbPrefix } = require('../../config');
 
 /*
 CREATE: reference to plan's last version
@@ -32,10 +32,10 @@ const ContractSchema = new Schema({
   targetHash                          : { type: String, require: true } // plan + userInfo.identityCard + userInfo.licensePlate + expireTime => unique
 });
 
-const Contract = mongoose.model( dbPrefix + '_contract', ContractSchema );
+const Model = mongoose.model( dbPrefix + '_contract', ContractSchema );
 
 module.exports.getContractsByLicensePlate = async licensePlate => {
-  return await Contract.find({ licensePlate: licensePlate }).lean();
+  return await Model.find({ licensePlate: licensePlate }).lean();
 };
 
-module.exports = Contract;
+module.exports = Model;

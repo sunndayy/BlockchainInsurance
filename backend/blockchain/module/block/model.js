@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { dbPrefix } = require('../config');
+const { dbPrefix } = require('../../config');
 
 const BlockSchema = new Schema({
   blockHeader                     : {
@@ -10,7 +10,8 @@ const BlockSchema = new Schema({
     validatorSigns                  : [ Schema.Types.Mixed ],
     createSign                      : Schema.Types.Mixed
   },
-  blockData                         : [ Schema.Types.Mixed ]
+  blockData                         : [ Schema.Types.Mixed ],
+  hash                              : { type: String, require: true }
 });
 
 module.exports = mongoose.model(dbPrefix + '_block', BlockSchema);
