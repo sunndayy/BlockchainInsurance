@@ -2,17 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b696cc9-e63a-46b7-961d-38ee5ef81080" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/model/block.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/global/blockchain-structure/blocktree.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/global/blockchain-structure/tx.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/global/state/node-array.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/global/state/state.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/router/node-discover/route.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/global/node-dictionary.js" beforeDir="false" afterPath="$PROJECT_DIR$/global/node-dictionary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/global/blocktree.js" beforeDir="false" afterPath="$PROJECT_DIR$/global/blockchain-structure/blockData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/global/node-dictionary.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/global/state.js" beforeDir="false" afterPath="$PROJECT_DIR$/global/blockchain-structure/blockHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/contract.js" beforeDir="false" afterPath="$PROJECT_DIR$/model/contract.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/plan.js" beforeDir="false" afterPath="$PROJECT_DIR$/model/plan.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/block/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/block/route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/follow/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/follow/route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/node-discover/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/node-discover/route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/tx/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/tx/route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/body-parser/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/body-parser/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/block/readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/block/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/block/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/follow/readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/follow/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/follow/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/info/readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/info/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/info/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/node-discover/readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/node-discover/route.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/tx/readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/tx/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/tx/route.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,10 +38,34 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/model/block.js">
+        <entry file="file://$PROJECT_DIR$/global/blockchain-structure/tx.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="39" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
+            <state relative-caret-position="170">
+              <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/global/blockchain-structure/blockData.js">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/global/blockchain-structure/blockHeader.js">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/global/blockchain-structure/blocktree.js">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/contract.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="527">
+              <caret line="31" column="12" selection-start-line="31" selection-start-column="2" selection-end-line="31" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -37,26 +73,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model/plan.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
-              <caret line="22" column="43" selection-start-line="22" selection-start-column="43" selection-end-line="22" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/contract.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-130">
-              <caret selection-end-line="2" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
+            <state relative-caret-position="340">
+              <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -67,11 +85,13 @@
     <findStrings>
       <find>Term</find>
       <find>var</find>
+      <find>updateState</find>
     </findStrings>
     <replaceStrings>
       <replace>plan</replace>
       <replace>Plan</replace>
       <replace>const</replace>
+      <replace>update</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -93,7 +113,6 @@
         <option value="$PROJECT_DIR$/model/contract/contract.js" />
         <option value="$PROJECT_DIR$/model/term.js" />
         <option value="$PROJECT_DIR$/model/refund.js" />
-        <option value="$PROJECT_DIR$/model/contract.js" />
         <option value="$PROJECT_DIR$/model/readme.txt" />
         <option value="$PROJECT_DIR$/module/node/route.js" />
         <option value="$PROJECT_DIR$/config.js" />
@@ -102,15 +121,18 @@
         <option value="$PROJECT_DIR$/module/info/route.js" />
         <option value="$PROJECT_DIR$/module/tx/route.js" />
         <option value="$PROJECT_DIR$/global/node-dictionary.js" />
-        <option value="$PROJECT_DIR$/module/node-discover/route.js" />
-        <option value="$PROJECT_DIR$/model/plan.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/model/block.js" />
+        <option value="$PROJECT_DIR$/module/node-discover/route.js" />
+        <option value="$PROJECT_DIR$/global/node-array.js" />
+        <option value="$PROJECT_DIR$/model/contract.js" />
+        <option value="$PROJECT_DIR$/model/plan.js" />
+        <option value="$PROJECT_DIR$/global/blockchain-structure/tx.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
+    <option name="x" value="950" />
     <option name="width" value="979" />
     <option name="height" value="1040" />
   </component>
@@ -131,22 +153,18 @@
             <path>
               <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
               <item name="blockchain" type="462c0819:PsiDirectoryNode" />
-              <item name="doc" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
-              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
               <item name="global" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
               <item name="blockchain" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="global" type="462c0819:PsiDirectoryNode" />
+              <item name="blockchain-structure" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
               <item name="blockchain" type="462c0819:PsiDirectoryNode" />
-              <item name="module" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -163,17 +181,19 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\global\state" />
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\global\blockchain-structure" />
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\model" />
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\doc" />
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\module" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\module\tx" />
       <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\module\node" />
       <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\module\info" />
       <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\module\follow" />
       <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\doc" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\model" />
-      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\doc" />
-      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\module" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -208,21 +228,26 @@
       <workItem from="1555839995179" duration="3275000" />
       <workItem from="1555856053379" duration="2784000" />
       <workItem from="1555858913765" duration="799000" />
+      <workItem from="1555860379690" duration="45000" />
+      <workItem from="1555889618768" duration="2140000" />
+      <workItem from="1555910688797" duration="1395000" />
+      <workItem from="1555914425244" duration="134000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28428000" />
+    <option name="totallyTimeSpent" value="32142000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15069398" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32503662" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32503662" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.6061493" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39970717" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -244,14 +269,13 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/module/node-discover/route.js</url>
+          <url>file://$PROJECT_DIR$/router/node-discover/route.js</url>
           <line>9</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/model/block.js</url>
           <line>15</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
@@ -280,78 +304,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/refund.js" />
-    <entry file="file://$PROJECT_DIR$/model/readme.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="53" selection-start-line="4" selection-start-column="53" selection-end-line="4" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/block/readme.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/info/readme.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="47" selection-start-line="3" selection-start-column="47" selection-end-line="3" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/follow/readme.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="53" selection-start-column="53" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/tx/readme.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="10" lean-forward="true" selection-start-column="10" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/node-discover/readme.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="1" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/doc/DB.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/doc/API.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/global/state.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="32" selection-start-column="32" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/global/blocktree.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/follow/route.js">
+    <entry file="file://$PROJECT_DIR$/module/block/readme.txt" />
+    <entry file="file://$PROJECT_DIR$/module/info/readme.txt" />
+    <entry file="file://$PROJECT_DIR$/module/follow/readme.txt" />
+    <entry file="file://$PROJECT_DIR$/router/follow/route.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="34" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/block/route.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="29" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -369,52 +328,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/info/route.js">
+    <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        <state relative-caret-position="102">
+          <caret line="6" column="31" lean-forward="true" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/tx/route.js">
+    <entry file="file://$PROJECT_DIR$/module/tx/readme.txt" />
+    <entry file="file://$PROJECT_DIR$/router/tx/route.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/node-discover/route.js">
+    <entry file="file://$PROJECT_DIR$/module/node-discover/readme.txt" />
+    <entry file="file://$PROJECT_DIR$/router/info/route.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
+        <state relative-caret-position="68">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/global/node-dictionary.js">
+    <entry file="file://$PROJECT_DIR$/router/node-discover/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="3" lean-forward="true" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/global/state/node-array.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="20" lean-forward="true" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/global/state/state.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doc/API.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/readme.txt" />
+    <entry file="file://$PROJECT_DIR$/doc/DB.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret lean-forward="true" />
+          <caret column="32" selection-start-column="32" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/plan.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="22" column="43" selection-start-line="22" selection-start-column="43" selection-end-line="22" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/contract.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-130">
-          <caret selection-end-line="2" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
+    <entry file="file://$PROJECT_DIR$/router/block/route.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
-          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
+          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -422,6 +393,36 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="39" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/global/blockchain-structure/tx.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/global/blockchain-structure/blockData.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/global/blockchain-structure/blockHeader.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/global/blockchain-structure/blocktree.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/contract.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="31" column="12" selection-start-line="31" selection-start-column="2" selection-end-line="31" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/plan.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
         </state>
       </provider>
     </entry>

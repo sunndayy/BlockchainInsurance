@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 const { dbPrefix } = require('../config');
 
 /*
-CREATE: no reference(ensure no plans have the same company and id)
-UPDATE: reference to last version
+CREATE: no reference
+UPDATE: reference to plan's last version
 * */
 
 const PlanSchema = new Schema({
@@ -17,7 +17,8 @@ const PlanSchema = new Schema({
   },
   status                          : { type: Boolean, default: true },
   contracts                       : [{ type: Schema.Types.ObjectId, ref: dbPrefix + '_contract' }],
-  lastUpdate                      : { type: Date, require: true }
+  lastUpdate                      : { type: Date, require: true },
+  targetHash                      : { type: String, require: true } // company + id => unique
 });
 
 const Plan = mongoose.model( dbPrefix + '_plan', PlanSchema );
@@ -34,4 +35,4 @@ module.exports.getContractsByCompany = async (company) => {
   return await Plan.find({ company: company }).populate('contracts').lean();
 };
 
-module.exports = PlanSchema;
+module.exports = Plan;

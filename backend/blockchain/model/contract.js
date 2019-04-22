@@ -28,7 +28,8 @@ const ContractSchema = new Schema({
     total                             : { type: Number, require: true },
     refund                            : { type: Number, require: true },
     time                              : { type: Date, require: true }
-  }]
+  }],
+  targetHash                          : { type: String, require: true } // plan + userInfo.identityCard + userInfo.licensePlate + expireTime => unique
 });
 
 const Contract = mongoose.model( dbPrefix + '_contract', ContractSchema );

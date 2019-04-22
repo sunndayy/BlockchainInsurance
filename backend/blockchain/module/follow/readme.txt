@@ -1,1 +1,0 @@
-POST /follow: Thêm user vào danh sách theo dõi các tx
