@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const verifyMiddleware = require('../../middleware/verify-middleware');
 
 router.get('/addrs', (req, res) => {
   // Reply with list of addresses
 });
 
-router.post('/version', (req, res) => {
+router.post('/version', verifyMiddleware, verifyMiddleware, (req, res) => {
   // let { header, url, signature } = req.body;
   // if (header == 'version') {
   //   // Verify signature

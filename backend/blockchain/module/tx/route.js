@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const verifyMiddleware = require('../../middleware/verify-middleware');
 
-router.post('/tx', (req, res) => {
+router.post('/tx', verifyMiddleware, (req, res) => {
   // Add tx to txPool
 });
 

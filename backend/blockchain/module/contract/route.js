@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const verifyMiddleware = require('../../middleware/verify-middleware');
 
 router.get('/plans-by-company/:company', (req, res) => {
 
