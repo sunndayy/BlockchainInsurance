@@ -3,21 +3,18 @@ package com.example.bishop;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +22,10 @@ import java.util.List;
 public class ShopActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
     private RecyclerView recyclerView;
-    private AlbumsAdapter adapter;
-    private List<Album> albumList;
+    private BikesAdaper adapter;
+    private List<Bike> bikeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +33,6 @@ public class ShopActivity extends AppCompatActivity
         setContentView(R.layout.activity_shop);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -55,10 +44,10 @@ public class ShopActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        albumList = new ArrayList<>();
-        adapter = new AlbumsAdapter(this, albumList);
+
+        bikeList = new ArrayList<>();
+        adapter = new BikesAdaper(this, bikeList);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -79,27 +68,6 @@ public class ShopActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.shop, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -107,17 +75,13 @@ public class ShopActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_cart) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_history) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_info) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_logout) {
 
         }
 
@@ -126,50 +90,44 @@ public class ShopActivity extends AppCompatActivity
         return true;
     }
 
-
     private void prepareAlbums() {
         int[] covers = new int[]{
-                R.drawable.album1,
-                R.drawable.album2,
-                R.drawable.album3,
-                R.drawable.album4,
-                R.drawable.album5,
-                R.drawable.album6,
-                R.drawable.album7,
-                R.drawable.album8,
-                R.drawable.album9,
-                R.drawable.album10,
-                R.drawable.album11};
+                R.drawable.ab,
+                R.drawable.blade,
+                R.drawable.lead,
+                R.drawable.msx,
+                R.drawable.pcx,
+                R.drawable.sh,
+                R.drawable.vision,
+                R.drawable.wave,
+                R.drawable.winner};
 
-        Album a = new Album("True Romance", 13, covers[0]);
-        albumList.add(a);
+        Bike a = new Bike("AB", 45000000, covers[0]);
+        bikeList.add(a);
 
-        a = new Album("Xscpae", 8, covers[1]);
-        albumList.add(a);
+        a = new Bike("Blade", 18000000, covers[1]);
+        bikeList.add(a);
 
-        a = new Album("Maroon 5", 11, covers[2]);
-        albumList.add(a);
+        a = new Bike("Lead", 31000000, covers[2]);
+        bikeList.add(a);
 
-        a = new Album("Born to Die", 12, covers[3]);
-        albumList.add(a);
+        a = new Bike("MSX", 90000000, covers[3]);
+        bikeList.add(a);
 
-        a = new Album("Honeymoon", 14, covers[4]);
-        albumList.add(a);
+        a = new Bike("PCX", 81000000, covers[4]);
+        bikeList.add(a);
 
-        a = new Album("I Need a Doctor", 1, covers[5]);
-        albumList.add(a);
+        a = new Bike("SH", 63000000, covers[5]);
+        bikeList.add(a);
 
-        a = new Album("Loud", 11, covers[6]);
-        albumList.add(a);
-
-        a = new Album("Legend", 14, covers[7]);
-        albumList.add(a);
-
-        a = new Album("Hello", 11, covers[8]);
-        albumList.add(a);
-
-        a = new Album("Greatest Hits", 17, covers[9]);
-        albumList.add(a);
+//        a = new Bike("Vision", 29000000, covers[6]);
+//        bikeList.add(a);
+//
+//        a = new Bike("Wave", 23000000, covers[7]);
+//        bikeList.add(a);
+//
+//        a = new Bike("Winner", 42000000, covers[8]);
+//        bikeList.add(a);
 
         adapter.notifyDataSetChanged();
     }
