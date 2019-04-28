@@ -51,7 +51,7 @@ public class BikesAdaper extends RecyclerView.Adapter<BikesAdaper.MyViewHolder> 
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Bike bike = bikeList.get(position);
         holder.title.setText(bike.getmName());
-        holder.count.setText(bike.getmPrice() + " đ");
+        holder.count.setText(Application.beaufityPrice(bike.getmPrice()));
 
         // loading album cover using Glide library
         Glide.with(mContext).load(bike.getMthumbnail()).into(holder.thumbnail);

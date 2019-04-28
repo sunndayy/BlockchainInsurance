@@ -1,5 +1,6 @@
 package com.example.bishop;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -16,6 +17,10 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 
+
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +31,14 @@ public class ShopActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private BikesAdaper adapter;
     private List<Bike> bikeList;
+    private SliderLayout sliderLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
+
+        // nav drawer
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -44,6 +52,11 @@ public class ShopActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
+        //slider
+        sliderLayout = (SliderLayout) findViewById(R.id.slider);
+        prepareBanner();
+
+        // list view
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         bikeList = new ArrayList<>();
@@ -56,6 +69,12 @@ public class ShopActivity extends AppCompatActivity
         recyclerView.setAdapter(adapter);
 
         prepareAlbums();
+    }
+
+    @Override
+    protected void onStop() {
+        sliderLayout.stopAutoCycle();
+        super.onStop();
     }
 
     @Override
@@ -76,8 +95,9 @@ public class ShopActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_cart) {
-            // Handle the camera action
+            startActivity(new Intent(ShopActivity.this, CartActivity.class));
         } else if (id == R.id.nav_history) {
+            startActivity(new Intent(ShopActivity.this, HistoryActivity.class));
 
         } else if (id == R.id.nav_info) {
 
@@ -176,5 +196,13 @@ public class ShopActivity extends AppCompatActivity
     private int dpToPx(int dp) {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+    }
+
+    private void prepareBanner() {
+        TextSliderView textSliderView = new TextSliderView(this);
+        textSliderView.image(R.drawable.banner1);
+
+        sliderLayout.addSlider(textSliderView);
+        sliderLayout.setDuration(3000);
     }
 }
