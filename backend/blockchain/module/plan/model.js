@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { dbPrefix } = require('../../config');
 
 /*
 CREATE: no reference
@@ -13,26 +12,20 @@ const PlanSchema = new Schema({
   term                            : {
     pricePerYear                    : { type: Number, require: true },
     percentage                      : { type: Number, require: true },
-    maxRefund                       : { type: Number, require: true }
+    maxRefund                       : { type: Number, require: true },
+    state                           : { type: Boolean, default: true },
   },
-  status                          : { type: Boolean, default: true },
-  contracts                       : [{ type: Schema.Types.ObjectId, ref: dbPrefix + '_contract' }],
-  lastUpdate                      : { type: Date, require: true },
-  targetHash                      : { type: String, require: true } // company + id => unique
+  contracts                       : [{ type: Schema.Types.ObjectId, ref: 'contract' }]
 });
 
-const Plan = mongoose.model( dbPrefix + '_plan', PlanSchema );
+const Plan = mongoose.model( 'plan', PlanSchema );
 
-module.exports.getPlansByCompany = async company => {
-  return await Plan.find({ company: company }).lean();
+module.exports.FindByCompany = async company => {
+  return await Plan.find({ company: company });
 };
 
-module.exports.getPlansByCompanyAndId = async (company, id) => {
-  return await Plan.findOne({ company: company, id: id }).lean();
-};
-
-module.exports.getContractsByCompany = async (company) => {
-  return await Plan.find({ company: company }).populate('contracts').lean();
+module.exports.FindByCompanyAndId = async (company, id) => {
+  return await Plan.findOne({ company: company, id: id });
 };
 
 module.exports = Plan;

@@ -1,26 +1,25 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { dbPrefix } = require('../../config');
 
-const Model = new Schema({
+const NodeSchema = new Schema({
   pubKeyHash                        : { type: String, require: true },
   company                           : { type: String },
-  url                               : { type: String },
+  host                               : { type: String },
   point                             : { type: Number },
   lastTimeCreateBlock               : { type: Number },
-  lastTimeUpdateUrl                 : { type: Date }
+  lastTimeUpdateHost                 : { type: Date }
 });
 
-module.exports.GetNodesOnTop = function () {
+const Node = mongoose.model('node', NodeSchema);
 
+module.exports.GetHost = async pubKeyHash => {
+  let node = await Node.findOne({ pubKeyHash: pubKeyHash });
+  if (node) {
+    return node.host;
+  }
+  return null;
 };
 
-module.exports.CalAge = function (time = new Date()) {
-
+module.exports.FindNode = async pubKeyHash => {
+  return await Node.findOne({ pubKeyHash: pubKeyHash });;
 };
-
-module.exports.CalTimeMustWait = function (pubKeyhash) {
-
-};
-
-module.exports = Model;

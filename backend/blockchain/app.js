@@ -15,6 +15,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', require('./module/node/route'));
+app.use('/', require('./module/block/route'));
+app.use('/', require('./module/tx/route'));
+app.use('/', require('./module/contract/route'));
+app.use('/', require('./module/plan/route'));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

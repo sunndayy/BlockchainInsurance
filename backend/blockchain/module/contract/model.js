@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { dbPrefix } = require('../../config');
+const Plan = require('../plan/model');
 
 /*
 CREATE: reference to plan's last version
@@ -8,7 +8,7 @@ UPDATE(add new refund): reference to plan's last version, contract's last versio
 * */
 
 const ContractSchema = new Schema({
-  plan                              : { type: Schema.Types.ObjectId, ref: dbPrefix + '_plan' , require: true},
+  plan                              : { type: Schema.Types.ObjectId, ref: 'plan' , require: true},
   userInfo                          : {
     identityCard                      : { type: String, require: true },
     licensePlate                      : { type: String, require: true },
@@ -26,16 +26,16 @@ const ContractSchema = new Schema({
   },
   refunds                           : [{
     total                             : { type: Number, require: true },
-    refund                            : { type: Number, require: true },
-    time                              : { type: Date, require: true }
-  }],
-  targetHash                          : { type: String, require: true } // plan + userInfo.identityCard + userInfo.licensePlate + expireTime => unique
+    refund                            : { type: Number, require: true }
+  }]
 });
 
-const Model = mongoose.model( dbPrefix + '_contract', ContractSchema );
+const Contract = mongoose.model( 'contract', ContractSchema );
 
-module.exports.getContractsByLicensePlate = async licensePlate => {
-  return await Model.find({ licensePlate: licensePlate }).lean();
+module.exports.FindByLicensePlate = async licensePlate => {
+  return await Contract.find({ licensePlate: licensePlate });
 };
 
-module.exports = Model;
+module.exports.FindByCompany = async company => {
+  return await Plan.find({ company: company }).populate('contracts').select('contracts');
+};

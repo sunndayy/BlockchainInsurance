@@ -1,16 +1,16 @@
-const crypto = require('../utils/crypto');
+const Crypto = require('../utils/crypto');
 
 module.exports = (req, res, next) => {
-  try {
-    let sign = JSON.parse(req.body.sign);
-    if (crypto.Verify(sign)) {
+  let sign = JSON.parse(req.body);
+  if (Crypto.Verify(sign)) {
+    try {
       req.body = JSON.parse(sign.msg);
-      req.body.pubKey = sign.pubKey;
-      next();
-    } else {
-      res.end('invalid signature');
+    } catch (err) {
+      req.body.msg = sign.msg;
     }
-  } catch (e) {
-    res.end('undefined error');
+    req.body.pubKey = sign.pubKey;
+    next();
+  } else {
+    res.error('Invalid signature');
   }
 }

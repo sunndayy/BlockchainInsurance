@@ -1,20 +1,31 @@
 const express = require('express');
 const router = express.Router();
+
+const FindNode =require('./model').FindNode;
+
 const verifyMiddleware = require('../../middleware/verify-middleware');
+const Crypto = require('../../utils/crypto');
 
-router.get('/addrs', (req, res) => {
-  // Reply with list of addresses
-});
-
-router.post('/version', verifyMiddleware, verifyMiddleware, (req, res) => {
-  // let { header, url, signature } = req.body;
-  // if (header == 'version') {
-  //   // Verify signature
-  //   // Check if peer is in node-dictionary
-  //   // If not, add peer to node-dictionary
-  //   // Reply with verack message
-  //   // Send version http request
-  // }
+router.post('/version', verifyMiddleware, async (req, res) => {
+    if (req.body.header == 'VERSION') {
+        let pubKeyHash = Crypto.Hash(req.body.pubKey);
+        if (nodes.indexOf(pubKeyHash) >= 0) {
+            let node = await FindNode(pubKeyHash);
+            if (node) {
+                let lastTime = new Date(node.lastTimeUpdateHost);
+                let newTime = new Date(req.body.time);
+                if (newTime > lastTime) {
+                    node.host = req.body.host;
+                    node.lastTimeUpdateHost = new Date();
+                    await node.Save();
+                    return res.json(Crypto.Sign(privKey, 'VERACK'));
+                }
+            }
+        }
+        res.error('Invalid node');
+    } else {
+        res.error('Invalid header');
+    }
 });
 
 module.exports = router;

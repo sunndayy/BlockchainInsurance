@@ -18,6 +18,11 @@ module.exports.Verify = ({ pubKey, msg, sign }) => {
   return key.verify(msgHash, sign);
 };
 
+module.exports.GetPubKey = privKey => {
+  let key = ec.keyFromPrivate(privKey, 'hex');
+  return key.getPublic('hex');
+};
+
 module.exports.GenKey = () => {
   return ec.genKeyPair().getPrivate('hex');
 };
