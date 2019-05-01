@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ItemDetailActivity">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp">
+
+        <ImageView
+            android:id="@+id/ic_detail_item"
+            android:src="@drawable/ab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Tên sản phẩm"
+                android:textSize="8pt"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="Air Blade 2017"
+                android:textSize="8pt"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/jet"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Giá tiền"
+                android:textSize="8pt"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="45.000.000 đ"
+                android:textSize="8pt"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/jet" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Nhà sản xuất"
+                android:textSize="8pt"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="Honda"
+                android:textSize="8pt"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/jet" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_detail_addcart"
+            android:text="Thêm vào giỏ hàng"
+            android:layout_marginTop="50dp"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+</ScrollView>
