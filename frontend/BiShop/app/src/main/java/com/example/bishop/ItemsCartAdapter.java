@@ -1,0 +1,74 @@
+package com.example.bishop;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+
+import com.bumptech.glide.Glide;
+
+import java.util.List;
+
+public class ItemsCartAdapter extends RecyclerView.Adapter<ItemsCartAdapter.MyViewHolder> {
+
+    private Context context;
+    private List<Item> itemList;
+
+    public ItemsCartAdapter(Context context, List<Item> itemList) {
+        this.context = context;
+        this.itemList = itemList;
+    }
+
+
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.item_cart, viewGroup, false);
+
+        return  new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+        Item item = itemList.get(i);
+        myViewHolder.itemName.setText(item.getName());
+        myViewHolder.itemPrice.setText(Common.beautifyPrice(item.getPrice()));
+        Glide.with(context).load(item.getImage()).into(myViewHolder.imgItem);
+    }
+
+    @Override
+    public int getItemCount() {
+        return itemList.size();
+    }
+
+    public void removeItem(int position) {
+        itemList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView itemName, itemPrice;
+        public ImageView imgItem;
+        public RelativeLayout viewBackground, viewForeground;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            itemName = (TextView) itemView.findViewById(R.id.txt_item_cart_name);
+            itemPrice = (TextView) itemView.findViewById(R.id.txt_item_cart_price);
+            imgItem = (ImageView) itemView.findViewById(R.id.ic_item_cart_bike);
+
+            viewBackground = (RelativeLayout) itemView.findViewById(R.id.item_cart_view_background);
+            viewForeground = (RelativeLayout) itemView.findViewById(R.id.item_cart_view_foreground);
+        }
+    }
+
+}
