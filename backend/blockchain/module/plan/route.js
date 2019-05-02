@@ -21,7 +21,7 @@ router.post('/get-plans-by-company', verifyMiddleWare, async (req, res) => {
     }
 });
 
-router.post('/get-plan-by-company-and-id', async (req, res) => {
+router.post('/get-plan-by-company-and-id', verifyMiddleWare, async (req, res) => {
     if (req.body.header == 'GETPLANBYCOMPANYANDID') {
         if (nodes.indexOf(Crypto.Hash(req.body.pubKey)) >= 0) {
             let plans = await FindByCompanyAndId(req.body.company, req.body.id);

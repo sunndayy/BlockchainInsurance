@@ -16,9 +16,9 @@ app.use(cookieParser());
 
 app.use('/', require('./module/node/route'));
 app.use('/', require('./module/block/route'));
-app.use('/', require('./module/tx/route'));
 app.use('/', require('./module/contract/route'));
 app.use('/', require('./module/plan/route'));
+app.use('/', require('./module/tx/route'));
 
 
 // catch 404 and forward to error handler
@@ -34,7 +34,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.end('error');
 });
 
 module.exports = app;

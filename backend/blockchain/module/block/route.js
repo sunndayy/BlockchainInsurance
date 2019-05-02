@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { FindByIndex, FindByHash } = require('./model').FindByIndex;
+const { FindByIndex, FindByHash } = require('./model');
 const GetHost = require('../node/model').GetHost;
 
 const SyncBlockChainApi = require('../../api/syncBlockChainApi');
@@ -80,10 +80,11 @@ router.post('/get-data', verifyMiddleware, async (req, res) => {
     }
 });
 
-router.post('/agree', (req, res) => {
+router.post('/agree', verifyMiddleware, (req, res) => {
     let msg = {
         curBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
-        nextBlockHash: req.body.nextBlockHash
+        nextBlockHash: req.body.nextBlockHash,
+        timeSign: (new Date()).getTime()
     };
     res.json({
         sign: Crypto.Sign(privKey, JSON.stringify(msg))

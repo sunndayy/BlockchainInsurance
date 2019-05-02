@@ -24,8 +24,7 @@ const MakeRequest = (url, msg, cb) => {
                     cb(msg, sign.pubKey);
                 }
             } catch (err) {
-                let msg = JSON.parse(body);
-                cb(msg);
+                console.error(err);
             }
         }
     };
@@ -44,7 +43,19 @@ const MakeConnectRequest = host => {
     };
     MakeRequest(host + '/version', msg, (resMsg, pubKey) => {
         if (resMsg == 'VERACK') {
-            Node.findOneAndUpdate({ pubKeyHash: Crypto.Hash(pubKey) }, { $set: { host: host } }, (err, value) => {
+            Node.findOneAndUpdate(
+                {
+                    pubKeyHash: Crypto.Hash(pubKey)
+                },
+                {
+                    $set: {
+                        host: host
+                    }
+                },
+                {
+                    upsert: true
+                },
+                (err, doc) => {
                 if (err) {
                     console.error(err);
                 } else {
@@ -67,8 +78,8 @@ const MakeSyncHeaderRequest = host => {
     };
     MakeRequest(host + '/get-header', msg,  resMsg => {
         let state = new State();
-        if (state.ValidateBlockHeader(resMsg.blockHeader)) {
-            MakeSyncDataRequest(host, resMsg.blockHeader);
+        if (state.ValidateBlockHeader(resMsg)) {
+            MakeSyncDataRequest(host, resMsg);
         }
     });
 };
@@ -84,7 +95,7 @@ const MakeSyncDataRequest = (host, blockHeader) => {
     };
     MakeRequest(host + '/get-data', msg, resMsg => {
         let state = new State();
-        if (state.ValidateBlockData(blockHeader, resMsg.blockData)) {
+        if (state.ValidateBlockData(blockHeader, resMsg)) {
             MakeSyncHeaderRequest(host);
         }
     });

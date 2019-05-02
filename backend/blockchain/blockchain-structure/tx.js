@@ -4,143 +4,163 @@ const Contract = mongoose.model('contract');
 const Crypto = require('../utils/crypto');
 
 class Tx {
-  constructor(obj) {
-    this._type = obj._type;
-    this._ref = obj._ref;
-    this._preStateHash = obj.preStateHash;
-    this._action = obj.action; // create ? update
-    this._pubKeyHash = obj._pubKeyHash;
-  }
+    constructor(obj) {
+        this._type = obj._type;
+        this._ref = obj._ref;
+        this._preStateHash = obj.preStateHash;
+        this._action = obj.action; // create ? update
+        this._pubKeyHash = obj._pubKeyHash;
+    }
+
+    async UpdateDB(state) {
+        if (state.txDict[this.uid]) {
+            await state.txDict[this.uid].save();
+            delete state.txDict[this.uid];
+        }
+    }
 }
 
 class PlanTx extends Tx {
-  async Validate(state) {
-    let node = state.nodes.find(node => {
-      return node.pubKeyHash == this._pubKeyHash;
-    });
-
-    if (!node || node.company != this._ref.company) {
-      return false;
+    constructor(obj) {
+        super(obj);
     }
 
-    let uid = this._ref.company + this._ref.id;
+    async Validate(state) {
+        let node = state.nodes.find(node => {
+            return node.pubKeyHash == this._pubKeyHash;
+        });
 
-    if (!state.txDict[uid]) {
-      state.txDict[uid] = await Plan.findOne({ company: this._ref.company, id: this._ref.id });
+        if (!node || node.company != this._ref.company) {
+            return false;
+        }
+
+        if (!state.txDict[this.uid]) {
+            state.txDict[uid] = await Plan.findOne({ company: this._ref.company, id: this._ref.id });
+        }
+
+        if (this._action.create && !state.txDict[this.uid]) {
+            return true;
+        }
+
+        if (this._action.update && state.txDict[this.uid]) {
+            let preStateHash = JSON.stringify(state.txDict[this.uid]);
+            if (preStateHash == this._preStateHash) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    if (this._action.create && !state.txDict[uid]) {
-      return true;
+    UpdateState(state) {
+        let newPlan = this._action.create ? this._action.create : this._action.update;
+
+        if (this._action.create) {
+            state.txDict[this.uid] = new Plan(newPlan);
+        } else if (this._action.update) {
+            let prePlan = state.txDict[this.uid];
+            let termKeys = Object.keys(newPlan.term);
+            termKeys.forEach(key => {
+                prePlan.term[key] = newPlan.term[key];
+            });
+            newPlan.lastUpdate = new Date()
+        }
     }
 
-    if (this._action.update && state.txDict[uid]) {
-      let preStateHash = JSON.stringify(state.txDict[uid]);
-      let update = this._action.update;
-      if (preStateHash == this._preStateHash) {
-        return true;
-      }
+    get uid() {
+        return this._ref.company + this._ref.id;
     }
-
-    return false;
-  }
-
-  UpdateStateAfterPushing(state) {
-    let newPlan = this._action.create ? this._action.create : this._action.update;
-    let uid = this._ref.company + this._ref.id;
-
-    if (this._action.create) {
-      state.txDict[uid] = new Plan(newPlan);
-    } else if (this._action.update) {
-      let prePlan = state.txDict[uid];
-      let termKeys = Object.keys(newPlan.term);
-      termKeys.forEach(key => {
-        prePlan.term[key] = newPlan.term[key];
-      });
-      newPlan.lastUpdate = new Date()
-    }
-  }
 }
 
 class ContractTx extends Tx {
-  async Validate(state) {
-    // ref: plan.company.id + plan.company.id + JSON.stringify(refunds)
-    let uid = JSON.stringify(this._ref.plan)
-        + JSON.stringify(this._ref.userInfo)
-        + JSON.stringify(this._ref.garaPubKeyHashes)
-        + JSON.stringify(this._ref.expireTime);
+    constructor(obj) {
+        super(obj);
+    }
 
-    let plan;
-    if (!state.txDict[uid]) {
-      if (!state.txDict[this._ref.plan.company + this._ref.plan.id]) {
-        state.txDict[this._ref.plan.company + this._ref.plan.id] = await Plan.findOne({ company: this._ref.plan.company, id: this._ref.plan.id }).populate('contracts');
-      }
-      plan = state.txDict[this._ref.plan.company + this._ref.plan.id];
+    async Validate(state) {
+        let plan;
 
-      if (plan) {
-        let target = {
-          userInfo: this._ref.userInfo,
-          garaPubKeyHashes: this._ref.garaPubKeyHashes,
-          expireTime: this._ref.expireTime
-        };
-        state.txDict[uid] = plan.contracts.find(contract => {
-          let source = {
-            userInfo: contract.userInfo,
-            garaPubKeyHashes: contract.garaPubKeyHashes,
-            expireTime: contract.expireTime
-          }
-          return JSON.stringify(source) == JSON.stringify(target);
-        });
-
-        if (this._action.create && !state.txDict[uid]) {
-          let node = state.nodes.find(node => {
-            return node.pubKeyHash == this._pubKeyHash;
-          });
-
-          if (!node || node.company != this._ref.plan.company) {
-            return false;
-          }
-
-          if (this._preStateHash == JSON.stringify(plan) && plan.term.state) {
-            return true;
-          }
-        }
-
-        if (this._action.update && state.txDict[uid]) {
-          if (this._ref.garaPubKeyHashes.indexOf(this._pubKeyHash) < 0) {
-            return false;
-          }
-
-          if (this._preStateHash == Crypto.Hash( JSON.stringify(plan) + JSON.stringify(state.txDict[uid]))) {
-            let sum = 0;
-            state.txDict[uid].refunds.forEach(refund => {
-              sum += refund.refund;
-            });
-            let newRefund = this._action.update.push;
-            sum += newRefund.refund;
-            if (sum <= plan.term.maxRefund && newRefund.refund/newRefund.total <= plan.term.percentage) {
-              return true;
+        if (!state.txDict[this.uid]) {
+            // Plan reference
+            if (!state.txDict[this._ref.plan.company + this._ref.plan.id]) {
+                state.txDict[this._ref.plan.company + this._ref.plan.id] = await Plan.findOne({ company: this._ref.plan.company, id: this._ref.plan.id }).populate('contracts');
             }
-          }
+            plan = state.txDict[this._ref.plan.company + this._ref.plan.id];
+
+            if (plan) {
+                // Contract reference
+                let target = {
+                    userInfo: this._ref.userInfo,
+                    garaPubKeyHashes: this._ref.garaPubKeyHashes,
+                    expireTime: this._ref.expireTime
+                };
+
+                state.txDict[this.uid] = plan.contracts.find(contract => {
+                    let source = {
+                        userInfo: contract.userInfo,
+                        garaPubKeyHashes: contract.garaPubKeyHashes,
+                        expireTime: contract.expireTime
+                    };
+                    return JSON.stringify(source) == JSON.stringify(target);
+                });
+
+                if (this._action.create && !state.txDict[this.uid]) {
+                    let node = state.nodes.find(node => {
+                        return node.pubKeyHash == this._pubKeyHash;
+                    });
+
+                    if (!node || node.company != this._ref.plan.company) {
+                        return false;
+                    }
+
+                    if (this._preStateHash == JSON.stringify(plan) && plan.term.state) {
+                        return true;
+                    }
+                }
+
+                if (this._action.update && state.txDict[this.uid]) {
+                    if (this._ref.garaPubKeyHashes.indexOf(this._pubKeyHash) < 0) {
+                        return false;
+                    }
+
+                    if (this._preStateHash == Crypto.Hash( JSON.stringify(plan) + JSON.stringify(state.txDict[this.uid]))) {
+                        let sum = 0;
+                        state.txDict[this.uid].refunds.forEach(refund => {
+                            sum += refund.refund;
+                        });
+                        let newRefund = this._action.update.push;
+                        sum += newRefund.refund;
+                        if (sum <= plan.term.maxRefund && newRefund.refund/newRefund.total <= plan.term.percentage) {
+                            return true;
+                        }
+                    }
+                }
+            }
         }
-      }
+
+        return false;
     }
 
-    return false;
-  }
-
-  UpdateStateAfterPushing(state) {
-    let newContract = this._action.create ? this._action.create : this._action.update;
-    let uid = JSON.stringify(this._ref.plan)
-        + JSON.stringify(this._ref.userInfo)
-        + JSON.stringify(this._ref.garaPubKeyHashes)
-        + JSON.stringify(this._ref.expireTime);
-
-    if (this._action.create) {
-      state.txDict[uid] = new Contract(newContract);
-    } else if (this._action.update) {
-      state.txDict[uid].refunds.push(this._action.update.push);
+    UpdateState(state) {
+        let newContract = this._action.create ? this._action.create : this._action.update;
+        if (this._action.create) {
+            state.txDict[this.uid] = new Contract(newContract);
+        } else if (this._action.update) {
+            state.txDict[this.uid].refunds.push(this._action.update.push);
+        }
     }
-  }
+
+    get uid() {
+        return JSON.stringify(this._ref.plan)
+            + JSON.stringify(this._ref.userInfo)
+            + JSON.stringify(this._ref.garaPubKeyHashes)
+            + JSON.stringify(this._ref.expireTime);
+    }
 }
 
-module.exports = { PlanTx, ContractTx };
+module.exports = tx => {
+    if (tx._type == 'PLAN') {
+        return new Plan(tx);
+    }
+    return new Contract(tx);
+};
