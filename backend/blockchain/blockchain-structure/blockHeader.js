@@ -11,20 +11,8 @@ module.exports = class BlockHeader {
         }
     }
 
-    Verify() {
-        if (!Crypto.Verify(this._creatorSign)) {
-            return false;
-        }
-        for (let i = 0; i < this._validatorSigns.length; i++) {
-            if (!Crypto.Verify(this._validatorSigns[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     get timeStamp() {
-        if (this._validatorSigns.length == 0) {
+        if (this._validatorSigns.length === 0) {
             return 0;
         }
         let max = 0;
@@ -36,7 +24,7 @@ module.exports = class BlockHeader {
     }
 
     get firstTimeSign() {
-        if (this._validatorSigns.length == 0) {
+        if (this._validatorSigns.length === 0) {
             return 0;
         }
         let min;
@@ -52,13 +40,7 @@ module.exports = class BlockHeader {
     }
 
     Sign(privKey) {
-        let info = {
-            index: this._index,
-            merkleRoot: this._merkleRoot,
-            preBlockHash: this._preBlockHash,
-            validatorSigns: this._validatorSigns
-        };
-        return Crypto.Sign(privKey, Crypto.Hash(JSON.stringify(privKey)));
+	    this._creatorSign = Crypto.Sign(privKey, Crypto.Hash(JSON.stringify(this._validatorSigns)));
     }
 
     get hash() {

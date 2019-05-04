@@ -42,7 +42,7 @@ const MakeConnectRequest = host => {
         time: new Date()
     };
     MakeRequest(host + '/version', msg, (resMsg, pubKey) => {
-        if (resMsg == 'VERACK') {
+        if (resMsg === 'VERACK') {
             Node.findOneAndUpdate(
                 {
                     pubKeyHash: Crypto.Hash(pubKey)
@@ -63,21 +63,22 @@ const MakeConnectRequest = host => {
                 }
             });
         }
-    });
+});
 };
 
 /**
  * Make get header request
  */
 const MakeSyncHeaderRequest = host => {
-    let index = (blockCache2[0].blockHeader.index == 1) ? 2 : blockCache2[0].blockHeader.index - 1;
+    let index = (blockCache2[0].blockHeader.index === 1) ? 2 : blockCache1[0].blockHeader.index;
     let msg = {
         header: 'GETHEADER',
         key: 'index',
         value: index
     };
-    MakeRequest(host + '/get-header', msg,  resMsg => {
+    MakeRequest(host + '/get-header', msg,  async resMsg => {
         let state = new State();
+        await state.Init();
         if (state.ValidateBlockHeader(resMsg)) {
             MakeSyncDataRequest(host, resMsg);
         }
@@ -93,8 +94,9 @@ const MakeSyncDataRequest = (host, blockHeader) => {
         key: 'hash',
         value: Crypto.Hash(JSON.stringify(blockHeader))
     };
-    MakeRequest(host + '/get-data', msg, resMsg => {
+    MakeRequest(host + '/get-data', msg, async resMsg => {
         let state = new State();
+        await state.Init();
         if (state.ValidateBlockData(blockHeader, resMsg)) {
             MakeSyncHeaderRequest(host);
         }

@@ -5,11 +5,14 @@ const Crypto = require('../utils/crypto');
 
 class Tx {
     constructor(obj) {
-        this._type = obj._type;
-        this._ref = obj._ref;
-        this._preStateHash = obj.preStateHash;
-        this._action = obj.action; // create ? update
-        this._pubKeyHash = obj._pubKeyHash;
+    	this._sign = obj;
+    	////////////////////////////////////
+    	let tx = JSON.parse(this._sign.msg);
+	    ////////////////////////////////////
+        this._type = tx._type;
+        this._ref = tx._ref;
+        this._preStateHash = tx.preStateHash;
+        this._action = tx.action; // create ? update
     }
 
     async UpdateDB(state) {
@@ -17,6 +20,14 @@ class Tx {
             await state.txDict[this.uid].save();
             delete state.txDict[this.uid];
         }
+    }
+    
+    Verify() {
+    	if (Crypto.Verify(this._sign)) {
+    		this._pubKeyHash = Crypto.Hash(this._sign.pubKey);
+    		return true;
+	    }
+    	return false;
     }
 }
 
@@ -26,11 +37,15 @@ class PlanTx extends Tx {
     }
 
     async Validate(state) {
+    	if (!super.Verify()) {
+    		return false;
+	    }
+    	
         let node = state.nodes.find(node => {
-            return node.pubKeyHash == this._pubKeyHash;
+            return node.pubKeyHash === this._pubKeyHash;
         });
 
-        if (!node || node.company != this._ref.company) {
+        if (!node || node.company !== this._ref.company) {
             return false;
         }
 
@@ -44,7 +59,7 @@ class PlanTx extends Tx {
 
         if (this._action.update && state.txDict[this.uid]) {
             let preStateHash = JSON.stringify(state.txDict[this.uid]);
-            if (preStateHash == this._preStateHash) {
+            if (preStateHash === this._preStateHash) {
                 return true;
             }
         }
@@ -78,6 +93,10 @@ class ContractTx extends Tx {
     }
 
     async Validate(state) {
+	    if (!super.Verify()) {
+		    return false;
+	    }
+    	
         let plan;
 
         if (!state.txDict[this.uid]) {
@@ -101,19 +120,19 @@ class ContractTx extends Tx {
                         garaPubKeyHashes: contract.garaPubKeyHashes,
                         expireTime: contract.expireTime
                     };
-                    return JSON.stringify(source) == JSON.stringify(target);
+                    return JSON.stringify(source) === JSON.stringify(target);
                 });
 
                 if (this._action.create && !state.txDict[this.uid]) {
                     let node = state.nodes.find(node => {
-                        return node.pubKeyHash == this._pubKeyHash;
+                        return node.pubKeyHash === this._pubKeyHash;
                     });
 
-                    if (!node || node.company != this._ref.plan.company) {
+                    if (!node || node.company !== this._ref.plan.company) {
                         return false;
                     }
 
-                    if (this._preStateHash == JSON.stringify(plan) && plan.term.state) {
+                    if (this._preStateHash === JSON.stringify(plan) && plan.term.state) {
                         return true;
                     }
                 }
@@ -123,7 +142,7 @@ class ContractTx extends Tx {
                         return false;
                     }
 
-                    if (this._preStateHash == Crypto.Hash( JSON.stringify(plan) + JSON.stringify(state.txDict[this.uid]))) {
+                    if (this._preStateHash === Crypto.Hash( JSON.stringify(plan) + JSON.stringify(state.txDict[this.uid]))) {
                         let sum = 0;
                         state.txDict[this.uid].refunds.forEach(refund => {
                             sum += refund.refund;
@@ -159,7 +178,7 @@ class ContractTx extends Tx {
 }
 
 module.exports = tx => {
-    if (tx._type == 'PLAN') {
+    if (tx._type === 'PLAN') {
         return new Plan(tx);
     }
     return new Contract(tx);

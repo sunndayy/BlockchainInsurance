@@ -7,7 +7,7 @@ const verifyMiddleware = require('../../middleware/verify-middleware');
 const Crypto = require('../../utils/crypto');
 
 router.post('/version', verifyMiddleware, async (req, res) => {
-    if (req.body.header == 'VERSION') {
+    if (req.body.header === 'VERSION') {
         let pubKeyHash = Crypto.Hash(req.body.pubKey);
         if (nodes.indexOf(pubKeyHash) >= 0) {
             let node = await FindNode(pubKeyHash);
@@ -22,9 +22,9 @@ router.post('/version', verifyMiddleware, async (req, res) => {
                 }
             }
         }
-        res.error('Invalid node');
+        res.end('Invalid node');
     } else {
-        res.error('Invalid header');
+        res.end('Invalid header');
     }
 });
 

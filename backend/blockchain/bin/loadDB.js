@@ -10,8 +10,8 @@ db.once('open', async () => {
     require('../module/block/model');
     let BlockCache = mongoose.model('block_cache');
 
-    let values = await BlockCache.find({});
-    if (values.length == 0) {
+    let blocks = await BlockCache.find({});
+    if (blocks.length === 0) {
         global.blockCache1 = [new BlockCache({
             blockHeader: {
                 index: 0,
@@ -27,14 +27,15 @@ db.once('open', async () => {
             blockData: []
         })];
     } else {
-        if (values[0].blockHeader.index < values[1].blockHeader.index) {
-            global.blockCache1 = [values[0]];
-            global.blockCache2 = [values[1]];
+        if (blocks[0].blockHeader.index < blocks[1].blockHeader.index) {
+            global.blockCache1 = [blocks[0]];
+            global.blockCache2 = [blocks[1]];
         } else {
-            global.blockCache1 = [values[1]];
-            global.blockCache2 = [values[0]];
+            global.blockCache1 = [blocks[1]];
+            global.blockCache2 = [blocks[0]];
         }
     }
+    
     global.choosenBlock = blockCache2[0];
     const State = require('../blockchain-structure/state');
     global.globalState = new State(true);
@@ -65,7 +66,7 @@ db.once('open', async () => {
                  */
                 let addrs = JSON.parse(body);
                 addrs.forEach(addr => {
-                    if (addr != myHost) {
+                    if (addr !== myHost) {
                         MakeConnectRequest(addr);
                     }
                 });

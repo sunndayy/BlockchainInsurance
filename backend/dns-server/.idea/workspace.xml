@@ -2,29 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6080b696-5387-468d-9750-5f9efc94fce5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dns-server.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../blockchain/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/company.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../blockchain/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../blockchain/api/syncBlockChainApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/api/syncBlockChainApi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../blockchain/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../blockchain/bin/loadDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/bin/loadDB.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../blockchain/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/bin/www" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../blockchain/blockchain-structure/blockHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/blockchain-structure/blockHeader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../blockchain/blockchain-structure/state.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/blockchain-structure/state.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../blockchain/blockchain-structure/tx.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/blockchain-structure/tx.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../blockchain/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../blockchain/db/000003.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../blockchain/db/CURRENT" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../blockchain/db/LOCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../blockchain/db/LOG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../blockchain/db/MANIFEST-000002" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../blockchain/loadDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/bin/loadDB.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../blockchain/middleware/verify-middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/middleware/verify-middleware.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../blockchain/module/block/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/module/block/model.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../blockchain/module/block/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/module/block/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../blockchain/module/contract/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/module/contract/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../blockchain/module/node/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/module/node/route.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../blockchain/module/plan/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/module/plan/route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../blockchain/module/tx/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/module/tx/route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../blockchain/tasks.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/tasks.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../blockchain/test/blockData-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../blockchain/test/crypto-test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -40,13 +32,18 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="32" column="3" selection-start-line="32" selection-start-column="3" selection-end-line="32" selection-end-column="3" />
+            <state relative-caret-position="108">
+              <caret line="19" column="23" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Undefined error</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -73,7 +70,7 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
-    <option name="width" value="979" />
+    <option name="width" value="980" />
     <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -81,27 +78,10 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="dns-server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dns-server" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dns-server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dns-server" type="462c0819:PsiDirectoryNode" />
-              <item name="bin" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="10.15.3" />
     <property name="nodejs_interpreter_path" value="node" />
@@ -134,15 +114,15 @@
       <workItem from="1556802291402" duration="1052000" />
       <workItem from="1556803831182" duration="121000" />
       <workItem from="1556807796099" duration="1000" />
+      <workItem from="1556894812370" duration="346000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1174000" />
+    <option name="totallyTimeSpent" value="1520000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -150,7 +130,7 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3295129" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3286119" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3895184" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -172,13 +152,9 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/app.js</url>
-          <line>23</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/app.js</url>
-          <line>30</line>
-          <option name="timeStamp" value="2" />
+          <line>21</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -195,8 +171,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="32" column="3" selection-start-line="32" selection-start-column="3" selection-end-line="32" selection-end-column="3" />
+        <state relative-caret-position="108">
+          <caret line="19" column="23" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="23" />
         </state>
       </provider>
     </entry>

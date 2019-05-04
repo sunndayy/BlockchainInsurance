@@ -12,18 +12,18 @@ const verifyMiddleware = require('../../middleware/verify-middleware');
 
 const findBlock = async (key, value) => {
     let block;
-    if (key == 'index') {
+    if (key === 'index') {
         block = await FindByIndex(parseInt(req.params.value));
     } else {
         block = await FindByHash(value);
         if (!block) {
             block = blockCache1.find(block => {
-                return Crypto.Hash(JSON.stringify(block.blockHeader)) == value;
+                return Crypto.Hash(JSON.stringify(block.blockHeader)) === value;
             });
         }
         if (!block) {
             block = blockCache2.find(block => {
-                return Crypto.Hash(JSON.stringify(block.blockHeader)) == value;
+                return Crypto.Hash(JSON.stringify(block.blockHeader)) === value;
             });
         }
     }
@@ -31,7 +31,7 @@ const findBlock = async (key, value) => {
 }
 
 router.post('/get-header', verifyMiddleware, async (req, res) => {
-    if (req.body.header == 'GETHEADER') {
+    if (req.body.header === 'GETHEADER') {
         if (nodes.indexOf(Crypto.Hash(req.body.pubKey)) >= 0) {
             let block = await findBlock(req.body.key, req.body.value);
             if (block) {
@@ -40,18 +40,19 @@ router.post('/get-header', verifyMiddleware, async (req, res) => {
                 };
                 res.json(Crypto.Sign(privKey, JSON.stringify(msg)));
             } else {
-                res.error('No block was found');
+                res.end('No block was found');
             }
         } else {
-            res.error('Invalid node');
+            res.end('Invalid node');
         }
     } else {
-        res.error('Invalid header');
+        res.end('Invalid header');
     }
 });
 
 router.post('/header', async (req, res) => {
     let state = new State();
+    await state.Init();
     if (state.ValidateBlockHeader(req.body.blockHeader)) {
         let host = await GetHost(Crypto.Hash(req.body.pubKey));
         if (host) {
@@ -61,7 +62,7 @@ router.post('/header', async (req, res) => {
 });
 
 router.post('/get-data', verifyMiddleware, async (req, res) => {
-    if (req.body.header == 'GETHEADER') {
+    if (req.body.header === 'GETHEADER') {
         if (nodes.indexOf(Crypto.Hash(req.body.pubKey)) >= 0) {
             let block = await findBlock(req.body.key, req.body.value);
             if (block) {
@@ -70,13 +71,13 @@ router.post('/get-data', verifyMiddleware, async (req, res) => {
                 };
                 res.json(Crypto.Sign(privKey, JSON.stringify(msg)));
             } else {
-                res.error('No block was found');
+                res.end('No block was found');
             }
         } else {
-            res.error('Invalid node');
+            res.end('Invalid node');
         }
     } else {
-        res.error('Invalid header');
+        res.end('Invalid header');
     }
 });
 

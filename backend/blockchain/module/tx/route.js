@@ -5,7 +5,7 @@ global.txCache = [];
 
 router.post('/tx', (req, res) => {
     let tx = Tx(req.body.tx);
-    if (session == WAIT_TO_COLLECT_TX) {
+    if (session === WAIT_TO_COLLECT_TX) {
         globalState.PushTx(tx);
     } else {
         txCache.push(tx, true);
