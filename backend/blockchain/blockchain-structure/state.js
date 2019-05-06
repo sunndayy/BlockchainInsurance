@@ -31,7 +31,7 @@ module.exports = class State {
             this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
             this._txCache = [];
         }
-        this._nodes = await Node.find();
+        this._nodes = await Node.find({});
     }
 
     HandleAfterNewBlock(blockHeader, blockData, cb) {
