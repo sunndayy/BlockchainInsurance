@@ -1,10 +1,9 @@
 module.exports = {
     dbPrefix: 'db1',
     dnsServer: 'http://bcdns.herokuapp.com',
-    nodes: [],
-    privKey: 'dffddfe476931ba592ae94da5c625689cdad0f60c5ccc4dbcdfc03d522b291c8',
-    myHost: 'localhost:2000',
     mySession: 2,
+	PRIV_KEY: 'dffddfe476931ba592ae94da5c625689cdad0f60c5ccc4dbcdfc03d522b291c8',
+	HOST: 'localhost:2000',
 	CREATOR_PRIZE: 5,
 	VALIDATOR_PRIZE: 1,
 	TOP: 1,

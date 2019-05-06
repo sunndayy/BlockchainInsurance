@@ -37,7 +37,7 @@ const MakeRequest = (url, msg, cb) => {
 const MakeConnectRequest = host => {
     let msg = {
         header: 'VERSION',
-        host: myHost,
+        host: HOST,
         time: new Date()
     };
     MakeRequest(host + '/version', msg, (resMsg, pubKeyHash) => {

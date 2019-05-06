@@ -144,7 +144,7 @@ db.once('open', async () => {
      */
     const request = require('request');
     const syncDNS = () => {
-        request.post({ url: dnsServer, form: { host: myHost } }, (err, res, body) => {
+        request.post({ url: dnsServer, form: { host: HOST } }, (err, res, body) => {
             if (err) {
                 console.error(err);
             }
@@ -164,7 +164,7 @@ db.once('open', async () => {
                  */
                 let addrs = JSON.parse(body);
                 addrs.forEach(addr => {
-                    if (addr !== myHost) {
+                    if (addr !== HOST) {
                         MakeConnectRequest(addr);
                     }
                 });
