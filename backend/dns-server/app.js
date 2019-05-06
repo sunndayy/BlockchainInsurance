@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var fs = require('fs');
 
 var app = express();
 
@@ -15,38 +14,20 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-fs.readFile('./company.json', (err, data) => {
-	var companies = err ? [] : JSON.parse(data.toString());
-	app.route('/company')
-		.get(function (req, res) {
-			res.json(companies);
-		})
-		.post(function (req, res) {
-			companies.push(req.body);
-			fs.writeFile('./company.json', JSON.stringify(companies), err => {
-				if (err) {
-					console.end(err);
-				}
-			});
-		});
-});
-
 var hosts = [];
 
 app.route('/')
 	.get(function (req, res) {
-		res.json(hosts);
+		res.json(hosts.filter((host, index) => {
+			return hosts.indexOf(host) >= index;
+		}));
 	})
 	.post(function (req, res) {
-		if (hosts.indexOf(req.body.host) < 0) {
-			hosts.push(req.body.host);
-			setTimeout(() => {
-				hosts.splice(hosts.indexOf(req.body.host), 1);
-			}, 1000 * 60 * 10);
-			res.end('Success');
-		} else {
-			res.end('Host was existed');
-		}
+		hosts.push(req.body.host);
+		setTimeout(() => {
+			hosts.splice(hosts.indexOf(req.body.host), 1);
+		}, 1000 * 60 * 10);
+		res.end('Success');
 	});
 
 // catch 404 and forward to error handler

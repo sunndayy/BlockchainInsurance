@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const FindNode =require('./model').FindNode;
+const FindNode = require('./model').FindNode;
 
 const verifyMiddleware = require('../../middleware/verify-middleware');
 const Crypto = require('../../utils/crypto');
 
 router.post('/version', verifyMiddleware, async (req, res) => {
     if (req.body.header === 'VERSION') {
-        let pubKeyHash = Crypto.Hash(req.body.pubKey);
+        let pubKeyHash = req.body.pubKeyHash;
         if (nodes.indexOf(pubKeyHash) >= 0) {
             let node = await FindNode(pubKeyHash);
             if (node) {
@@ -18,7 +18,7 @@ router.post('/version', verifyMiddleware, async (req, res) => {
                     node.host = req.body.host;
                     node.lastTimeUpdateHost = new Date();
                     await node.Save();
-                    return res.json(Crypto.Sign(privKey, 'VERACK'));
+                    return res.json(Crypto.Sign('VER_ACK'));
                 }
             }
         }

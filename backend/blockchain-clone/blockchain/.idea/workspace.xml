@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4b696cc9-e63a-46b7-961d-38ee5ef81080" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/syncBlockChainApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/syncBlockChainApi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/loadDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/bin/loadDB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blockchain-structure/blockData.js" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain-structure/blockData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blockchain-structure/blockHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain-structure/blockHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blockchain-structure/state.js" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain-structure/state.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/verify-middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/verify-middleware.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/block/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/block/model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/block/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/block/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/contract/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/contract/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/node/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/node/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/plan/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/plan/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/tx/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/tx/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tasks.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tasks.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/crypto.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/crypto.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dns-server/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../dns-server/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dns-server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../dns-server/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dns-server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../dns-server/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dns-server/company.json" beforeDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/tx/route.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/node/model.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="14" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/bin/loadDB.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="276">
+              <caret line="66" column="28" selection-start-line="66" selection-start-column="28" selection-end-line="66" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/plan/route.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="62" selection-start-line="9" selection-start-column="62" selection-end-line="9" selection-end-column="62" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>this</find>
+      <find>res.error</find>
+      <find>isglo</find>
+      <find>Verify</find>
+      <find>new State</find>
+      <find>choosenBlock</find>
+      <find>switch</find>
+      <find>pushTx</find>
+      <find>UpdateDB</find>
+      <find>uid</find>
+      <find>_isGlobalState</find>
+      <find>HandleAfterGetBlockHeader</find>
+      <find>req.body.pubkey</find>
+      <find>req.body.pubKey</find>
+      <find>verac</find>
+      <find>session</find>
+      <find>Crypto.sign</find>
+      <find>JSON</find>
+      <find>sign</find>
+      <find>getpubkey</find>
+      <find>blockHeader</find>
+      <find>privKe</find>
+      <find>privKey</find>
+      <find>request(</find>
+      <find>dnsser</find>
+      <find>myhost</find>
+      <find>request</find>
+      <find>dnsset</find>
+      <find>makeRe</find>
+      <find>request.post</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>verifyMiddleware</replace>
+      <replace>key</replace>
+      <replace>uniqueHash</replace>
+      <replace>let</replace>
+      <replace>syncHeaderFunc</replace>
+      <replace>blockCache</replace>
+      <replace>config</replace>
+      <replace>GetHost</replace>
+      <replace>host</replace>
+      <replace>MakeRequest</replace>
+      <replace>MakeConnectRequest</replace>
+      <replace>MakeSyncHeaderRequest</replace>
+      <replace>MakeSyncDataRequest</replace>
+      <replace>FindByLicensePlate</replace>
+      <replace>FindByCompany</replace>
+      <replace>FindByIndex</replace>
+      <replace>FindBlockByIndex</replace>
+      <replace />
+      <replace>FindByHash</replace>
+      <replace>GetNodesOnTop</replace>
+      <replace>Crypto</replace>
+      <replace>UpdateState</replace>
+      <replace>globalState.</replace>
+      <replace>NUM_TX_PER_BLOCK</replace>
+      <replace>NUM_SIGN_PER_BLOCK</replace>
+      <replace>DURATION</replace>
+      <replace>res.end</replace>
+      <replace>mySession</replace>
+      <replace>privKey</replace>
+      <replace>HandleAfterGetHeader</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/global/blocktree/readme.txt" />
+        <option value="$PROJECT_DIR$/module/info/readme.txt" />
+        <option value="$PROJECT_DIR$/model/refund/refund.js" />
+        <option value="$PROJECT_DIR$/model/term/term.js" />
+        <option value="$PROJECT_DIR$/model/contract/contract.js" />
+        <option value="$PROJECT_DIR$/model/term.js" />
+        <option value="$PROJECT_DIR$/model/refund.js" />
+        <option value="$PROJECT_DIR$/model/readme.txt" />
+        <option value="$PROJECT_DIR$/module/info/route.js" />
+        <option value="$PROJECT_DIR$/global/node-dictionary.js" />
+        <option value="$PROJECT_DIR$/model/block.js" />
+        <option value="$PROJECT_DIR$/module/node-discover/route.js" />
+        <option value="$PROJECT_DIR$/global/node-array.js" />
+        <option value="$PROJECT_DIR$/model/contract.js" />
+        <option value="$PROJECT_DIR$/model/plan.js" />
+        <option value="$PROJECT_DIR$/global/blockchain-structure/tx.js" />
+        <option value="$PROJECT_DIR$/router/block/block.js" />
+        <option value="$PROJECT_DIR$/router/node-discover/node.js" />
+        <option value="$PROJECT_DIR$/router/node/node.js" />
+        <option value="$PROJECT_DIR$/router/plan/route.js" />
+        <option value="$PROJECT_DIR$/test/crypto-test.js" />
+        <option value="$PROJECT_DIR$/module/follow/route.js" />
+        <option value="$PROJECT_DIR$/test/blockData-test.js" />
+        <option value="$USER_HOME$/Desktop/test/lib.js" />
+        <option value="$USER_HOME$/Desktop/test/main.js" />
+        <option value="$PROJECT_DIR$/task.txt" />
+        <option value="$PROJECT_DIR$/controller.js" />
+        <option value="$PROJECT_DIR$/init.js" />
+        <option value="$PROJECT_DIR$/module/plan/model.js" />
+        <option value="$PROJECT_DIR$/module/contract/model.js" />
+        <option value="$PROJECT_DIR$/module/node/model.js" />
+        <option value="$PROJECT_DIR$/tasks.txt" />
+        <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/../dns-server/app.js" />
+        <option value="$PROJECT_DIR$/loadDB.js" />
+        <option value="$PROJECT_DIR$/bin/www" />
+        <option value="$PROJECT_DIR$/blockchain-structure/tx.js" />
+        <option value="$PROJECT_DIR$/blockchain-structure/blockData.js" />
+        <option value="$PROJECT_DIR$/module/contract/route.js" />
+        <option value="$PROJECT_DIR$/module/node/route.js" />
+        <option value="$PROJECT_DIR$/blockchain-structure/blockHeader.js" />
+        <option value="$PROJECT_DIR$/bin/loadDB.js" />
+        <option value="$PROJECT_DIR$/module/plan/route.js" />
+        <option value="$PROJECT_DIR$/blockchain-structure/state.js" />
+        <option value="$PROJECT_DIR$/module/block/model.js" />
+        <option value="$PROJECT_DIR$/module/block/route.js" />
+        <option value="$PROJECT_DIR$/middleware/verify-middleware.js" />
+        <option value="$PROJECT_DIR$/module/tx/route.js" />
+        <option value="$PROJECT_DIR$/api/syncBlockChainApi.js" />
+        <option value="$PROJECT_DIR$/utils/crypto.js" />
+        <option value="$PROJECT_DIR$/config.js" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="952" />
+    <option name="width" value="977" />
+    <option name="height" value="1038" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="bin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="blockchain-structure" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="doc" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="middleware" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="module" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="module" type="462c0819:PsiDirectoryNode" />
+              <item name="block" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="module" type="462c0819:PsiDirectoryNode" />
+              <item name="contract" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="module" type="462c0819:PsiDirectoryNode" />
+              <item name="node" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="module" type="462c0819:PsiDirectoryNode" />
+              <item name="plan" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="module" type="462c0819:PsiDirectoryNode" />
+              <item name="tx" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="10.15.3" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path" value="node" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2019.1.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\router\plan" />
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\module\tx" />
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\module\node" />
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\module\info" />
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\module\follow" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\bin" />
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\router\plan" />
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\router\node-discover" />
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\router\info" />
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\blockchain\router\block" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Node.js.bin\www">
+    <configuration name="blockData-test.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/test/blockData-test.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <configuration name="crypto-test.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/test/crypto-test.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.blockData-test.js" />
+        <item itemvalue="Node.js.crypto-test.js" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4b696cc9-e63a-46b7-961d-38ee5ef81080" name="Default Changelist" comment="" />
+      <created>1555736321499</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1555736321499</updated>
+      <workItem from="1555736323701" duration="4799000" />
+      <workItem from="1555767976074" duration="27000" />
+      <workItem from="1555768048585" duration="4393000" />
+      <workItem from="1555803895402" duration="3677000" />
+      <workItem from="1555810536754" duration="3320000" />
+      <workItem from="1555817966740" duration="3436000" />
+      <workItem from="1555832792275" duration="1918000" />
+      <workItem from="1555839995179" duration="3275000" />
+      <workItem from="1555856053379" duration="2784000" />
+      <workItem from="1555858913765" duration="799000" />
+      <workItem from="1555860379690" duration="45000" />
+      <workItem from="1555889618768" duration="2140000" />
+      <workItem from="1555910688797" duration="1395000" />
+      <workItem from="1555914425244" duration="134000" />
+      <workItem from="1555934225044" duration="146000" />
+      <workItem from="1555936278941" duration="3171000" />
+      <workItem from="1556022677432" duration="2793000" />
+      <workItem from="1556025480296" duration="2801000" />
+      <workItem from="1556031315829" duration="164000" />
+      <workItem from="1556033756188" duration="112000" />
+      <workItem from="1556069276552" duration="1395000" />
+      <workItem from="1556111579823" duration="2695000" />
+      <workItem from="1556116177527" duration="3192000" />
+      <workItem from="1556327209949" duration="5697000" />
+      <workItem from="1556341315471" duration="742000" />
+      <workItem from="1556349220308" duration="11174000" />
+      <workItem from="1556360719143" duration="2618000" />
+      <workItem from="1556369256312" duration="4608000" />
+      <workItem from="1556450925289" duration="756000" />
+      <workItem from="1556496846069" duration="551000" />
+      <workItem from="1556497592566" duration="23000" />
+      <workItem from="1556503575070" duration="14803000" />
+      <workItem from="1556529095009" duration="11820000" />
+      <workItem from="1556590493269" duration="8029000" />
+      <workItem from="1556607970464" duration="12388000" />
+      <workItem from="1556676384265" duration="4317000" />
+      <workItem from="1556696857654" duration="556000" />
+      <workItem from="1556697469297" duration="673000" />
+      <workItem from="1556698206979" duration="432000" />
+      <workItem from="1556698759962" duration="3257000" />
+      <workItem from="1556756562420" duration="1117000" />
+      <workItem from="1556761550849" duration="491000" />
+      <workItem from="1556790433177" duration="597000" />
+      <workItem from="1556801247482" duration="917000" />
+      <workItem from="1556802179379" duration="1634000" />
+      <workItem from="1556803969632" duration="4241000" />
+      <workItem from="1556847993557" duration="551000" />
+      <workItem from="1556887746583" duration="3791000" />
+      <workItem from="1556957931601" duration="502000" />
+      <workItem from="1556958486078" duration="69000" />
+      <workItem from="1556970161937" duration="5281000" />
+      <workItem from="1556979563069" duration="1412000" />
+      <workItem from="1557066775753" duration="675000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="152333000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="762" y="0" width="781" height="830" extended-state="0" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" weight="0.46774194" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32503662" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.49291784" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3581662" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.329429" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32719547" />
+      <window_info anchor="bottom" id="TypeScript" order="11" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24966443" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23020135" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="TypeScript" order="0" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.32503662" />
+      <window_info anchor="bottom" id="Run" order="3" weight="0.49291784" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.35410765" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" weight="0.329429" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32719547" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24966443" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/bin/loadDB.js</url>
+          <line>66</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/global/state/state.js" />
+    <entry file="file://$PROJECT_DIR$/blockchain-structure/blockTree.js" />
+    <entry file="file://$PROJECT_DIR$/module/follow/route.js" />
+    <entry file="file://$PROJECT_DIR$/doc/DB.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/crypto-test.js" />
+    <entry file="file://$PROJECT_DIR$/test/blockData-test.js" />
+    <entry file="file://$USER_HOME$/Desktop/test/main.js" />
+    <entry file="file://$USER_HOME$/Desktop/test/lib.js" />
+    <entry file="file://$PROJECT_DIR$/module/node/controller.js" />
+    <entry file="file://$PROJECT_DIR$/module/block/controller.js" />
+    <entry file="file://$PROJECT_DIR$/module/plan/controller.js" />
+    <entry file="file://$PROJECT_DIR$/module/tx/controller.js" />
+    <entry file="file://$PROJECT_DIR$/module/contract/controller.js" />
+    <entry file="file://$PROJECT_DIR$/controller.js" />
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/mongoose/lib/utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/haravan/mongose/query.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-13">
+          <caret line="1" column="14" lean-forward="true" selection-start-line="1" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/hara_oes/modules/orders/server/models/order.server.model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="1316" column="14" selection-start-line="1316" selection-end-line="1316" selection-end-column="14" />
+          <folding>
+            <element signature="e#570#25614#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/haravan/mongose/model.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/mongoose/lib/error/missingSchema.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/init.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/mongodb/lib/operations/mongo_client_ops.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="285" column="4" selection-start-line="285" selection-start-column="4" selection-end-line="285" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doc/API.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/mongoose/lib/schema.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2142">
+          <caret line="562" column="10" selection-start-line="562" selection-start-column="10" selection-end-line="562" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/express/lib/view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="60" column="10" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/javascript/nodejs/10.15.3/core-modules/net.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="1101" column="12" lean-forward="true" selection-start-line="1101" selection-start-column="12" selection-end-line="1101" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dns-server/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="39" column="16" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/contract/model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/plan/model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="28" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/javascript/nodejs/10.15.3/node-typings/node_modules/@types/node/tls.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2023">
+          <caret line="122" column="12" selection-start-line="122" selection-start-column="12" selection-end-line="122" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blockchain-structure/tx.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1582">
+          <caret line="160" column="5" lean-forward="true" selection-start-line="160" selection-start-column="5" selection-end-line="160" selection-end-column="5" />
+          <folding>
+            <element signature="n#!!block;n#constructor#0;n#PlanTx#0" />
+            <element signature="n#!!block;n#constructor#0;n#ContractTx#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/bn.js/lib/bn.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="621" selection-start-line="621" selection-end-line="621" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tasks.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blockchain-structure/state.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="148" column="158" selection-start-line="148" selection-start-column="158" selection-end-line="148" selection-end-column="158" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/www">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-42">
+          <caret line="33" column="1" lean-forward="true" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
+          <folding>
+            <element signature="n#!!doc;n#onError#0" />
+            <element signature="n#!!block;n#onError#0" />
+            <element signature="n#!!doc;n#onListening#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blockchain-structure/blockHeader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="31" column="31" selection-start-line="31" selection-start-column="27" selection-end-line="31" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blockchain-structure/blockData.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/block/model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="43" lean-forward="true" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/block/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="86" column="24" selection-start-line="86" selection-start-column="24" selection-end-line="86" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/contract/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="24" column="54" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/node/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="39" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/crypto.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="44" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/middleware/verify-middleware.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/syncBlockChainApi.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="21" column="38" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/node/model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/tx/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/plan/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="62" selection-start-line="9" selection-start-column="62" selection-end-line="9" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/loadDB.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="66" column="28" selection-start-line="66" selection-start-column="28" selection-end-line="66" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
