@@ -106,32 +106,43 @@ db.once('open', async () => {
     server.on('error', onError);
     server.on('listening', onListening);
 
+    let BlockHeader = require('../blockchain-structure/block-header');
+    let BlockData = require('../blockchain-structure/block-data');
     let BlockCache = mongoose.model('block_cache');
 
     let blocks = await BlockCache.find({});
-    if (blocks.length === 0) {
-        global.blockCache1 = [{
-	        blockHeader: {
-		        index: 0,
-		        validatorSigns: []
-	        },
-	        blockData: []
-        }];
-        global.blockCache2 = [{
-	        blockHeader: {
-		        index: 1,
-		        validatorSigns: []
-	        },
-	        blockData: []
-        }];
+    if (blocks.length == 0) {
+        blocks.push({
+            blockHeader: {
+                index: 0,
+                validatorSigns: []
+                },
+            blockData: []
+        });
+        blocks.push({
+            blockHeader: {
+                index: 1,
+                validatorSigns: []
+                },
+            blockData: []
+        });
+    }
+
+    console.log(blocks[0]);
+
+    blocks = blocks.map(block => {
+        return {
+            blockHeader: new BlockHeader(block.blockHeader),
+            blockData: new BlockData(block.blockData)
+        };
+    });
+
+    if (blocks[0].blockHeader.index < blocks[1].blockHeader.index) {
+        global.blockCache1 = [blocks[0]];
+        global.blockCache2 = [blocks[1]];
     } else {
-        if (blocks[0].blockHeader.index < blocks[1].blockHeader.index) {
-            global.blockCache1 = [blocks[0]];
-            global.blockCache2 = [blocks[1]];
-        } else {
-            global.blockCache1 = [blocks[1]];
-            global.blockCache2 = [blocks[0]];
-        }
+        global.blockCache1 = [blocks[1]];
+        global.blockCache2 = [blocks[0]];
     }
 
     global.choosenBlock = blockCache2[0];
@@ -157,7 +168,7 @@ db.once('open', async () => {
         } else {
             syncDNS();
             try {
-                const { MakeConnectRequest } = require('../api/syncBlockChainApi');
+                const { MakeConnectRequest } = require('../api/sync-blockchain-api');
 
                 /**
                  * Connect and sync blockchain from every node in network

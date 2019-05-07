@@ -1,8 +1,8 @@
 const Crypto = require('../utils/crypto');
 
 const FindByIndex = require('../module/block/model').FindByIndex;
-const BlockData = require('./blockData');
-const BlockHeader = require('./blockHeader');
+const BlockData = require('./block-data');
+const BlockHeader = require('./block-header');
 
 const mongoose = require('mongoose');
 const Node = mongoose.model('node');

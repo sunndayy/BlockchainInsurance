@@ -5,8 +5,8 @@ const Crypto = require('../utils/crypto');
 const Node = mongoose.model('node');
 
 const State = require('../blockchain-structure/state');
-const BlockHeader = require('../blockchain-structure/blockHeader');
-const BlockData = require('../blockchain-structure/blockData');
+const BlockHeader = require('../blockchain-structure/block-header');
+const BlockData = require('../blockchain-structure/block-data');
 
 /**
  * Make a request
