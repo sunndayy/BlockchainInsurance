@@ -124,7 +124,7 @@ module.exports = class State {
 	                        	if (node.pubKeyHash != Crypto.PUB_KEY_HASH) {
 			                        request.post({
 				                        url: 'http://' + node.host + '/agree',
-				                        form: Crypto.Sign(JSON.stringify({ nextBlockHash: Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree)) }))
+				                        form: Crypto.Sign({ nextBlockHash: Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree)) })
 			                        }, (err, res, body) => {
 				                        if (err) {
 					                        console.error(err);
