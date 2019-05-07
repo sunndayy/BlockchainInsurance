@@ -84,9 +84,7 @@ router.post('/agree', verifyMiddleware, (req, res) => {
         nextBlockHash: req.body.nextBlockHash,
         timeSign: (new Date()).getTime()
     };
-    res.json({
-        sign: Crypto.Sign(JSON.stringify(msg))
-    });
+    res.json(Crypto.Sign(JSON.stringify(msg)));
 });
 
 module.exports = router;
