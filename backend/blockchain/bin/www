@@ -116,19 +116,21 @@ db.once('open', async () => {
             blockHeader: {
                 index: 0,
                 validatorSigns: []
-                },
-            blockData: []
+            },
+            blockData: {
+                txs: []
+            }
         });
         blocks.push({
             blockHeader: {
                 index: 1,
                 validatorSigns: []
-                },
-            blockData: []
+            },
+            blockData: {
+                txs: []
+            }
         });
     }
-
-    console.log(blocks[0]);
 
     blocks = blocks.map(block => {
         return {
