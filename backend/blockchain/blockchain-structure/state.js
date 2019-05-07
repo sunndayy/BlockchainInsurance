@@ -171,7 +171,7 @@ module.exports = class State {
 
     AddBlock(blockHeader, blockData) {
         let _this = this;
-        blockData.forEach(tx => {
+        blockData.txs.forEach(tx => {
             _this.PushTx(tx);
         });
 

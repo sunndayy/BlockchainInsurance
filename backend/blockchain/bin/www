@@ -135,7 +135,7 @@ db.once('open', async () => {
     blocks = blocks.map(block => {
         return {
             blockHeader: new BlockHeader(block.blockHeader),
-            blockData: new BlockData(block.blockData)
+            blockData: new BlockData(block.blockData.txs)
         };
     });
 
