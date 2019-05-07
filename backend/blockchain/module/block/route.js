@@ -79,12 +79,12 @@ router.post('/get-data', verifyMiddleware, async (req, res) => {
 
 router.post('/agree', verifyMiddleware, (req, res) => {
     let msg = {
-        curBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
+	    header: 'AGREE',
+	    curBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
         nextBlockHash: req.body.nextBlockHash,
         timeSign: (new Date()).getTime()
     };
     res.json({
-	    header: 'AGREE',
         sign: Crypto.Sign(JSON.stringify(msg))
     });
 });
