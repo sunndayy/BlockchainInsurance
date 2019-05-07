@@ -4,15 +4,12 @@ const Contract = mongoose.model('contract');
 const Crypto = require('../utils/crypto');
 
 class Tx {
-    constructor(obj) {
-    	this._sign = obj;
-    	////////////////////////////////////
-    	let tx = JSON.parse(this._sign.msg);
-	    ////////////////////////////////////
-        this._type = tx._type;
-        this._ref = tx._ref;
-        this._preStateHash = tx.preStateHash;
-        this._action = tx.action; // create ? update
+    constructor({ sign, tx }) {
+    	this._sign = sign;
+    	this._type = tx.type;
+    	this._ref = tx.ref;
+    	this._preStateHash = tx.preStateHash;
+    	this._action = tx.action;
     }
 
     async UpdateDB(state) {
@@ -50,7 +47,7 @@ class PlanTx extends Tx {
         }
 
         if (!state.txDict[this.uid]) {
-            state.txDict[uid] = await Plan.findOne({ company: this._ref.company, id: this._ref.id });
+            state.txDict[this.uid] = await Plan.findOne({ company: this._ref.company, id: this._ref.id });
         }
 
         if (this._action.create && !state.txDict[this.uid]) {
@@ -71,7 +68,11 @@ class PlanTx extends Tx {
         let newPlan = this._action.create ? this._action.create : this._action.update;
 
         if (this._action.create) {
-            state.txDict[this.uid] = new Plan(newPlan);
+            state.txDict[this.uid] = new Plan({
+	            company: this._ref.company,
+	            id: this._ref.id,
+	            term: newPlan
+            });
         } else if (this._action.update) {
             let prePlan = state.txDict[this.uid];
             let termKeys = Object.keys(newPlan.term);
@@ -177,9 +178,10 @@ class ContractTx extends Tx {
     }
 }
 
-module.exports = tx => {
-    if (tx._type === 'PLAN') {
-        return new Plan(tx);
-    }
-    return new Contract(tx);
+module.exports = ({ sign, tx }) => {
+	if (tx.type == 'PLAN') {
+		return new PlanTx({ sign, tx })
+	} else {
+		return new ContractTx(({ sign, tx }));
+	}
 };

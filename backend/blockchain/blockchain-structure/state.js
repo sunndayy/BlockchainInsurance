@@ -115,7 +115,7 @@ module.exports = class State {
                             let blockData = new BlockData(this._txCache);
                             let blockHeader = new BlockHeader({
                                 index: choosenBlock.blockHeader.index + 1,
-                                preBlockHash: JSON.stringify(choosenBlock.blockHeader),
+                                preBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
                                 merkleRoot: blockData.merkleRoot
                             });
 	
@@ -194,6 +194,10 @@ module.exports = class State {
         });
 
         if (node) {
+        	if (!node.lastTimeCreateBlock) {
+        		return 0;
+	        }
+        	
             let s = node.point * (time - new Date(node.lastTimeCreateBlock));
             if (s > 0) {
                 return (NEED_POINT - s) / node.point;
@@ -207,7 +211,7 @@ module.exports = class State {
         this._nodes.sort((a, b) => {
             return b.point - a.point;
         });
-        return this._nodes.splice(0, TOP);
+        return this._nodes.slice(0, TOP);
     }
 
     get txDict() {
