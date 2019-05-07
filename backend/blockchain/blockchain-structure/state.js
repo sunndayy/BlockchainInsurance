@@ -29,6 +29,8 @@ module.exports = class State {
             }
             this.AddBlock(preBlock.blockHeader, preBlock.blockData);
             this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
+            await Block.remove({});
+            await Block.insertMany([preBlock, choosenBlock]);
             this._txCache = [];
         }
         this._nodes = await Node.find({});
