@@ -21,7 +21,8 @@ module.exports = async () => {
 	promises.push(initNodePromise('2dedf231bb53757027f475dc6a37259348004875cc9882df46b8e1ce3a36c773', 'pvduong'));
 	promises.push(new Promise((resolve, reject) => {
 		Node.find({}, (err, docs) => {
-			global.nodes = docs.map(node => node.pubKeyHash);
+			nodes = docs.map(node => node.pubKeyHash);
+			resolve();
 		});
 	}));
 	await Promise.all(promises);

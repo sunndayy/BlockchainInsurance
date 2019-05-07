@@ -13,7 +13,7 @@ const verifyMiddleware = require('../../middleware/verify-middleware');
 const findBlock = async (key, value) => {
     let block;
     if (key === 'index') {
-        block = await FindByIndex(parseInt(req.params.value));
+        block = await FindByIndex(parseInt(value));
     } else {
         block = await FindByHash(value);
         if (!block) {

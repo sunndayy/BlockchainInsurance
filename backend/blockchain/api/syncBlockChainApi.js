@@ -19,7 +19,7 @@ const MakeRequest = (url, msg, cb) => {
             try {
                 let sign = JSON.parse(body);
                 if (Crypto.Verify(sign)) {
-                    let msg = sign.msg;
+	                let msg = JSON.parse(sign.msg);
                     cb(msg, Crypto.Hash(sign.pubKey));
                 }
             } catch (err) {
