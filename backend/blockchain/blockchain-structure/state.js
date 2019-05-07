@@ -109,8 +109,8 @@ module.exports = class State {
 
                 if (this._txCache.length === NUM_TX_PER_BLOCK) {
                     let nodesOnTop = this.GetNodesOnTop();
-
-                    if (nodesOnTop.indexOf(Crypto.PUB_KEY_HASH) < 0) {
+                    let nodesOnTopPubKeyHashes = nodesOnTop.map(node => node.pubKeyHash);
+                    if (nodesOnTopPubKeyHashes.indexOf(Crypto.PUB_KEY_HASH) < 0) {
                         if (this.CalTimeMustWait(Crypto.PUB_KEY_HASH) <= 0) {
                             let blockData = new BlockData(this._txCache);
                             let blockHeader = new BlockHeader({
