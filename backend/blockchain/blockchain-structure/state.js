@@ -121,44 +121,46 @@ module.exports = class State {
 	
 	                        let _this = this;
 	                        nodesOnTop.forEach(node => {
-                                request.post({
-                                    url: 'http://' + node.host + '/agree',
-                                    form: Crypto.Sign(JSON.stringify({ nextBlockHash: Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree)) }))
-                                }, (err, res, body) => {
-                                    if (err) {
-                                        console.error(err);
-                                    } else {
-                                        try {
-                                            if (mySession === WAIT_TO_COLLECT_SIGN) {
-                                                let sign = JSON.parse(body);
-                                                let msg = JSON.parse(sign.msg);
-
-                                                if (msg.curBlockHash === choosenBlock.blockHeader.hash
-                                                    && msg.nextBlockHash === Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
-                                                    if (!blockHeader.validatorSigns) {
-                                                        blockHeader.validatorSigns = [];
-                                                    }
-                                                    blockHeader.validatorSigns.push(sign);
-                                                    
-                                                    if (blockHeader.validatorSigns.length === NUM_SIGN_PER_BLOCK) {
-                                                        let validatorPubKeyHashes = blockHeader.validatorSigns.map(sign => {
-                                                            return Crypto.Hash(sign.pubKey);
-                                                        });
-                                                        blockHeader.Sign();
-	
-	                                                    _this.HandleAfterNewBlock(blockHeader, blockData, () => {
-	                                                        _this._nodes.forEach(node => {
-                                                                request.post('http://' + node.host + '/header', { form: Crypto.Sign(JSON.stringify(blockHeader))});
-                                                            });
-                                                        });
-                                                    }
-                                                }
-                                            }
-                                        } catch (e) {
-                                            console.error(e);
-                                        }
-                                    }
-                                });
+	                        	if (node.pubKeyHash != Crypto.PUB_KEY_HASH) {
+			                        request.post({
+				                        url: 'http://' + node.host + '/agree',
+				                        form: Crypto.Sign(JSON.stringify({ nextBlockHash: Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree)) }))
+			                        }, (err, res, body) => {
+				                        if (err) {
+					                        console.error(err);
+				                        } else {
+					                        try {
+						                        if (mySession === WAIT_TO_COLLECT_SIGN) {
+							                        let sign = JSON.parse(body);
+							                        let msg = JSON.parse(sign.msg);
+							
+							                        if (msg.curBlockHash === choosenBlock.blockHeader.hash
+								                        && msg.nextBlockHash === Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
+								                        if (!blockHeader.validatorSigns) {
+									                        blockHeader.validatorSigns = [];
+								                        }
+								                        blockHeader.validatorSigns.push(sign);
+								
+								                        if (blockHeader.validatorSigns.length === NUM_SIGN_PER_BLOCK) {
+									                        let validatorPubKeyHashes = blockHeader.validatorSigns.map(sign => {
+										                        return Crypto.Hash(sign.pubKey);
+									                        });
+									                        blockHeader.Sign();
+									
+									                        _this.HandleAfterNewBlock(blockHeader, blockData, () => {
+										                        _this._nodes.forEach(node => {
+											                        request.post('http://' + node.host + '/header', { form: Crypto.Sign(JSON.stringify(blockHeader))});
+										                        });
+									                        });
+								                        }
+							                        }
+						                        }
+					                        } catch (e) {
+						                        console.error(e);
+					                        }
+				                        }
+			                        });
+		                        }
                             });
                         }
                     }
