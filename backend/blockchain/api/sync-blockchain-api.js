@@ -43,7 +43,7 @@ const MakeConnectRequest = host => {
 	MakeRequest(host + '/version', msg, async (resMsg, pubKeyHash) => {
 		try {
 			if (resMsg.header === 'VER_ACK') {
-				await Node.findOneAndUpdate(
+				Node.findOneAndUpdate(
 					{
 						pubKeyHash: pubKeyHash
 					},
@@ -54,9 +54,15 @@ const MakeConnectRequest = host => {
 						}
 					},
 					{
-						upsert: true
+						upsert: true,
+						new: true
+					}, (err, doc) => {
+						if (err) {
+							console.error(err);
+						} else {
+							MakeSyncHeaderRequest(host);
+						}
 					});
-				MakeSyncHeaderRequest(host);
 			}
 		} catch (err) {
 			console.error(err);
@@ -68,51 +74,51 @@ const MakeConnectRequest = host => {
  * Make get header request
  */
 const HandleAfterGetHeader = async (host, blockHeader) => {
-	let state = new State();
-	await state.Init();
-	blockHeader = new BlockHeader(blockHeader);
-	if (state.ValidateBlockHeader(blockHeader)) {
-		MakeSyncDataRequest(host, blockHeader);
-	}
+	// let state = new State();
+	// await state.Init();
+	// blockHeader = new BlockHeader(blockHeader);
+	// if (state.ValidateBlockHeader(blockHeader)) {
+	// 	MakeSyncDataRequest(host, blockHeader);
+	// }
 };
 
 const MakeSyncHeaderRequest = host => {
-	let index = (blockCache2[0].blockHeader.index === 1) ? 2 : blockCache1[0].blockHeader.index;
-	let msg = {
-		header: 'GET_HEADER',
-		key: 'index',
-		value: index
-	};
-	MakeRequest(host + '/get-header', msg, async resMsg => {
-		if (resMsg.header == 'HEADER') {
-			await HandleAfterGetHeader(host, resMsg.blockHeader);
-		}
-	});
+	// let index = (blockCache2[0].blockHeader.index === 1) ? 2 : blockCache1[0].blockHeader.index;
+	// let msg = {
+	// 	header: 'GET_HEADER',
+	// 	key: 'index',
+	// 	value: index
+	// };
+	// MakeRequest(host + '/get-header', msg, async resMsg => {
+	// 	if (resMsg.header == 'HEADER') {
+	// 		await HandleAfterGetHeader(host, resMsg.blockHeader);
+	// 	}
+	// });
 };
 
 /**
  * Make get data request
  */
 const HandleAfterGetData = async (host, blockHeader, blockData) => {
-	let state = new State();
-	await state.Init();
-	blockData = new BlockData(blockData);
-	if (state.ValidateBlockData(blockHeader, blockData)) {
-		MakeSyncHeaderRequest(host);
-	}
+	// let state = new State();
+	// await state.Init();
+	// blockData = new BlockData(blockData);
+	// if (state.ValidateBlockData(blockHeader, blockData)) {
+	// 	MakeSyncHeaderRequest(host);
+	// }
 };
 
 const MakeSyncDataRequest = (host, blockHeader) => {
-	let msg = {
-		header: 'GET_DATA',
-		key: 'hash',
-		value: Crypto.Hash(JSON.stringify(blockHeader))
-	};
-	MakeRequest(host + '/get-data', msg, async resMsg => {
-		if (resMsg.header == 'DATA') {
-			await HandleAfterGetData(host, blockHeader, resMsg.blockData);
-		}
-	});
+	// let msg = {
+	// 	header: 'GET_DATA',
+	// 	key: 'hash',
+	// 	value: Crypto.Hash(JSON.stringify(blockHeader))
+	// };
+	// MakeRequest(host + '/get-data', msg, async resMsg => {
+	// 	if (resMsg.header == 'DATA') {
+	// 		await HandleAfterGetData(host, blockHeader, resMsg.blockData);
+	// 	}
+	// });
 };
 
 module.exports = {
