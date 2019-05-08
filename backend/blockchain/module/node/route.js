@@ -14,23 +14,26 @@ router.post('/version', verifyMiddleware, async (req, res) => {
             if (node) {
             	let add = true;
             	if (node.lastTimeUpdateHost) {
-		            let lastTime = new Date(node.lastTimeUpdateHost);
+		            let lastTime = node.lastTimeUpdateHost;
 		            let newTime = new Date(req.body.time);
 		            if (newTime <= lastTime) {
 		            	add = false;
 		            }
 	            }
             	if (add) {
-		            node.host = req.body.host;
-		            node.lastTimeUpdateHost = node.lastTimeUpdateHost ? new Date(node.lastTimeUpdateHost) : new Date();
-		            await node.save();
-		            return res.json(Crypto.Sign({
+		            res.json(Crypto.Sign({
 			            header: 'VER_ACK'
 		            }));
+		            node.host = req.body.host;
+		            if (!node.lastTimeUpdateHost) {
+			            node.lastTimeUpdateHost = new Date();
+		            }
+		            await node.save();
 	            }
             }
+        } else {
+	        res.end('Invalid node');
         }
-        res.end('Invalid node');
     } else {
         res.end('Invalid header');
     }
