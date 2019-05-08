@@ -14,12 +14,13 @@ const _ = require('lodash');
 
 module.exports = class State {
     constructor(isGlobalState = false) {
-        this._txDict = {};
-        this._isGlobalState = isGlobalState;
+        this.txDict = {};
+        this.isGlobalState = isGlobalState;
     }
 
     async Init() {
-	    if (this._isGlobalState) {
+	    this.nodes = await Node.find({});
+	    if (this.isGlobalState) {
 		    let preBlock;
 		    if (choosenBlock.blockHeader.index > 1) {
 			    preBlock = blockCache1.find(block => {
@@ -34,7 +35,6 @@ module.exports = class State {
 		    await BlockCache.insertMany([preBlock, choosenBlock]);
 		    this._txCache = [];
 	    }
-	    this._nodes = await Node.find({});
     }
 
     HandleAfterNewBlock(blockHeader, blockData, cb) {
@@ -66,7 +66,7 @@ module.exports = class State {
                         return a.blockHeader.firstTimeSign - b.blockHeader.firstTimeSign;
                     });
                     choosenBlock = blockCache2[0];
-                    mySession = WAIT_TO_COLLECT_SIGN;
+                    mySession = WAIT_TO_COLLECTsign;
                     globalState = new State(true);
                     await globalState.Init();
                     txCache.forEach( async tx => {
@@ -116,7 +116,7 @@ module.exports = class State {
                             let blockData = new BlockData(this._txCache);
                             let blockHeader = new BlockHeader({
                                 index: choosenBlock.blockHeader.index + 1,
-                                preBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader.json)),
+                                preBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
                                 merkleRoot: blockData.merkleRoot
                             });
 	
@@ -131,7 +131,7 @@ module.exports = class State {
 					                        console.error(err);
 				                        } else {
 					                        try {
-						                        if (mySession === WAIT_TO_COLLECT_SIGN) {
+						                        if (mySession === WAIT_TO_COLLECTsign) {
 							                        let sign = JSON.parse(body);
 							                        let msg = JSON.parse(sign.msg);
 							
@@ -142,14 +142,14 @@ module.exports = class State {
 								                        }
 								                        blockHeader.validatorSigns.push(sign);
 								
-								                        if (blockHeader.validatorSigns.length === NUM_SIGN_PER_BLOCK) {
+								                        if (blockHeader.validatorSigns.length === NUMsign_PER_BLOCK) {
 									                        let validatorPubKeyHashes = blockHeader.validatorSigns.map(sign => {
 										                        return Crypto.Hash(sign.pubKey);
 									                        });
 									                        blockHeader.Sign();
 									
 									                        _this.HandleAfterNewBlock(blockHeader, blockData, () => {
-										                        _this._nodes.forEach(node => {
+										                        _this.nodes.forEach(node => {
 											                        request.post('http://' + node.host + '/header', { form: Crypto.Sign(JSON.stringify(blockHeader))});
 										                        });
 									                        });
@@ -177,14 +177,14 @@ module.exports = class State {
         });
 
         if (blockHeader.creatorSign) {
-            let creator = this._nodes.find(node => {
+            let creator = this.nodes.find(node => {
                 return node.pubKeyHash === Crypto.Hash(blockHeader.creatorSign.pubKey);
             });
             creator.point += CREATOR_PRIZE;
         }
 
         blockHeader.validatorSigns.forEach(sign => {
-            let validator = _this._nodes.find(node => {
+            let validator = _this.nodes.find(node => {
                 return node.pubKeyHash === Crypto.Hash(sign.pubKey);
             });
             validator.point += VALIDATOR_PRIZE;
@@ -192,7 +192,7 @@ module.exports = class State {
     }
 
     CalTimeMustWait(pubKeyHash, time = new Date()) {
-        let node = this._nodes.find(node => {
+        let node = this.nodes.find(node => {
             return node.pubKeyHash === pubKeyHash;
         });
 
@@ -211,20 +211,12 @@ module.exports = class State {
     }
 
     GetNodesOnTop() {
-        this._nodes.sort((a, b) => {
+        this.nodes.sort((a, b) => {
             return b.point - a.point;
         });
-        return this._nodes.slice(0, TOP);
+        return this.nodes.slice(0, TOP);
     }
-
-    get txDict() {
-        return this._txDict;
-    }
-
-    get nodes() {
-        return this._nodes;
-    }
-
+    
     /*
     * Only for new block from other nodes
     * */
@@ -284,7 +276,7 @@ module.exports = class State {
         Verify and validate validatorSigns
         * */
         let nodesOntTop = this.GetNodesOnTop();
-        for (let i = 0; i < NUM_SIGN_PER_BLOCK; i++) {
+        for (let i = 0; i < NUMsign_PER_BLOCK; i++) {
             if (!Crypto.Verify(blockHeader.validatorSigns[i])) {
                 return false;
             }

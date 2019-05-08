@@ -3,20 +3,20 @@ const Crypto = require('../utils/Crypto');
 module.exports = class BlockHeader {
     constructor(obj) {
         if (obj) {
-            this._index = obj.index;
-            this._preBlockHash = obj.preBlockHash;
-            this._merkleRoot = obj.merkleRoot;
-            this._validatorSigns = obj.validatorSigns || [];
-            this._creatorSign = obj.creatorSign;
+            this.index = obj.index;
+            this.preBlockHash = obj.preBlockHash;
+            this.merkleRoot = obj.merkleRoot;
+            this.validatorSigns = obj.validatorSigns || [];
+            this.creatorSign = obj.creatorSign;
         }
     }
 
     get timeStamp() {
-        if (this._validatorSigns.length === 0) {
+        if (this.validatorSigns.length === 0) {
             return 0;
         }
         let max = 0;
-        this._validatorSigns.forEach(sign => {
+        this.validatorSigns.forEach(sign => {
             let timeSign = JSON.parse(sign.msg).timeSign;
             max = (timeSign > max) ? timeSign : max;
         });
@@ -24,11 +24,11 @@ module.exports = class BlockHeader {
     }
 
     get firstTimeSign() {
-        if (this._validatorSigns.length === 0) {
+        if (this.validatorSigns.length === 0) {
             return 0;
         }
         let min;
-        this._validatorSigns.forEach(sign => {
+        this.validatorSigns.forEach(sign => {
             let timeSign = JSON.parse(sign.msg).timeSign;
             if (!min) {
                 min = timeSign;
@@ -40,28 +40,14 @@ module.exports = class BlockHeader {
     }
 
     Sign() {
-	    this._creatorSign = Crypto.Sign(Crypto.Hash(JSON.stringify(this._validatorSigns)));
+	    this.creatorSign = Crypto.Sign(Crypto.Hash(JSON.stringify(this.validatorSigns)));
     }
 
     get infoNeedAgree() {
         return {
-            index: this._index,
-            preBlockHash: this._preBlockHash,
-            merkleRoot: this._merkleRoot
+            index: this.index,
+            preBlockHash: this.preBlockHash,
+            merkleRoot: this.merkleRoot
         }
-    }
-    
-    get validatorSigns() {
-    	return this._validatorSigns;
-    }
-    
-    get json() {
-    	return {
-    		index: this._index,
-		    preBlockHash: this._preBlockHash,
-		    merkleRoot: this._merkleRoot,
-		    validatorSigns: this._validatorSigns,
-		    creatorSign: this._creatorSign
-	    }
     }
 };

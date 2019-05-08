@@ -2,20 +2,20 @@ const crypto = require('../utils/crypto');
 
 module.exports = class BlockData {
     constructor(txs) {
-        this._txs = txs || [];
+        this.txs = txs || [];
     }
 
     get merkleRoot() {
-        switch (this._txs.length) {
+        switch (this.txs.length) {
             case 0:
                 return '';
 
             case 1:
-                return crypto.Hash(JSON.stringify(this._txs[0]));
+                return crypto.Hash(JSON.stringify(this.txs[0]));
 
             default:
                 let tmpArr1 = [];
-                this._txs.forEach(tx => {
+                this.txs.forEach(tx => {
                     tmpArr1.push(crypto.Hash(JSON.stringify(tx)));
                 });
 
@@ -31,9 +31,5 @@ module.exports = class BlockData {
 
                 return tmpArr1[0];
         }
-    }
-    
-    get txs() {
-    	return this._txs;
     }
 };
