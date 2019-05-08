@@ -7,6 +7,7 @@ const BlockHeader = require('./block-header');
 const mongoose = require('mongoose');
 const Node = mongoose.model('node');
 const Block = mongoose.model('block');
+const BlockCache = mongoose.model('block_cache');
 
 const request = require('request');
 const _ = require('lodash');
@@ -18,22 +19,22 @@ module.exports = class State {
     }
 
     async Init() {
-        if (this._isGlobalState) {
-            let preBlock;
-            if (choosenBlock.blockHeader.index > 1) {
-                preBlock = blockCache1.find(block => {
-                    return block.blockHeader.hash === choosenBlock.blockHeader.preBlockHash;
-                });
-            } else {
-                preBlock = blockCache1[0];
-            }
-            this.AddBlock(preBlock.blockHeader, preBlock.blockData);
-            this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
-            await Block.remove({});
-            await Block.insertMany([preBlock, choosenBlock]);
-            this._txCache = [];
-        }
-        this._nodes = await Node.find({});
+	    if (this._isGlobalState) {
+		    let preBlock;
+		    if (choosenBlock.blockHeader.index > 1) {
+			    preBlock = blockCache1.find(block => {
+				    return block.blockHeader.hash === choosenBlock.blockHeader.preBlockHash;
+			    });
+		    } else {
+			    preBlock = blockCache1[0];
+		    }
+		    this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+		    this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
+		    await BlockCache.remove({});
+		    await BlockCache.insertMany([preBlock, choosenBlock]);
+		    this._txCache = [];
+	    }
+	    this._nodes = await Node.find({});
     }
 
     HandleAfterNewBlock(blockHeader, blockData, cb) {
@@ -115,7 +116,7 @@ module.exports = class State {
                             let blockData = new BlockData(this._txCache);
                             let blockHeader = new BlockHeader({
                                 index: choosenBlock.blockHeader.index + 1,
-                                preBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
+                                preBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader.json)),
                                 merkleRoot: blockData.merkleRoot
                             });
 	

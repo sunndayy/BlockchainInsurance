@@ -43,15 +43,25 @@ module.exports = class BlockHeader {
 	    this._creatorSign = Crypto.Sign(Crypto.Hash(JSON.stringify(this._validatorSigns)));
     }
 
-    get hash() {
-        return Crypto.Hash(JSON.stringify(this));
-    }
-
     get infoNeedAgree() {
         return {
             index: this._index,
             preBlockHash: this._preBlockHash,
             merkleRoot: this._merkleRoot
         }
+    }
+    
+    get validatorSigns() {
+    	return this._validatorSigns;
+    }
+    
+    get json() {
+    	return {
+    		index: this._index,
+		    preBlockHash: this._preBlockHash,
+		    merkleRoot: this._merkleRoot,
+		    validatorSigns: this._validatorSigns,
+		    creatorSign: this._creatorSign
+	    }
     }
 };

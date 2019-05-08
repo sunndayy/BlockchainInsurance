@@ -23,7 +23,7 @@ const findBlock = async (key, value) => {
         }
         if (!block) {
             block = blockCache2.find(block => {
-                return Crypto.Hash(JSON.stringify(block.blockHeader)) === value;
+                return Crypto.Hash(JSON.stringify(block.blockHeader.json)) === value;
             });
         }
     }
