@@ -33,7 +33,7 @@ module.exports = class State {
 		    this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
 		    await BlockCache.remove({});
 		    await BlockCache.insertMany([preBlock, choosenBlock]);
-		    this._txCache = [];
+		    this.txCache = [];
 	    }
     }
 
@@ -42,13 +42,16 @@ module.exports = class State {
             return block.blockHeader.hash === blockHeader.preBlockHash;
         });
 
-        let prePreBlock = blockCache1.find(block => {
-            return block.blockHeader.hash === preBlock.blockHeader.preBlockHash;
-        });
-
-        if (!prePreBlock.hash) {
-	        prePreBlock.hash = prePreBlock.blockHeader.hash;
+        let prePreBlock;
+        if (preBlock.blockHeader.index > 1) {
+	        prePreBlock = blockCache1.find(block => {
+		        return block.blockHeader.hash === preBlock.blockHeader.preBlockHash;
+	        });
+        } else {
+	        prePreBlock = blockCache1[0];
         }
+        prePreBlock.hash = prePreBlock.blockHeader.hash;
+        
         
         (new Block(prePreBlock)).save(async (err, doc) => {
             if (err) {
@@ -66,7 +69,7 @@ module.exports = class State {
                         return a.blockHeader.firstTimeSign - b.blockHeader.firstTimeSign;
                     });
                     choosenBlock = blockCache2[0];
-                    mySession = WAIT_TO_COLLECTsign;
+                    mySession = WAIT_TO_COLLECT_SIGN;
                     globalState = new State(true);
                     await globalState.Init();
                     txCache.forEach( async tx => {
@@ -74,12 +77,14 @@ module.exports = class State {
                     });
                 }, DURATION);
 
-                doc.blockData.forEach(async tx => {
+                doc.blockData.txs.forEach(async tx => {
                     await tx.UpdateDB(this);
                 });
 
-                let creatorPubKeyHash = Crypto.Hash(doc.blockHeader.creatorSign.pubKey);
-                await Node.findOneAndUpdate({ pubKeyHash: creatorPubKeyHash }, { $inc: { point: 10 } });
+                if (doc.blockHeader.creatorSign) {
+	                let creatorPubKeyHash = Crypto.Hash(doc.blockHeader.creatorSign.pubKey);
+	                await Node.findOneAndUpdate({ pubKeyHash: creatorPubKeyHash }, { $inc: { point: 10 } });
+                }
                 
                 await Promise.all(doc.blockHeader.validatorSigns.map(sign => {
                 	return new Promise((reject, resolve) => {
@@ -106,14 +111,14 @@ module.exports = class State {
             tx.UpdateState(this);
 
             if (addToCache) {
-                this._txCache.push(tx);
+                this.txCache.push(tx);
 
-                if (this._txCache.length === NUM_TX_PER_BLOCK) {
+                if (this.txCache.length === NUM_TX_PER_BLOCK) {
                     let nodesOnTop = this.GetNodesOnTop();
                     let nodesOnTopPubKeyHashes = nodesOnTop.map(node => node.pubKeyHash);
                     if (nodesOnTopPubKeyHashes.indexOf(Crypto.PUB_KEY_HASH) < 0) {
                         if (this.CalTimeMustWait(Crypto.PUB_KEY_HASH) <= 0) {
-                            let blockData = new BlockData(this._txCache);
+                            let blockData = new BlockData(this.txCache);
                             let blockHeader = new BlockHeader({
                                 index: choosenBlock.blockHeader.index + 1,
                                 preBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
@@ -131,7 +136,7 @@ module.exports = class State {
 					                        console.error(err);
 				                        } else {
 					                        try {
-						                        if (mySession === WAIT_TO_COLLECTsign) {
+						                        if (mySession === WAIT_TO_COLLECT_SIGN) {
 							                        let sign = JSON.parse(body);
 							                        let msg = JSON.parse(sign.msg);
 							
@@ -142,7 +147,7 @@ module.exports = class State {
 								                        }
 								                        blockHeader.validatorSigns.push(sign);
 								
-								                        if (blockHeader.validatorSigns.length === NUMsign_PER_BLOCK) {
+								                        if (blockHeader.validatorSigns.length === NUM_SIGN_PER_BLOCK) {
 									                        let validatorPubKeyHashes = blockHeader.validatorSigns.map(sign => {
 										                        return Crypto.Hash(sign.pubKey);
 									                        });
@@ -276,7 +281,7 @@ module.exports = class State {
         Verify and validate validatorSigns
         * */
         let nodesOntTop = this.GetNodesOnTop();
-        for (let i = 0; i < NUMsign_PER_BLOCK; i++) {
+        for (let i = 0; i < NUM_SIGN_PER_BLOCK; i++) {
             if (!Crypto.Verify(blockHeader.validatorSigns[i])) {
                 return false;
             }

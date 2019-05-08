@@ -50,4 +50,8 @@ module.exports = class BlockHeader {
             merkleRoot: this.merkleRoot
         }
     }
+    
+    get hash() {
+    	return Crypto.Hash(JSON.stringify(this));
+    }
 };
