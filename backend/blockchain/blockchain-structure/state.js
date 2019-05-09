@@ -14,204 +14,208 @@ const _ = require('lodash');
 
 module.exports = class State {
 	constructor(isGlobalState = false) {
-		// this.txDict = {};
-		// this.isGlobalState = isGlobalState;
+		this.txDict = {};
+		this.isGlobalState = isGlobalState;
 	}
 	
 	async Init() {
-		// this.nodes = await Node.find({});
-		// if (this.isGlobalState) {
-		// 	let preBlock;
-		// 	if (choosenBlock.blockHeader.index > 1) {
-		// 		preBlock = blockCache1.find(block => {
-		// 			return block.blockHeader.hash === choosenBlock.blockHeader.preBlockHash;
-		// 		});
-		// 	} else {
-		// 		preBlock = blockCache1[0];
-		// 	}
-		// 	this.AddBlock(preBlock.blockHeader, preBlock.blockData);
-		// 	this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
-		// 	await BlockCache.remove({});
-		// 	await BlockCache.insertMany([preBlock, choosenBlock]);
-		// 	this.txCache = [];
-		// }
+		this.nodes = await Node.find({});
+		if (this.isGlobalState) {
+			let preBlock;
+			if (choosenBlock.blockHeader.index > 1) {
+				preBlock = blockCache1.find(block => {
+					return block.blockHeader.hash === choosenBlock.blockHeader.preBlockHash;
+				});
+			} else {
+				preBlock = blockCache1[0];
+			}
+			this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+			this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
+			await BlockCache.remove({});
+			await BlockCache.insertMany([preBlock, choosenBlock]);
+			this.txCache = [];
+		}
 	}
 	
 	HandleAfterNewBlock(blockHeader, blockData, cb) {
-		// let preBlock = blockCache2.find(block => {
-		// 	return block.blockHeader.hash === blockHeader.preBlockHash;
-		// });
-		//
-		// let prePreBlock;
-		// if (preBlock.blockHeader.index > 1) {
-		// 	prePreBlock = blockCache1.find(block => {
-		// 		return block.blockHeader.hash === preBlock.blockHeader.preBlockHash;
-		// 	});
-		// } else {
-		// 	prePreBlock = blockCache1[0];
-		// }
-		// prePreBlock.hash = prePreBlock.blockHeader.hash;
-		//
-		//
-		// (new Block(prePreBlock)).save(async (err, doc) => {
-		// 	if (err) {
-		// 		console.error(err);
-		// 	} else {
-		// 		mySession = WAIT_AFTER_NEW_BLOCK;
-		// 		blockCache1 = blockCache2;
-		// 		blockCache2 = [{
-		// 			blockHeader: blockHeader,
-		// 			blockData: blockData
-		// 		}];
-		//
-		// 		setTimeout( async () => {
-		// 			blockCache2.sort((a, b) => {
-		// 				return a.blockHeader.firstTimeSign - b.blockHeader.firstTimeSign;
-		// 			});
-		// 			choosenBlock = blockCache2[0];
-		// 			mySession = WAIT_TO_COLLECT_SIGN;
-		// 			globalState = new State(true);
-		// 			await globalState.Init();
-		// 			txCache.forEach( async tx => {
-		// 				await globalState.PushTx(tx, true);
-		// 			});
-		// 		}, DURATION);
-		//
-		// 		for (let i = 0; i < prePreBlock.blockData.txs.length; i++) {
-		// 			let tx = prePreBlock.blockData.txs[i];
-		// 			await tx.UpdateDB(this);
-		// 		}
-		//
-		// 		if (prePreBlock.blockHeader.creatorSign) {
-		// 			let creatorPubKeyHash = Crypto.Hash(prePreBlock.blockHeader.creatorSign.pubKey);
-		// 			await Node.findOneAndUpdate({ pubKeyHash: creatorPubKeyHash }, { $inc: { point: 10 } });
-		// 		}
-		//
-		// 		let validatorPubKeyHashes = prePreBlock.blockHeader.validatorSigns.map(sign => Crypto.Hash(sign.pubKey));
-		// 		await Node.updateMany({pubKeyHash: { $in: validatorPubKeyHashes }}, { $inc: { point: 2 } });
-		// 		cb();
-		// 	}
-		// });
+		let preBlock = blockCache2.find(block => {
+			return block.blockHeader.hash === blockHeader.preBlockHash;
+		});
+		
+		let prePreBlock;
+		if (preBlock.blockHeader.index > 1) {
+			prePreBlock = blockCache1.find(block => {
+				return block.blockHeader.hash === preBlock.blockHeader.preBlockHash;
+			});
+		} else {
+			prePreBlock = blockCache1[0];
+		}
+		prePreBlock.hash = prePreBlock.blockHeader.hash;
+		
+		
+		(new Block(prePreBlock)).save(async (err, doc) => {
+			if (err) {
+				console.error(err);
+			} else {
+				mySession = WAIT_AFTER_NEW_BLOCK;
+				blockCache1 = blockCache2;
+				blockCache2 = [{
+					blockHeader: blockHeader,
+					blockData: blockData
+				}];
+				
+				setTimeout( async () => {
+					blockCache2.sort((a, b) => {
+						return a.blockHeader.firstTimeSign - b.blockHeader.firstTimeSign;
+					});
+					choosenBlock = blockCache2[0];
+					mySession = WAIT_TO_COLLECT_SIGN;
+					globalState = new State(true);
+					await globalState.Init();
+					txCache.forEach( async tx => {
+						await globalState.PushTx(tx, true);
+					});
+				}, DURATION);
+				
+				for (let i = 0; i < prePreBlock.blockData.txs.length; i++) {
+					let tx = prePreBlock.blockData.txs[i];
+					await tx.UpdateDB(this);
+				}
+				
+				if (prePreBlock.blockHeader.creatorSign) {
+					let creatorPubKeyHash = Crypto.Hash(prePreBlock.blockHeader.creatorSign.pubKey);
+					await Node.findOneAndUpdate({ pubKeyHash: creatorPubKeyHash }, { $inc: { point: 10 } });
+				}
+				
+				let validatorPubKeyHashes = prePreBlock.blockHeader.validatorSigns.map(sign => Crypto.Hash(sign.pubKey));
+				Node.updateMany({pubKeyHash: { $in: validatorPubKeyHashes }}, { $inc: { point: 2 } }, (err, stats) => {
+					if (err) {
+						console.error(err);
+					} else {
+						cb();
+					}
+				});
+			}
+		});
 	}
 	
 	async PushTx(tx, addToCache = false) {
-		// if (await tx.Validate(this)) {
-		// 	tx.UpdateState(this);
-		//
-		// 	if (addToCache) {
-		// 		this.txCache.push(tx);
-		//
-		// 		if (this.txCache.length === NUM_TX_PER_BLOCK) {
-		// 			let nodesOnTop = this.GetNodesOnTop();
-		// 			let nodesOnTopPubKeyHashes = nodesOnTop.map(node => node.pubKeyHash);
-		// 			if (nodesOnTopPubKeyHashes.indexOf(Crypto.PUB_KEY_HASH) < 0) {
-		// 				if (this.CalTimeMustWait(Crypto.PUB_KEY_HASH) <= 0) {
-		// 					let blockData = new BlockData(this.txCache);
-		// 					let blockHeader = new BlockHeader({
-		// 						index: choosenBlock.blockHeader.index + 1,
-		// 						preBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
-		// 						merkleRoot: blockData.merkleRoot
-		// 					});
-		//
-		// 					let _this = this;
-		// 					nodesOnTop.forEach(node => {
-		// 						if (node.pubKeyHash !== Crypto.PUB_KEY_HASH && node.host) {
-		// 							request.post({
-		// 								url: 'http://' + node.host + '/agree',
-		// 								form: Crypto.Sign({ nextBlockHash: Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree)) })
-		// 							}, (err, res, body) => {
-		// 								if (err) {
-		// 									console.error(err);
-		// 								} else {
-		// 									try {
-		// 										if (mySession === WAIT_TO_COLLECT_SIGN) {
-		// 											let sign = JSON.parse(body);
-		// 											let msg = JSON.parse(sign.msg);
-		//
-		// 											if (msg.curBlockHash === choosenBlock.blockHeader.hash
-		// 												&& msg.nextBlockHash === Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
-		// 												if (!blockHeader.validatorSigns) {
-		// 													blockHeader.validatorSigns = [];
-		// 												}
-		// 												blockHeader.validatorSigns.push(sign);
-		//
-		// 												if (blockHeader.validatorSigns.length === NUM_SIGN_PER_BLOCK) {
-		// 													let validatorPubKeyHashes = blockHeader.validatorSigns.map(sign => {
-		// 														return Crypto.Hash(sign.pubKey);
-		// 													});
-		// 													blockHeader.Sign();
-		//
-		// 													_this.HandleAfterNewBlock(blockHeader, blockData, () => {
-		// 														_this.nodes.forEach(node => {
-		// 															if (node.host !== HOST && node.host) {
-		// 																request.post('http://' + node.host + '/header', { form: Crypto.Sign(blockHeader)}, (err, res, body) => {
-		//
-		// 																});
-		// 															}
-		// 														});
-		// 													});
-		// 												}
-		// 											}
-		// 										}
-		// 									} catch (e) {
-		// 										console.error(e);
-		// 									}
-		// 								}
-		// 							});
-		// 						}
-		// 					});
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// }
+		if (await tx.Validate(this)) {
+			tx.UpdateState(this);
+			if (addToCache) {
+				this.txCache.push(tx);
+				
+				if (this.txCache.length === NUM_TX_PER_BLOCK) {
+					let nodesOnTop = this.GetNodesOnTop();
+					let nodesOnTopPubKeyHashes = nodesOnTop.map(node => node.pubKeyHash);
+					if (nodesOnTopPubKeyHashes.indexOf(Crypto.PUB_KEY_HASH) < 0) {
+						if (this.CalTimeMustWait(Crypto.PUB_KEY_HASH) <= 0) {
+							let blockData = new BlockData(this.txCache);
+							let blockHeader = new BlockHeader({
+								index: choosenBlock.blockHeader.index + 1,
+								preBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
+								merkleRoot: blockData.merkleRoot
+							});
+							
+							let _this = this;
+							nodesOnTop.forEach(node => {
+								if (node.pubKeyHash !== Crypto.PUB_KEY_HASH && node.host) {
+									request.post({
+										url: 'http://' + node.host + '/agree',
+										form: Crypto.Sign({ nextBlockHash: Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree)) })
+									}, (err, res, body) => {
+										if (err) {
+											console.error(err);
+										} else {
+											try {
+												if (mySession === WAIT_TO_COLLECT_SIGN) {
+													let sign = JSON.parse(body);
+													let msg = JSON.parse(sign.msg);
+													
+													if (msg.curBlockHash === choosenBlock.blockHeader.hash
+														&& msg.nextBlockHash === Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
+														if (!blockHeader.validatorSigns) {
+															blockHeader.validatorSigns = [];
+														}
+														blockHeader.validatorSigns.push(sign);
+														
+														if (blockHeader.validatorSigns.length === NUM_SIGN_PER_BLOCK) {
+															let validatorPubKeyHashes = blockHeader.validatorSigns.map(sign => {
+																return Crypto.Hash(sign.pubKey);
+															});
+															blockHeader.Sign();
+															
+															_this.HandleAfterNewBlock(blockHeader, blockData, () => {
+																_this.nodes.forEach(node => {
+																	if (node.host !== HOST && node.host) {
+																		request.post('http://' + node.host + '/header', { form: Crypto.Sign(blockHeader)}, (err, res, body) => {
+																		
+																		});
+																	}
+																});
+															});
+														}
+													}
+												}
+											} catch (e) {
+												console.error(e);
+											}
+										}
+									});
+								}
+							});
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	AddBlock(blockHeader, blockData) {
-		// let _this = this;
-		// blockData.txs.forEach(tx => {
-		// 	_this.PushTx(tx);
-		// });
-		//
-		// if (blockHeader.creatorSign) {
-		// 	let creator = this.nodes.find(node => {
-		// 		return node.pubKeyHash === Crypto.Hash(blockHeader.creatorSign.pubKey);
-		// 	});
-		// 	creator.point += CREATOR_PRIZE;
-		// }
-		//
-		// blockHeader.validatorSigns.forEach(sign => {
-		// 	let validator = _this.nodes.find(node => {
-		// 		return node.pubKeyHash === Crypto.Hash(sign.pubKey);
-		// 	});
-		// 	validator.point += VALIDATOR_PRIZE;
-		// });
+		let _this = this;
+		blockData.txs.forEach(tx => {
+			_this.PushTx(tx);
+		});
+		
+		if (blockHeader.creatorSign) {
+			let creator = this.nodes.find(node => {
+				return node.pubKeyHash === Crypto.Hash(blockHeader.creatorSign.pubKey);
+			});
+			creator.point += CREATOR_PRIZE;
+		}
+		
+		blockHeader.validatorSigns.forEach(sign => {
+			let validator = _this.nodes.find(node => {
+				return node.pubKeyHash === Crypto.Hash(sign.pubKey);
+			});
+			validator.point += VALIDATOR_PRIZE;
+		});
 	}
 	
 	CalTimeMustWait(pubKeyHash, time = new Date()) {
-		// let node = this.nodes.find(node => {
-		// 	return node.pubKeyHash === pubKeyHash;
-		// });
-		//
-		// if (node) {
-		// 	if (!node.lastTimeCreateBlock) {
-		// 		return 0;
-		// 	}
-		//
-		// 	let s = node.point * (time - new Date(node.lastTimeCreateBlock));
-		// 	if (s > 0) {
-		// 		return (NEED_POINT - s) / node.point;
-		// 	}
-		// }
-		//
-		// return 3600000;
+		let node = this.nodes.find(node => {
+			return node.pubKeyHash === pubKeyHash;
+		});
+		
+		if (node) {
+			if (!node.lastTimeCreateBlock) {
+				return 0;
+			}
+			
+			let s = node.point * (time - new Date(node.lastTimeCreateBlock));
+			if (s > 0) {
+				return (NEED_POINT - s) / node.point;
+			}
+		}
+		
+		return 3600000;
 	}
 	
 	GetNodesOnTop() {
-		// this.nodes.sort((a, b) => {
-		// 	return b.point - a.point;
-		// });
-		// return this.nodes.slice(0, TOP);
+		this.nodes.sort((a, b) => {
+			return b.point - a.point;
+		});
+		return this.nodes.slice(0, TOP);
 	}
 	
 	/*

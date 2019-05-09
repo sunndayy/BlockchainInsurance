@@ -40,7 +40,7 @@ const MakeConnectRequest = host => {
 		host: HOST,
 		time: new Date()
 	};
-	MakeRequest(host + '/version', msg, async (resMsg, pubKeyHash) => {
+	MakeRequest(host + '/version', msg,(resMsg, pubKeyHash) => {
 		try {
 			if (resMsg.header === 'VER_ACK') {
 				Node.findOneAndUpdate(
@@ -60,7 +60,9 @@ const MakeConnectRequest = host => {
 						if (err) {
 							console.error(err);
 						} else {
-							MakeSyncHeaderRequest(host);
+							setTimeout(() => {
+								MakeSyncHeaderRequest(host);
+							}, 5000);
 						}
 					});
 			}
