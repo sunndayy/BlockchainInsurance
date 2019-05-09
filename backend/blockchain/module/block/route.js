@@ -64,8 +64,8 @@ router.post('/get-header', verifyMiddleware, async (req, res) => {
 });
 
 router.post('/header', verifyMiddleware, async (req, res) => {
-	// let host = await GetHost(req.body.pubKeyHash);
-	// await SyncBlockChainApi.HandleAfterGetHeader(host, req.body);
+	let host = await GetHost(req.body.pubKeyHash);
+	await SyncBlockChainApi.HandleAfterGetHeader(host, req.body);
 });
 
 router.post('/get-data', verifyMiddleware, async (req, res) => {

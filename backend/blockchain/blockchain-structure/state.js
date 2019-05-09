@@ -372,10 +372,10 @@ module.exports = class State {
 			return false;
 		}
 		
-		// if (blockHeader.creatorSign.msg !== Crypto.Hash(JSON.stringify(validatorPubKeyHashes))) {
-		// 	console.log("Thông tin node thu thập ký không hợp lệ");
-		// 	return false;
-		// }
+		if (blockHeader.creatorSign.msg !== Crypto.Hash(JSON.stringify(validatorPubKeyHashes))) {
+			console.log("Thông tin node thu thập ký không hợp lệ");
+			return false;
+		}
 		
 		/*
 		Check creator is not on top and has waited enough
@@ -461,10 +461,10 @@ module.exports = class State {
 			return;
 		}
 		
-		// if (blockData.merkleRoot !== blockHeader.merkleRoot) {
-		// 	console.log("Merkleroot không đúng");
-		// 	return false;
-		// }
+		if (blockData.merkleRoot !== blockHeader.merkleRoot) {
+			console.log("Merkleroot không đúng");
+			return false;
+		}
 		
 		for (let i = 0; i < NUM_TX_PER_BLOCK; i++) {
 			if (await !blockData.txs[i].Validate(this)) {
