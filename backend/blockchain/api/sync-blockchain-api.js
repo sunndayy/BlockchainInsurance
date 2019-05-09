@@ -82,8 +82,10 @@ const HandleAfterGetHeader = async (host, blockHeader) => {
 	}
 };
 
-const MakeSyncHeaderRequest = host => {
-	let index = (blockCache2[0].blockHeader.index === 1) ? 2 : blockCache1[0].blockHeader.index;
+const MakeSyncHeaderRequest = (host, index = blockCache1[0].blockHeader.index) => {
+	if (index < 2) {
+		index = 2;
+	}
 	let msg = {
 		header: 'GET_HEADER',
 		key: 'index',
@@ -104,7 +106,7 @@ const HandleAfterGetData = async (host, blockHeader, blockData) => {
 	await state.Init();
 	blockData = new BlockData(blockData.txs);
 	await state.ValidateBlockData(blockHeader, blockData, () => {
-		MakeSyncHeaderRequest(host);
+		MakeSyncHeaderRequest(host, blockHeader.index + 1);
 	});
 };
 

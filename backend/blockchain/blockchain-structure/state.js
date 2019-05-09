@@ -106,7 +106,7 @@ module.exports = class State {
 					await Node.findOneAndUpdate({ pubKeyHash: creatorPubKeyHash }, { $inc: { point: CREATOR_PRIZE } });
 				}
 				
-				console.log("Cộng điểm cho node ký tên");
+				console.log("Cộng điểm cho node xác nhận");
 				let validatorPubKeyHashes = prePreBlock.blockHeader.validatorSigns.map(sign => Crypto.Hash(sign.pubKey));
 				Node.updateMany({pubKeyHash: { $in: validatorPubKeyHashes }}, { $inc: { point: VALIDATOR_PRIZE } }, (err, stats) => {
 					if (err) {
