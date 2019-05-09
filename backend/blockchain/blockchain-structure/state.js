@@ -223,127 +223,129 @@ module.exports = class State {
 	* Only for new block from other nodes
 	* */
 	async ValidateBlockHeader(blockHeader) {
-		// /*
-		// Find previous block
-		// * */
-		// let preBlock;
-		//
-		// switch (blockHeader.index) {
-		// 	case blockCache1[0].blockHeader.index:
-		// 		preBlock = await FindByIndex(blockHeader.index - 1);
-		// 		break;
-		//
-		// 	case blockCache2[0].blockHeader.index:
-		// 		preBlock = blockCache1.find(block => {
-		// 			return block.blockHeader.hash === blockHeader.preBlockHash;
-		// 		});
-		// 		if (preBlock) {
-		// 			this.AddBlock(preBlock.blockHeader, preBlock.blockData);
-		// 		} else {
-		// 			return false;
-		// 		}
-		// 		break;
-		//
-		// 	case blockCache2[0].blockHeader.index + 1:
-		// 		preBlock = blockCache2.find(block => {
-		// 			return block.blockHeader.hash === blockHeader.preBlockHash;
-		// 		});
-		// 		if (preBlock) {
-		// 			let prePreBlock;
-		// 			if (preBlock.blockHeader.index > 1) {
-		// 				prePreBlock = blockCache1.find(block => {
-		// 					return block.blockHeader.hash === preBlock.blockHeader.preBlockHash;
-		// 				});
-		// 			} else {
-		// 				prePreBlock = blockCache1[0];
-		// 			}
-		// 			this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
-		// 			this.AddBlock(preBlock.blockHeader, preBlock.blockData);
-		// 		} else {
-		// 			return false;
-		// 		}
-		// 		break;
-		//
-		// 	default:
-		// 		return false;
-		// }
-		//
-		// /*
-		// Validate preBlockHash and timeSign
-		// * */
-		// if (blockHeader.preBlockHash !== preBlock.blockHeader.hash) {
-		// 	return false;
-		// }
-		//
-		// if (blockHeader.firstTimeSign - preBlock.blockHeader.timestamp < DURATION) {
-		// 	return false;
-		// }
-		//
-		// /*
-		// Verify and validate validatorSigns
-		// * */
-		// let nodesOntTop = this.GetNodesOnTop();
-		// for (let i = 0; i < NUM_SIGN_PER_BLOCK; i++) {
-		// 	if (!Crypto.Verify(blockHeader.validatorSigns[i])) {
-		// 		return false;
-		// 	}
-		//
-		// 	let pubKeyHash = Crypto.Hash(blockHeader.validatorSigns[i].pubKey);
-		// 	if (!nodesOntTop.find(node => {
-		// 		return node.pubKeyHash === pubKeyHash
-		// 	})) {
-		// 		return false;
-		// 	}
-		//
-		// 	let msg = JSON.parse(blockHeader.validatorSigns[i].msg);
-		//
-		// 	if (msg.curBlockHash !== preBlock.blockHeader.hash
-		// 		|| msg.nextBlockHash !== Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
-		// 		return false;
-		// 	}
-		// }
-		//
-		// /*
-		// Check no node signs 2 sequence blocks
-		// * */
-		// let validatorPubKeyHashes = blockHeader.validatorSigns.map(sign => {
-		// 	return Crypto.Hash(sign.pubKey);
-		// });
-		//
-		// let preBlockValidatorPubkeyHashes = preBlock.blockHeader.validatorSigns.map(sign => {
-		// 	return Crypto.Hash(sign.pubKey);
-		// });
-		//
-		// if (_.union(validatorPubKeyHashes, preBlockValidatorPubkeyHashes).length
-		// 	< validatorPubKeyHashes.length + preBlockValidatorPubkeyHashes.length) {
-		// 	return false;
-		// }
-		//
-		// /*
-		// Verify and validate creatorSign
-		// * */
-		// if (!Crypto.Verify(blockHeader.creatorSign)) {
-		// 	return false;
-		// }
-		//
-		// if (blockHeader.creatorSign.msg !== Crypto.Hash(JSON.stringify(validatorPubKeyHashes))) {
-		// 	return false;
-		// }
-		//
-		// /*
-		// Check creator is not on top and has waited enough
-		// * */
-		// let creatorPubKeyHash = Crypto.Hash(blockHeader.creatorSign.pubKey);
-		//
-		// if (nodesOntTop.indexOf(creatorPubKeyHash) >= 0) {
-		// 	return false;
-		// }
-		//
-		// if (this.CalTimeMustWait(creatorPubKeyHash, new Date(blockHeader.timeStamp)) > 0) {
-		// 	return false;
-		// }
-		//
-		// return true;
+		/*
+		Find previous block
+		* */
+		let preBlock;
+		
+		switch (blockHeader.index) {
+			case blockCache1[0].blockHeader.index:
+				preBlock = await FindByIndex(blockHeader.index - 1);
+				break;
+			
+			case blockCache2[0].blockHeader.index:
+				preBlock = blockCache1.find(block => {
+					return block.blockHeader.hash === blockHeader.preBlockHash;
+				});
+				if (preBlock) {
+					this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+				} else {
+					return false;
+				}
+				break;
+			
+			case blockCache2[0].blockHeader.index + 1:
+				preBlock = blockCache2.find(block => {
+					return block.blockHeader.hash === blockHeader.preBlockHash;
+				});
+				if (preBlock) {
+					let prePreBlock;
+					if (preBlock.blockHeader.index > 1) {
+						prePreBlock = blockCache1.find(block => {
+							return block.blockHeader.hash === preBlock.blockHeader.preBlockHash;
+						});
+					} else {
+						prePreBlock = blockCache1[0];
+					}
+					this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
+					this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+				} else {
+					return false;
+				}
+				break;
+			
+			default:
+				return false;
+		}
+		
+		/*
+		Validate preBlockHash and timeSign
+		* */
+		if (blockHeader.preBlockHash !== preBlock.blockHeader.hash) {
+			return false;
+		}
+		
+		if (preBlock.blockHeader.timestamp) {
+			if (blockHeader.firstTimeSign - preBlock.blockHeader.timestamp < DURATION) {
+				return false;
+			}
+		}
+		
+		/*
+		Verify and validate validatorSigns
+		* */
+		let nodesOntTop = this.GetNodesOnTop();
+		for (let i = 0; i < NUM_SIGN_PER_BLOCK; i++) {
+			if (!Crypto.Verify(blockHeader.validatorSigns[i])) {
+				return false;
+			}
+			
+			let pubKeyHash = Crypto.Hash(blockHeader.validatorSigns[i].pubKey);
+			if (!nodesOntTop.find(node => {
+				return node.pubKeyHash === pubKeyHash
+			})) {
+				return false;
+			}
+			
+			let msg = JSON.parse(blockHeader.validatorSigns[i].msg);
+			
+			if (msg.curBlockHash !== preBlock.blockHeader.hash
+				|| msg.nextBlockHash !== Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
+				return false;
+			}
+		}
+		
+		/*
+		Check no node signs 2 sequence blocks
+		* */
+		let validatorPubKeyHashes = blockHeader.validatorSigns.map(sign => {
+			return Crypto.Hash(sign.pubKey);
+		});
+		
+		let preBlockValidatorPubkeyHashes = preBlock.blockHeader.validatorSigns.map(sign => {
+			return Crypto.Hash(sign.pubKey);
+		});
+		
+		if (_.union(validatorPubKeyHashes, preBlockValidatorPubkeyHashes).length
+			< validatorPubKeyHashes.length + preBlockValidatorPubkeyHashes.length) {
+			return false;
+		}
+		
+		/*
+		Verify and validate creatorSign
+		* */
+		if (!Crypto.Verify(blockHeader.creatorSign)) {
+			return false;
+		}
+		
+		if (blockHeader.creatorSign.msg !== Crypto.Hash(JSON.stringify(validatorPubKeyHashes))) {
+			return false;
+		}
+		
+		/*
+		Check creator is not on top and has waited enough
+		* */
+		let creatorPubKeyHash = Crypto.Hash(blockHeader.creatorSign.pubKey);
+		
+		if (nodesOntTop.indexOf(creatorPubKeyHash) >= 0) {
+			return false;
+		}
+		
+		if (this.CalTimeMustWait(creatorPubKeyHash, new Date(blockHeader.timeStamp)) > 0) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	async ValidateBlockData(blockHeader, blockData) {

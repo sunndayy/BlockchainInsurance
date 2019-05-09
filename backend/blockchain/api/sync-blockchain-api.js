@@ -74,26 +74,26 @@ const MakeConnectRequest = host => {
  * Make get header request
  */
 const HandleAfterGetHeader = async (host, blockHeader) => {
-	// let state = new State();
-	// await state.Init();
-	// blockHeader = new BlockHeader(blockHeader);
-	// if (state.ValidateBlockHeader(blockHeader)) {
-	// 	MakeSyncDataRequest(host, blockHeader);
-	// }
+	let state = new State();
+	await state.Init();
+	blockHeader = new BlockHeader(blockHeader);
+	if (await state.ValidateBlockHeader(blockHeader)) {
+		MakeSyncDataRequest(host, blockHeader);
+	}
 };
 
 const MakeSyncHeaderRequest = host => {
-	// let index = (blockCache2[0].blockHeader.index === 1) ? 2 : blockCache1[0].blockHeader.index;
-	// let msg = {
-	// 	header: 'GET_HEADER',
-	// 	key: 'index',
-	// 	value: index
-	// };
-	// MakeRequest(host + '/get-header', msg, async resMsg => {
-	// 	if (resMsg.header == 'HEADER') {
-	// 		await HandleAfterGetHeader(host, resMsg.blockHeader);
-	// 	}
-	// });
+	let index = (blockCache2[0].blockHeader.index === 1) ? 2 : blockCache1[0].blockHeader.index;
+	let msg = {
+		header: 'GET_HEADER',
+		key: 'index',
+		value: index
+	};
+	MakeRequest(host + '/get-header', msg, async resMsg => {
+		if (resMsg.header === 'HEADER') {
+			await HandleAfterGetHeader(host, resMsg.blockHeader);
+		}
+	});
 };
 
 /**
