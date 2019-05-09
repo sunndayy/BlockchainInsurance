@@ -60,9 +60,7 @@ const MakeConnectRequest = host => {
 						if (err) {
 							console.error(err);
 						} else {
-							setTimeout(() => {
-								MakeSyncHeaderRequest(host);
-							}, 5000);
+							MakeSyncHeaderRequest(host);
 						}
 					});
 			}
