@@ -1,4 +1,5 @@
 const crypto = require('../utils/crypto');
+const TX = require('./tx');
 
 module.exports = class BlockData {
 	constructor(txs) {

@@ -12,6 +12,8 @@ const BlockCache = mongoose.model('block_cache');
 const request = require('request');
 const _ = require('lodash');
 
+const SyncBlockChainAPI = require('../api/sync-blockchain-api');
+
 module.exports = class State {
 	constructor(isGlobalState = false) {
 		this.txDict = {};
@@ -32,9 +34,9 @@ module.exports = class State {
 				preBlock = blockCache1[0];
 			}
 			console.log("Thêm prePreBlock");
-			this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+			await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 			console.log("Thêm preBlock");
-			this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
+			await this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
 			console.log("Xóa tất cả block trong blockCache database");
 			await BlockCache.remove({});
 			console.log("Thêm 2 block tạm vào blockCache database");
@@ -203,12 +205,13 @@ module.exports = class State {
 		}
 	}
 	
-	AddBlock(blockHeader, blockData) {
+	async AddBlock(blockHeader, blockData) {
 		let _this = this;
 		console.log("Duyệt qua từng giao dịch và cập nhật trạng thái");
-		blockData.txs.forEach(tx => {
-			_this.PushTx(tx);
-		});
+		for (let i = 0; i < blockData.txs.length; i++) {
+			let tx = blockData.txs[i];
+			await this.PushTx(tx);
+		}
 		
 		if (blockHeader.creatorSign) {
 			console.log("Cộng điểm cho node thu thập");
@@ -218,7 +221,7 @@ module.exports = class State {
 			creator.point += CREATOR_PRIZE;
 		}
 		
-		console.log("Cộng ddiemr cho node xác nhận");
+		console.log("Cộng điểm cho node xác nhận");
 		blockHeader.validatorSigns.forEach(sign => {
 			let validator = _this.nodes.find(node => {
 				return node.pubKeyHash === Crypto.Hash(sign.pubKey);
@@ -272,7 +275,7 @@ module.exports = class State {
 					return block.blockHeader.hash === blockHeader.preBlockHash;
 				});
 				if (preBlock) {
-					this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+					await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 				} else {
 					return false;
 				}
@@ -291,8 +294,8 @@ module.exports = class State {
 					} else {
 						prePreBlock = blockCache1[0];
 					}
-					this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
-					this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+					await this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
+					await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 				} else {
 					return false;
 				}
@@ -369,10 +372,10 @@ module.exports = class State {
 			return false;
 		}
 		
-		if (blockHeader.creatorSign.msg !== Crypto.Hash(JSON.stringify(validatorPubKeyHashes))) {
-			console.log("Thông tin node thu thập ký không hợp lệ");
-			return false;
-		}
+		// if (blockHeader.creatorSign.msg !== Crypto.Hash(JSON.stringify(validatorPubKeyHashes))) {
+		// 	console.log("Thông tin node thu thập ký không hợp lệ");
+		// 	return false;
+		// }
 		
 		/*
 		Check creator is not on top and has waited enough
@@ -389,77 +392,83 @@ module.exports = class State {
 			return false;
 		}
 		
-		console.log("Block hợp lệ");
+		console.log("Block header hợp lệ");
 		return true;
 	}
 	
-	async ValidateBlockData(blockHeader, blockData) {
-		// let cb;
-		// let preBlock;
-		// switch (blockHeader.index) {
-		// 	case blockCache1[0].index:
-		// 		cb = () => {
-		// 			blockCache1.push({
-		// 				blockHeader: blockHeader,
-		// 				blockData: blockData
-		// 			});
-		// 		};
-		// 		break;
-		//
-		// 	case blockCache2[0].index:
-		// 		preBlock = blockCache1.find(block => {
-		// 			return block.blockHeader.hash === blockHeader.preBlockHash;
-		// 		});
-		// 		if (preBlock) {
-		// 			this.AddBlock(preBlock.blockHeader, preBlock.blockData);
-		// 		} else {
-		// 			return false;
-		// 		}
-		// 		cb = () => {
-		// 			blockCache2.push({
-		// 				blockHeader: blockHeader,
-		// 				blockData: blockData
-		// 			});
-		// 		};
-		// 		break;
-		//
-		// 	case blockCache2[0].index + 1:
-		// 		preBlock = blockCache2.find(block => {
-		// 			return block.blockHeader.hash === blockHeader.preBlockHash;
-		// 		});
-		// 		if (preBlock) {
-		// 			let prePreBlock = blockCache1.find(block => {
-		// 				return block.blockHeader.hash === preBlock.blockHeader.preBlockHash;
-		// 			});
-		// 			this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
-		// 			this.AddBlock(preBlock.blockHeader, preBlock.blockData);
-		// 		} else {
-		// 			return false;
-		// 		}
-		// 		cb = () => {
-		// 			this.HandleAfterNewBlock(blockHeader, blockData);
-		// 		};
-		// 		break;
-		//
-		// 	default:
-		// 		return false;
-		// }
-		//
-		// if (blockData.length !== NUM_TX_PER_BLOCK) {
-		// 	return false;
-		// }
-		//
-		// if (blockData.merkleRoot !== blockHeader.merkleRoot) {
-		// 	return false;
-		// }
-		//
-		// for (let i = 0; i < NUM_TX_PER_BLOCK; i++) {
-		// 	if (await !blockData[i].Validate(this)) {
-		// 		return false;
-		// 	}
-		// }
-		//
-		// cb();
-		// return true;
+	async ValidateBlockData(blockHeader, blockData, host) {
+		let cb;
+		let preBlock;
+		switch (blockHeader.index) {
+			case blockCache1[0].index:
+				cb = () => {
+					blockCache1.push({
+						blockHeader: blockHeader,
+						blockData: blockData
+					});
+				};
+				break;
+
+			case blockCache2[0].index:
+				preBlock = blockCache1.find(block => {
+					return block.blockHeader.hash === blockHeader.preBlockHash;
+				});
+				if (preBlock) {
+					await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+				} else {
+					return false;
+				}
+				cb = () => {
+					blockCache2.push({
+						blockHeader: blockHeader,
+						blockData: blockData
+					});
+				};
+				break;
+
+			case blockCache2[0].index + 1:
+				preBlock = blockCache2.find(block => {
+					return block.blockHeader.hash === blockHeader.preBlockHash;
+				});
+				if (preBlock) {
+					let prePreBlock = blockCache1.find(block => {
+						return block.blockHeader.hash === preBlock.blockHeader.preBlockHash;
+					});
+					await this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
+					await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+				} else {
+					return false;
+				}
+				cb = () => {
+					this.HandleAfterNewBlock(blockHeader, blockData, () => {
+						SyncBlockChainAPI.MakeConnectRequest(host);
+					});
+				};
+				break;
+
+			default:
+				return false;
+		}
+
+		if (blockData.length !== NUM_TX_PER_BLOCK) {
+			console.log("Số lượng transaction không đúng");
+			return false;
+		}
+
+		if (blockData.merkleRoot !== blockHeader.merkleRoot) {
+			console.log("Merkleroot không đúng");
+			return false;
+		}
+
+		for (let i = 0; i < NUM_TX_PER_BLOCK; i++) {
+			if (await !blockData[i].Validate(this)) {
+				console.log("Giao dịch không hợp lệ");
+				return false;
+			}
+		}
+
+		cb();
+		console.log("Block data hợp lệ");
+		return true;
 	}
 };

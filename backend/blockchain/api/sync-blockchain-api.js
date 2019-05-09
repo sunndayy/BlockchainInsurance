@@ -100,25 +100,23 @@ const MakeSyncHeaderRequest = host => {
  * Make get data request
  */
 const HandleAfterGetData = async (host, blockHeader, blockData) => {
-	// let state = new State();
-	// await state.Init();
-	// blockData = new BlockData(blockData);
-	// if (state.ValidateBlockData(blockHeader, blockData)) {
-	// 	MakeSyncHeaderRequest(host);
-	// }
+	let state = new State();
+	await state.Init();
+	blockData = new BlockData(blockData.txs);
+	await state.ValidateBlockData(blockHeader, blockData, host);
 };
 
 const MakeSyncDataRequest = (host, blockHeader) => {
-	// let msg = {
-	// 	header: 'GET_DATA',
-	// 	key: 'hash',
-	// 	value: Crypto.Hash(JSON.stringify(blockHeader))
-	// };
-	// MakeRequest(host + '/get-data', msg, async resMsg => {
-	// 	if (resMsg.header == 'DATA') {
-	// 		await HandleAfterGetData(host, blockHeader, resMsg.blockData);
-	// 	}
-	// });
+	let msg = {
+		header: 'GET_DATA',
+		key: 'hash',
+		value: Crypto.Hash(JSON.stringify(blockHeader))
+	};
+	MakeRequest(host + '/get-data', msg, async resMsg => {
+		if (resMsg.header === 'DATA') {
+			await HandleAfterGetData(host, blockHeader, resMsg.blockData);
+		}
+	});
 };
 
 module.exports = {
