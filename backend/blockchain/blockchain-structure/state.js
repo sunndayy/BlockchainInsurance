@@ -400,7 +400,7 @@ module.exports = class State {
 		let cb;
 		let preBlock;
 		switch (blockHeader.index) {
-			case blockCache1[0].index:
+			case blockCache1[0].blockHeader.index:
 				cb = () => {
 					blockCache1.push({
 						blockHeader: blockHeader,
@@ -408,8 +408,8 @@ module.exports = class State {
 					});
 				};
 				break;
-
-			case blockCache2[0].index:
+			
+			case blockCache2[0].blockHeader.index:
 				preBlock = blockCache1.find(block => {
 					return block.blockHeader.hash === blockHeader.preBlockHash;
 				});
@@ -425,15 +425,23 @@ module.exports = class State {
 					});
 				};
 				break;
-
-			case blockCache2[0].index + 1:
-				preBlock = blockCache2.find(block => {
-					return block.blockHeader.hash === blockHeader.preBlockHash;
-				});
-				if (preBlock) {
-					let prePreBlock = blockCache1.find(block => {
-						return block.blockHeader.hash === preBlock.blockHeader.preBlockHash;
+			
+			case blockCache2[0].blockHeader.index + 1:
+				let prePreBlock;
+				if (blockCache2[0].blockHeader.index === 1) {
+					preBlock = blockCache2[0];
+					prePreBlock = blockCache1[0];
+				} else {
+					preBlock = blockCache2.find(block => {
+						return block.blockHeader.hash === blockHeader.preBlockHash;
 					});
+					if (preBlock) {
+						prePreBlock = blockCache1.find(block => {
+							return block.blockHeader.hash === preBlock.blockHeader.preBlockHash;
+						});
+					}
+				}
+				if (preBlock && prePreBlock) {
 					await this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
 					await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 				} else {
@@ -445,28 +453,28 @@ module.exports = class State {
 					});
 				};
 				break;
-
+			
 			default:
 				return false;
 		}
-
-		if (blockData.length !== NUM_TX_PER_BLOCK) {
+		
+		if (blockData.txs.length !== NUM_TX_PER_BLOCK && blockHeader.index > 1) {
 			console.log("Số lượng transaction không đúng");
 			return false;
 		}
-
+		
 		if (blockData.merkleRoot !== blockHeader.merkleRoot) {
 			console.log("Merkleroot không đúng");
 			return false;
 		}
-
+		
 		for (let i = 0; i < NUM_TX_PER_BLOCK; i++) {
 			if (await !blockData[i].Validate(this)) {
 				console.log("Giao dịch không hợp lệ");
 				return false;
 			}
 		}
-
+		
 		cb();
 		console.log("Block data hợp lệ");
 		return true;

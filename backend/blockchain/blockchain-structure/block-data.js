@@ -3,14 +3,8 @@ const TX = require('./tx');
 
 module.exports = class BlockData {
 	constructor(txs) {
-		this.txs = [];
-		let _this = this;
-		txs.forEach(tx => {
-			_this.txs.push(TX({
-				sign: tx.sign,
-				tx: tx
-			}));
-		});
+		console.log("Alo");
+		this.txs = Array.isArray(txs) ? txs.map(tx => TX({ sign: tx.sign, tx: tx })) : [];
 	}
 	
 	get merkleRoot() {
