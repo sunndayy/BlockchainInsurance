@@ -1,3 +1,4 @@
+const { MakeSyncHeaderRequest } = require('../api/sync-blockchain-api');
 const Crypto = require('../utils/crypto');
 
 const FindByIndex = require('../module/block/model').FindByIndex;
@@ -12,7 +13,6 @@ const BlockCache = mongoose.model('block_cache');
 const request = require('request');
 const _ = require('lodash');
 
-const SyncBlockChainAPI = require('../api/sync-blockchain-api');
 
 module.exports = class State {
 	constructor(isGlobalState = false) {
@@ -396,7 +396,7 @@ module.exports = class State {
 		return true;
 	}
 	
-	async ValidateBlockData(blockHeader, blockData, host) {
+	async ValidateBlockData(blockHeader, blockData, syncHeader) {
 		let cb;
 		let preBlock;
 		switch (blockHeader.index) {
@@ -448,35 +448,32 @@ module.exports = class State {
 					return false;
 				}
 				cb = () => {
-					this.HandleAfterNewBlock(blockHeader, blockData, () => {
-						SyncBlockChainAPI.MakeConnectRequest(host);
-					});
+					this.HandleAfterNewBlock(blockHeader, blockData, syncHeader);
 				};
 				break;
 			
 			default:
-				return false;
+				return;
 		}
 		
 		if (blockData.txs.length !== NUM_TX_PER_BLOCK && blockHeader.index > 1) {
 			console.log("Số lượng transaction không đúng");
-			return false;
+			return;
 		}
 		
-		if (blockData.merkleRoot !== blockHeader.merkleRoot) {
-			console.log("Merkleroot không đúng");
-			return false;
-		}
+		// if (blockData.merkleRoot !== blockHeader.merkleRoot) {
+		// 	console.log("Merkleroot không đúng");
+		// 	return false;
+		// }
 		
 		for (let i = 0; i < NUM_TX_PER_BLOCK; i++) {
-			if (await !blockData[i].Validate(this)) {
+			if (await !blockData.txs[i].Validate(this)) {
 				console.log("Giao dịch không hợp lệ");
-				return false;
+				return;
 			}
 		}
 		
-		cb();
 		console.log("Block data hợp lệ");
-		return true;
+		cb();
 	}
 };

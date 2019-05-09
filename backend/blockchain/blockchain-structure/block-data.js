@@ -3,7 +3,6 @@ const TX = require('./tx');
 
 module.exports = class BlockData {
 	constructor(txs) {
-		console.log("Alo");
 		this.txs = Array.isArray(txs) ? txs.map(tx => TX({ sign: tx.sign, tx: tx })) : [];
 	}
 	

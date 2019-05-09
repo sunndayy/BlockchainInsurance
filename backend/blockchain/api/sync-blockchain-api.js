@@ -103,7 +103,9 @@ const HandleAfterGetData = async (host, blockHeader, blockData) => {
 	let state = new State();
 	await state.Init();
 	blockData = new BlockData(blockData.txs);
-	await state.ValidateBlockData(blockHeader, blockData, host);
+	await state.ValidateBlockData(blockHeader, blockData, () => {
+		MakeSyncHeaderRequest(host);
+	});
 };
 
 const MakeSyncDataRequest = (host, blockHeader) => {
