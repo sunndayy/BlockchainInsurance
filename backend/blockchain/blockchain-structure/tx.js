@@ -8,7 +8,7 @@ class Tx {
 		this.sign = sign;
 		this.type = tx.type;
 		this.ref = tx.ref;
-		this.preStateHash = tx.preStateHash;
+		this.preStateHash = tx.preStateHash || null;
 		this.action = tx.action;
 	}
 	

@@ -7,7 +7,6 @@ module.exports = class BlockData {
 	}
 	
 	get merkleRoot() {
-		console.log(JSON.stringify(this.txs));
 		switch (this.txs.length) {
 			case 0:
 				return '';

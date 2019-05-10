@@ -1,4 +1,4 @@
-const { MakeSyncHeaderRequest } = require('../api/sync-blockchain-api');
+const {MakeSyncHeaderRequest} = require('../api/sync-blockchain-api');
 const Crypto = require('../utils/crypto');
 
 const FindByIndex = require('../module/block/model').FindByIndex;
@@ -78,7 +78,7 @@ module.exports = class State {
 				}];
 				
 				console.log("Set timeout sau khi nhận/tạo block mới");
-				setTimeout( async () => {
+				setTimeout(async () => {
 					console.log("Cập nhật session thành đang thu thập giao dịch và chữ ký");
 					mySession = WAIT_TO_COLLECT_SIGN;
 					console.log("Chọn block có thời gian thu thập chữ ký nhanh nhất làm nextBlock");
@@ -89,7 +89,7 @@ module.exports = class State {
 					globalState = new State(true);
 					await globalState.Init();
 					console.log("Thêm các giao dịch trong cache vào block mới tạo");
-					txCache.forEach( async tx => {
+					txCache.forEach(async tx => {
 						await globalState.PushTx(tx, true);
 					});
 				}, DURATION);
@@ -103,12 +103,12 @@ module.exports = class State {
 				console.log("Cộng điểm cho node thu thập");
 				if (prePreBlock.blockHeader.creatorSign) {
 					let creatorPubKeyHash = Crypto.Hash(prePreBlock.blockHeader.creatorSign.pubKey);
-					await Node.findOneAndUpdate({ pubKeyHash: creatorPubKeyHash }, { $inc: { point: CREATOR_PRIZE } });
+					await Node.findOneAndUpdate({pubKeyHash: creatorPubKeyHash}, {$inc: {point: CREATOR_PRIZE}});
 				}
 				
 				console.log("Cộng điểm cho node xác nhận");
 				let validatorPubKeyHashes = prePreBlock.blockHeader.validatorSigns.map(sign => Crypto.Hash(sign.pubKey));
-				Node.updateMany({pubKeyHash: { $in: validatorPubKeyHashes }}, { $inc: { point: VALIDATOR_PRIZE } }, (err, stats) => {
+				Node.updateMany({pubKeyHash: {$in: validatorPubKeyHashes}}, {$inc: {point: VALIDATOR_PRIZE}}, (err, stats) => {
 					if (err) {
 						console.error(err);
 					} else {
@@ -137,68 +137,68 @@ module.exports = class State {
 					let nodesOnTopPubKeyHashes = nodesOnTop.map(node => node.pubKeyHash);
 					if (nodesOnTopPubKeyHashes.indexOf(Crypto.PUB_KEY_HASH) < 0) {
 						console.log("Kiểm tra đã tích lũy đủ điểm");
-						if (this.CalTimeMustWait(Crypto.PUB_KEY_HASH) <= 0) {
-							let blockData = new BlockData(this.txCache);
-							let blockHeader = new BlockHeader({
-								index: choosenBlock.blockHeader.index + 1,
-								preBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
-								merkleRoot: blockData.merkleRoot
-							});
-							
-							let _this = this;
-							console.log("Thu thập chữ ký của các node xác nhận");
-							nodesOnTop.forEach(node => {
-								if (node.pubKeyHash !== Crypto.PUB_KEY_HASH && node.host) {
-									request.post({
-										url: 'http://' + node.host + '/agree',
-										form: Crypto.Sign({ nextBlockHash: Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree)) })
-									}, (err, res, body) => {
-										if (err) {
-											console.error(err);
-										} else {
-											try {
-												if (mySession === WAIT_TO_COLLECT_SIGN) {
-													let sign = JSON.parse(body);
-													let msg = JSON.parse(sign.msg);
+						// if (this.CalTimeMustWait(Crypto.PUB_KEY_HASH) <= 0) {
+						let blockData = new BlockData(this.txCache);
+						let blockHeader = new BlockHeader({
+							index: choosenBlock.blockHeader.index + 1,
+							preBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
+							merkleRoot: blockData.merkleRoot
+						});
+						
+						let _this = this;
+						console.log("Thu thập chữ ký của các node xác nhận");
+						nodesOnTop.forEach(node => {
+							if (node.pubKeyHash !== Crypto.PUB_KEY_HASH && node.host) {
+								request.post({
+									url: 'http://' + node.host + '/agree',
+									form: Crypto.Sign({nextBlockHash: Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))})
+								}, (err, res, body) => {
+									if (err) {
+										console.error(err);
+									} else {
+										try {
+											if (mySession === WAIT_TO_COLLECT_SIGN) {
+												let sign = JSON.parse(body);
+												let msg = JSON.parse(sign.msg);
+												
+												if (msg.curBlockHash === choosenBlock.blockHeader.hash
+													&& msg.nextBlockHash === Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
+													if (!blockHeader.validatorSigns) {
+														blockHeader.validatorSigns = [];
+													}
+													console.log("Thêm chữ ký node xác nhận vào block mới tạo");
+													blockHeader.validatorSigns.push(sign);
 													
-													if (msg.curBlockHash === choosenBlock.blockHeader.hash
-														&& msg.nextBlockHash === Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
-														if (!blockHeader.validatorSigns) {
-															blockHeader.validatorSigns = [];
-														}
-														console.log("Thêm chữ ký node xác nhận vào block mới tạo");
-														blockHeader.validatorSigns.push(sign);
+													if (blockHeader.validatorSigns.length === NUM_SIGN_PER_BLOCK) {
+														let validatorPubKeyHashes = blockHeader.validatorSigns.map(sign => {
+															return Crypto.Hash(sign.pubKey);
+														});
+														console.log("Node thu thập ký tên lên danh sách node xác nhận");
+														blockHeader.Sign();
 														
-														if (blockHeader.validatorSigns.length === NUM_SIGN_PER_BLOCK) {
-															let validatorPubKeyHashes = blockHeader.validatorSigns.map(sign => {
-																return Crypto.Hash(sign.pubKey);
-															});
-															console.log("Node thu thập ký tên lên danh sách node xác nhận");
-															blockHeader.Sign();
-															
-															console.log("Xử lý sau khi tạo block mới");
-															_this.HandleAfterNewBlock(blockHeader, blockData, () => {
-																// console.log('Success');
-																_this.nodes.forEach(node => {
-																	if (node.host !== HOST && node.host) {
-																		request.post('http://' + node.host + '/header', { form: Crypto.Sign(blockHeader)}, (err, res, body) => {
+														console.log("Xử lý sau khi tạo block mới");
+														_this.HandleAfterNewBlock(blockHeader, blockData, () => {
+															// console.log('Success');
+															_this.nodes.forEach(node => {
+																if (node.host !== HOST && node.host) {
+																	request.post('http://' + node.host + '/header', {form: Crypto.Sign(blockHeader)}, (err, res, body) => {
 																		
-																		});
-																	}
-																});
+																	});
+																}
 															});
-															
-														}
+														});
+														
 													}
 												}
-											} catch (e) {
-												console.error(e);
 											}
+										} catch (e) {
+											console.error(e);
 										}
-									});
-								}
-							});
-						}
+									}
+								});
+							}
+						});
+						// }
 					}
 				}
 			}
@@ -230,24 +230,24 @@ module.exports = class State {
 		});
 	}
 	
-	CalTimeMustWait(pubKeyHash, time = new Date()) {
-		let node = this.nodes.find(node => {
-			return node.pubKeyHash === pubKeyHash;
-		});
-		
-		if (node) {
-			if (!node.lastTimeCreateBlock) {
-				return 0;
-			}
-			
-			let s = node.point * (time - new Date(node.lastTimeCreateBlock));
-			if (s > 0) {
-				return (NEED_POINT - s) / node.point;
-			}
-		}
-		
-		return 3600000;
-	}
+	// CalTimeMustWait(pubKeyHash, time = new Date()) {
+	// 	let node = this.nodes.find(node => {
+	// 		return node.pubKeyHash === pubKeyHash;
+	// 	});
+	//
+	// 	if (node) {
+	// 		if (!node.lastTimeCreateBlock) {
+	// 			return 0;
+	// 		}
+	//
+	// 		let s = node.point * (time - new Date(node.lastTimeCreateBlock));
+	// 		if (s > 0) {
+	// 			return (NEED_POINT - s) / node.point;
+	// 		}
+	// 	}
+	//
+	// 	return 3600000;
+	// }
 	
 	GetNodesOnTop() {
 		this.nodes.sort((a, b) => {
@@ -387,10 +387,10 @@ module.exports = class State {
 			return false;
 		}
 		
-		if (this.CalTimeMustWait(creatorPubKeyHash, new Date(blockHeader.timeStamp)) > 0) {
-			console.log("Node thu thập chưa chờ đủ điểm");
-			return false;
-		}
+		// if (this.CalTimeMustWait(creatorPubKeyHash, new Date(blockHeader.timeStamp)) > 0) {
+		// 	console.log("Node thu thập chưa chờ đủ điểm");
+		// 	return false;
+		// }
 		
 		console.log("Block header hợp lệ");
 		return true;

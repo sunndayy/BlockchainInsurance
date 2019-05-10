@@ -4,10 +4,10 @@ module.exports = class BlockHeader {
 	constructor(obj) {
 		if (obj) {
 			this.index = obj.index;
-			this.preBlockHash = obj.preBlockHash;
-			this.merkleRoot = obj.merkleRoot;
+			this.preBlockHash = obj.preBlockHash || null;
+			this.merkleRoot = obj.merkleRoot || null;
 			this.validatorSigns = obj.validatorSigns || [];
-			this.creatorSign = obj.creatorSign;
+			this.creatorSign = obj.creatorSign || null;
 		}
 	}
 	
