@@ -178,14 +178,14 @@ module.exports = class State {
 															
 															console.log("Xử lý sau khi tạo block mới");
 															_this.HandleAfterNewBlock(blockHeader, blockData, () => {
-																console.log('Success');
-																// _this.nodes.forEach(node => {
-																// 	if (node.host !== HOST && node.host) {
-																// 		request.post('http://' + node.host + '/header', { form: Crypto.Sign(blockHeader)}, (err, res, body) => {
-																//
-																// 		});
-																// 	}
-																// });
+																// console.log('Success');
+																_this.nodes.forEach(node => {
+																	if (node.host !== HOST && node.host) {
+																		request.post('http://' + node.host + '/header', { form: Crypto.Sign(blockHeader)}, (err, res, body) => {
+
+																		});
+																	}
+																});
 															});
 															
 														}

@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b696cc9-e63a-46b7-961d-38ee5ef81080" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/api/sync-blockchain-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/sync-blockchain-api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blockchain-structure/state.js" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain-structure/state.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/block/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/block/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/node/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/node/route.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -15,21 +17,30 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/module/block/route.js">
+        <entry file="file://$PROJECT_DIR$/blockchain-structure/state.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="99" column="3" lean-forward="true" selection-start-line="99" selection-start-column="3" selection-end-line="99" selection-end-column="3" />
+            <state relative-caret-position="272">
+              <caret line="190" column="29" lean-forward="true" selection-start-line="190" selection-start-column="29" selection-end-line="190" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/sync-blockchain-api.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="28" column="4" lean-forward="true" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/blockchain-structure/state.js">
+        <entry file="file://$PROJECT_DIR$/blockchain-structure/block-header.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="463" selection-start-line="463" selection-end-line="466" selection-end-column="5" />
+            <state relative-caret-position="491">
+              <caret line="59" column="2" selection-start-line="59" selection-start-column="2" selection-end-line="59" selection-end-column="2" />
             </state>
           </provider>
         </entry>
@@ -38,13 +49,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>handleafter</find>
-      <find>cập nhật</find>
-      <find>console.log();</find>
-      <find>Block hợp lệ</find>
-      <find>new BlockData</find>
-      <find>async</find>
-      <find>pushtx</find>
       <find>addblock</find>
       <find>AddBlock</find>
       <find>ValidateBlockData</find>
@@ -68,6 +72,13 @@
       <find>Thêm các giao dịch trong cache vào block mới tạo</find>
       <find>validateBlockData</find>
       <find>HandleAfterGetHeader</find>
+      <find>suc</find>
+      <find>GetNodesOnTop</find>
+      <find>state</find>
+      <find>globalstate</find>
+      <find>getno</find>
+      <find>nodes</find>
+      <find>nodesontop</find>
     </findStrings>
     <replaceStrings>
       <replace>FindByHash</replace>
@@ -144,26 +155,26 @@
         <option value="$PROJECT_DIR$/api/syncBlockChainApi.js" />
         <option value="$USER_HOME$/Desktop/test/test.js" />
         <option value="$PROJECT_DIR$/middleware/verify-middleware.js" />
-        <option value="$PROJECT_DIR$/bin/www" />
         <option value="$USER_HOME$/Desktop/test.js" />
         <option value="$PROJECT_DIR$/module/contract/route.js" />
         <option value="$PROJECT_DIR$/module/plan/route.js" />
-        <option value="$PROJECT_DIR$/module/node/route.js" />
         <option value="$PROJECT_DIR$/module/tx/route.js" />
         <option value="$PROJECT_DIR$/model/init-nodes.js" />
         <option value="$PROJECT_DIR$/utils/crypto.js" />
         <option value="$PROJECT_DIR$/blockchain-structure/block-header.js" />
-        <option value="$PROJECT_DIR$/config.js" />
         <option value="$PROJECT_DIR$/blockchain-structure/tx.js" />
         <option value="$PROJECT_DIR$/blockchain-structure/block-data.js" />
-        <option value="$PROJECT_DIR$/api/sync-blockchain-api.js" />
         <option value="$PROJECT_DIR$/module/block/route.js" />
+        <option value="$PROJECT_DIR$/bin/www" />
+        <option value="$PROJECT_DIR$/config.js" />
         <option value="$PROJECT_DIR$/blockchain-structure/state.js" />
+        <option value="$PROJECT_DIR$/module/node/route.js" />
+        <option value="$PROJECT_DIR$/api/sync-blockchain-api.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="952" />
     <option name="width" value="977" />
     <option name="height" value="1038" />
   </component>
@@ -404,11 +415,12 @@
       <workItem from="1557413855834" duration="1770000" />
       <workItem from="1557415739857" duration="1737000" />
       <workItem from="1557417547726" duration="488000" />
+      <workItem from="1557446297046" duration="2949000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="211353000" />
+    <option name="totallyTimeSpent" value="214302000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -420,17 +432,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="762" y="0" width="781" height="830" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="npm" order="1" side_tool="true" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.11566424" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.27419356" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32503662" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.48853868" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.43201134" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.4312321" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.329429" />
@@ -470,20 +482,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/blockchain-structure/state.js</url>
-          <line>369</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/blockchain-structure/state.js</url>
-          <line>458</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog>
           <selected-grouping-rules>
@@ -491,6 +489,11 @@
           </selected-grouping-rules>
         </breakpoints-dialog>
       </breakpoints-dialog>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="javascript-exception">
+          <properties />
+        </breakpoint>
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -682,24 +685,10 @@
     <entry file="file://$USER_HOME$/Desktop/test/test.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/init-nodes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="16" column="4" lean-forward="true" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/module/plan/route.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="7" selection-start-line="7" selection-end-line="20" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/tx/route.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="29" lean-forward="true" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -720,31 +709,10 @@
     <entry file="file://$PROJECT_DIR$/node_modules/mongodb/lib/utils.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/bin/www">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="179" column="40" lean-forward="true" selection-start-line="179" selection-start-column="40" selection-end-line="179" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/blockchain-structure/block-data.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blockchain-structure/block-header.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="59" column="2" selection-start-line="59" selection-start-column="2" selection-end-line="59" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -755,10 +723,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/sync-blockchain-api.js">
+    <entry file="file://$PROJECT_DIR$/bin/www">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="86" column="14" selection-start-line="86" selection-start-column="14" selection-end-line="86" selection-end-column="14" />
+        <state relative-caret-position="167">
+          <caret line="80" column="36" lean-forward="true" selection-start-line="80" selection-start-column="36" selection-end-line="80" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/init-nodes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="4" lean-forward="true" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/block/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="86" column="10" lean-forward="true" selection-start-line="86" selection-start-column="10" selection-end-line="86" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -771,22 +760,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/module/node/route.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="89">
-          <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+        <state relative-caret-position="176">
+          <caret line="35" column="19" lean-forward="true" selection-end-line="50" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/block/route.js">
+    <entry file="file://$PROJECT_DIR$/module/tx/route.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="99" column="3" lean-forward="true" selection-start-line="99" selection-start-column="3" selection-end-line="99" selection-end-column="3" />
+        <state relative-caret-position="187">
+          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/blockchain-structure/state.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="463" selection-start-line="463" selection-end-line="466" selection-end-column="5" />
+        <state relative-caret-position="272">
+          <caret line="190" column="29" lean-forward="true" selection-start-line="190" selection-start-column="29" selection-end-line="190" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/sync-blockchain-api.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="28" column="4" lean-forward="true" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blockchain-structure/block-header.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="59" column="2" selection-start-line="59" selection-start-column="2" selection-end-line="59" selection-end-column="2" />
         </state>
       </provider>
     </entry>

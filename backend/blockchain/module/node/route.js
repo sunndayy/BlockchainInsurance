@@ -28,6 +28,12 @@ router.post('/version', verifyMiddleware, async (req, res) => {
 	            	if (err) {
 	            		console.error(err);
 		            } else {
+	            		let index = globalState.nodes.findIndex(_node => {
+	            			return _node.pubKeyHash === node.pubKeyHash;
+			            });
+	            		if (index >= 0) {
+				            globalState.nodes[index] = node;
+			            }
 			            res.json(Crypto.Sign({
 				            header: 'VER_ACK'
 			            }));

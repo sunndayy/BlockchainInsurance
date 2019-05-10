@@ -56,10 +56,16 @@ const MakeConnectRequest = host => {
 					{
 						upsert: true,
 						new: true
-					}, (err, doc) => {
+					}, (err, node) => {
 						if (err) {
 							console.error(err);
 						} else {
+							let index = globalState.nodes.findIndex(_node => {
+								return _node.pubKeyHash === node.pubKeyHash;
+							});
+							if (index >= 0) {
+								globalState.nodes[index] = node;
+							}
 							MakeSyncHeaderRequest(host);
 						}
 					});
