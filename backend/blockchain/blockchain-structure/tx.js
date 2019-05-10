@@ -21,10 +21,13 @@ class Tx {
 	
 	Verify() {
 		if (Crypto.Verify(this.sign)) {
-			this._pubKeyHash = Crypto.Hash(this.sign.pubKey);
 			return true;
 		}
 		return false;
+	}
+	
+	get pubKeyHash() {
+		return Crypto.Hash(this.sign.pubKey);
 	}
 }
 
@@ -39,7 +42,7 @@ class PlanTx extends Tx {
 		}
 		
 		let node = state.nodes.find(node => {
-			return node.pubKeyHash === this._pubKeyHash;
+			return node.pubKeyHash === this.pubKeyHash;
 		});
 		
 		if (!node || node.company !== this.ref.company) {
@@ -126,7 +129,7 @@ class ContractTx extends Tx {
 				
 				if (this.action.create && !state.txDict[this.uid]) {
 					let node = state.nodes.find(node => {
-						return node.pubKeyHash === this._pubKeyHash;
+						return node.pubKeyHash === this.pubKeyHash;
 					});
 					
 					if (!node || node.company !== this.ref.plan.company) {
@@ -139,7 +142,7 @@ class ContractTx extends Tx {
 				}
 				
 				if (this.action.update && state.txDict[this.uid]) {
-					if (this.ref.garaPubKeyHashes.indexOf(this._pubKeyHash) < 0) {
+					if (this.ref.garaPubKeyHashes.indexOf(this.pubKeyHash) < 0) {
 						return false;
 					}
 					
