@@ -90,7 +90,7 @@ module.exports = class State {
 					await globalState.Init();
 					// console.log("Thêm các giao dịch trong cache vào block mới tạo");
 					txCache.forEach(async tx => {
-						if (tx.Validate(globalState)) {
+						if (await tx.Validate(globalState)) {
 							await globalState.PushTx(tx, true);
 						}
 					});
