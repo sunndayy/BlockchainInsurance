@@ -14,7 +14,7 @@ mongoose.connect("mongodb://localhost/" + dbPrefix, { useNewUrlParser: true });
 const db = mongoose.connection;
 
 db.on('error', err => {
-    console.error(err);
+    // console.error(err);
 });
 
 db.once('open', async () => {
@@ -61,11 +61,11 @@ db.once('open', async () => {
         // handle specific listen errors with friendly messages
         switch (error.code) {
             case 'EACCES':
-                console.error(bind + ' requires elevated privileges');
+                // console.error(bind + ' requires elevated privileges');
                 process.exit(1);
                 break;
             case 'EADDRINUSE':
-                console.error(bind + ' is already in use');
+                // console.error(bind + ' is already in use');
                 process.exit(1);
                 break;
             default:
@@ -159,14 +159,14 @@ db.once('open', async () => {
     const syncDNS = () => {
         request.post({ url: dnsServer, form: { host: HOST } }, (err, res, body) => {
             if (err) {
-                console.error(err);
+                // console.error(err);
             }
         });
     };
 
     request(dnsServer, (err, res, body) => {
         if (err) {
-            console.error(err);
+            // console.error(err);
         } else {
             syncDNS();
             try {
@@ -182,7 +182,7 @@ db.once('open', async () => {
                     }
                 });
             } catch (err) {
-                console.error(err);
+                // console.error(err);
             }
         }
     });
