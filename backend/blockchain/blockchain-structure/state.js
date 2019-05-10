@@ -34,15 +34,20 @@ module.exports = class State {
 				preBlock = blockCache1[0];
 			}
 			// console.log("Thêm prePreBlock");
-			await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+			this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 			// console.log("Thêm preBlock");
-			await this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
+			this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
 			// console.log("Xóa tất cả block trong blockCache database");
 			await BlockCache.remove({});
 			// console.log("Thêm 2 block tạm vào blockCache database");
 			await BlockCache.insertMany([preBlock, choosenBlock]);
 			// console.log("Reset mảng transaction");
-			this.txCache = [];
+			for (let i = 0; i < txCache.length; i++) {
+				if (await txCache[i].Validate(this)) {
+					this.PushTx(txCache[i]);
+				}
+			}
+			txCache = [];
 		}
 		
 	}
@@ -91,7 +96,7 @@ module.exports = class State {
 					// console.log("Thêm các giao dịch trong cache vào block mới tạo");
 					txCache.forEach(async tx => {
 						if (await tx.Validate(globalState)) {
-							await globalState.PushTx(tx, true);
+							globalState.PushTx(tx, true);
 						}
 					});
 				}, DURATION);
@@ -121,8 +126,8 @@ module.exports = class State {
 			}
 		});
 	}
-	
-	async PushTx(tx, addToCache = false) {
+
+	PushTx(tx, addToCache = false) {
 		// console.log("Kiểm tra giao dịch hợp lệ")
 		// console.log("Cập nhật trạng thái");
 		tx.UpdateState(this);
@@ -204,13 +209,13 @@ module.exports = class State {
 			}
 		}
 	}
-	
-	async AddBlock(blockHeader, blockData) {
+
+	AddBlock(blockHeader, blockData) {
 		let _this = this;
 		// console.log("Duyệt qua từng giao dịch và cập nhật trạng thái");
 		for (let i = 0; i < blockData.txs.length; i++) {
 			let tx = blockData.txs[i];
-			await this.PushTx(tx);
+			this.PushTx(tx);
 		}
 		
 		if (blockHeader.creatorSign) {
@@ -275,7 +280,7 @@ module.exports = class State {
 					return block.blockHeader.hash === blockHeader.preBlockHash;
 				});
 				if (preBlock) {
-					await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+					this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 				} else {
 					return false;
 				}
@@ -294,8 +299,8 @@ module.exports = class State {
 					} else {
 						prePreBlock = blockCache1[0];
 					}
-					await this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
-					await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+					this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
+					this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 				} else {
 					return false;
 				}
@@ -414,7 +419,7 @@ module.exports = class State {
 					return block.blockHeader.hash === blockHeader.preBlockHash;
 				});
 				if (preBlock) {
-					await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+					this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 				} else {
 					return false;
 				}
@@ -442,8 +447,8 @@ module.exports = class State {
 					}
 				}
 				if (preBlock && prePreBlock) {
-					await this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
-					await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+					this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
+					this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 				} else {
 					return false;
 				}

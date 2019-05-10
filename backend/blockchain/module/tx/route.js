@@ -9,7 +9,7 @@ router.post('/tx', async (req, res) => {
 		tx: JSON.parse(req.body.msg)
 	});
 	if (mySession === WAIT_TO_COLLECT_SIGN && await tx.Validate(globalState)) {
-		await globalState.PushTx(tx, true);
+		globalState.PushTx(tx, true);
 	} else {
 		txCache.push(tx, true);
 	}
