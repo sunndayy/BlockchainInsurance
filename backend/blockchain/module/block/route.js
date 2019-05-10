@@ -44,7 +44,10 @@ const findBlock = async (key, value) => {
 
 router.post('/get-header', verifyMiddleware, async (req, res) => {
 	if (req.body.header === 'GET_HEADER') {
-		if (nodes.indexOf(req.body.pubKeyHash) >= 0) {
+		let index = globalState.nodes.findIndex(node => {
+			return node.pubKeyHash === req.body.pubKeyHash;
+		});
+		if (index >= 0) {
 			let block = await findBlock(req.body.key, req.body.value);
 			if (block) {
 				let msg = {
@@ -70,7 +73,10 @@ router.post('/header', verifyMiddleware, async (req, res) => {
 
 router.post('/get-data', verifyMiddleware, async (req, res) => {
 	if (req.body.header === 'GET_DATA') {
-		if (nodes.indexOf(req.body.pubKeyHash) >= 0) {
+		let index = globalState.nodes.findIndex(node => {
+			return node.pubKeyHash === req.body.pubKeyHash;
+		});
+		if (index >= 0) {
 			let block = await findBlock(req.body.key, req.body.value);
 			if (block) {
 				let msg = {

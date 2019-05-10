@@ -182,7 +182,7 @@ module.exports = class State {
 																_this.nodes.forEach(node => {
 																	if (node.host !== HOST && node.host) {
 																		request.post('http://' + node.host + '/header', { form: Crypto.Sign(blockHeader)}, (err, res, body) => {
-
+																		
 																		});
 																	}
 																});
@@ -372,7 +372,7 @@ module.exports = class State {
 			return false;
 		}
 		
-		if (blockHeader.creatorSign.msg !== Crypto.Hash(JSON.stringify(validatorPubKeyHashes))) {
+		if (blockHeader.creatorSign.msg !== JSON.stringify(validatorPubKeyHashes)) {
 			console.log("Thông tin node thu thập ký không hợp lệ");
 			return false;
 		}
