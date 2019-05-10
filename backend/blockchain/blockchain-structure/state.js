@@ -18,12 +18,14 @@ module.exports = class State {
 	constructor(isGlobalState = false) {
 		this.txDict = {};
 		this.isGlobalState = isGlobalState;
+		this.txCache = [];
 	}
 	
 	async Init() {
 		// console.log("Khởi tạo lại trạng thái và load danh sách node");
 		this.nodes = await Node.find({});
 		if (this.isGlobalState) {
+			console.log('Đây là global state');
 			// console.log("Khởi tạo trạng thái toàn cục");
 			let preBlock;
 			if (choosenBlock.blockHeader.index > 1) {
@@ -48,8 +50,9 @@ module.exports = class State {
 				}
 			}
 			txCache = [];
+		} else {
+			console.log('Đây là tmp state');
 		}
-		
 	}
 	
 	HandleAfterNewBlock(blockHeader, blockData, cb) {
@@ -94,11 +97,6 @@ module.exports = class State {
 					globalState = new State(true);
 					await globalState.Init();
 					// console.log("Thêm các giao dịch trong cache vào block mới tạo");
-					txCache.forEach(async tx => {
-						if (await tx.Validate(globalState)) {
-							globalState.PushTx(tx, true);
-						}
-					});
 				}, DURATION);
 				
 				// console.log("Duyệt qua từng giao dịch trong block vào cập nhật lại database");
@@ -224,6 +222,7 @@ module.exports = class State {
 				return node.pubKeyHash === Crypto.Hash(blockHeader.creatorSign.pubKey);
 			});
 			creator.point += CREATOR_PRIZE;
+			// console.log("Cộng " + CREATOR_PRIZE + ' điểm cho ' + creator.pubKeyHash);
 		}
 		
 		// console.log("Cộng điểm cho node xác nhận");
@@ -232,7 +231,13 @@ module.exports = class State {
 				return node.pubKeyHash === Crypto.Hash(sign.pubKey);
 			});
 			validator.point += VALIDATOR_PRIZE;
+			// console.log("Cộng " + VALIDATOR_PRIZE + ' điểm cho ' + validator.pubKeyHash);
 		});
+		
+		_this.nodes.forEach(node => {
+			console.log(node.pubKeyHash + ' ' + node.point);
+		});
+		console.log();
 	}
 	
 	// CalTimeMustWait(pubKeyHash, time = new Date()) {
