@@ -6,7 +6,7 @@ module.exports = {
 	HOST: 'localhost:2000',
 	CREATOR_PRIZE: 5,
 	VALIDATOR_PRIZE: 1,
-	TOP: 1,
+	TOP: 2,
 	PORT: '2000',
 	DURATION: 5000,
 	WAIT_AFTER_NEW_BLOCK: 1,

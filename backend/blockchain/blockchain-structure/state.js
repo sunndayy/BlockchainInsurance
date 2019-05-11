@@ -107,7 +107,7 @@ module.exports = class State {
 			}
 		});
 	}
-
+	
 	PushTx(tx, addToCache = false) {
 		if (addToCache) {
 			if (this.txCache.length < NUM_TX_PER_BLOCK) {
@@ -181,7 +181,7 @@ module.exports = class State {
 		}
 		return false;
 	}
-
+	
 	AddBlock(blockHeader, blockData) {
 		let _this = this;
 		for (let i = 0; i < blockData.txs.length; i++) {
@@ -376,6 +376,7 @@ module.exports = class State {
 						blockHeader: blockHeader,
 						blockData: blockData
 					});
+					syncHeader();
 				};
 				break;
 			
@@ -393,6 +394,7 @@ module.exports = class State {
 						blockHeader: blockHeader,
 						blockData: blockData
 					});
+					syncHeader();
 				};
 				break;
 			
@@ -415,7 +417,7 @@ module.exports = class State {
 					this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
 					this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 				} else {
-					return false;
+					return;
 				}
 				cb = () => {
 					this.HandleAfterNewBlock(blockHeader, blockData, syncHeader);
@@ -431,7 +433,7 @@ module.exports = class State {
 		}
 		
 		if (blockData.merkleRoot !== blockHeader.merkleRoot) {
-			return false;
+			return;
 		}
 		
 		for (let i = 0; i < NUM_TX_PER_BLOCK; i++) {
