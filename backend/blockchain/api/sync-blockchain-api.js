@@ -97,7 +97,8 @@ const MakeSyncHeaderRequest = (host, index = blockCache1[0].blockHeader.index) =
 	let msg = {
 		header: 'GET_HEADER',
 		key: 'index',
-		value: index
+		value: index,
+		time: new Date()
 	};
 	MakeRequest(host + '/get-header', msg, async resMsg => {
 		if (resMsg.header === 'HEADER') {
@@ -122,7 +123,8 @@ const MakeSyncDataRequest = (host, blockHeader) => {
 	let msg = {
 		header: 'GET_DATA',
 		key: 'hash',
-		value: Crypto.Hash(JSON.stringify(blockHeader))
+		value: Crypto.Hash(JSON.stringify(blockHeader)),
+		time: new Date()
 	};
 	MakeRequest(host + '/get-data', msg, async resMsg => {
 		if (resMsg.header === 'DATA') {
