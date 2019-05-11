@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { FindByIndex, FindByHash } = require('./model');
+const {FindByIndex, FindByHash} = require('./model');
 const GetHost = require('../node/model').GetHost;
 
 const SyncBlockChainApi = require('../../api/sync-blockchain-api');

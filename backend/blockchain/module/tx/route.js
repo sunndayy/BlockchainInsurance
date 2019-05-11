@@ -10,7 +10,7 @@ router.post('/tx', async (req, res) => {
 	});
 	if (mySession === WAIT_TO_COLLECT_SIGN && await tx.Validate(globalState)) {
 		if (globalState.PushTx(tx, true)) {
-			return ;
+			return;
 		}
 	}
 	txCache.push(tx, true);

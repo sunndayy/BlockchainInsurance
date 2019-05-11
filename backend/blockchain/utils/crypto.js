@@ -13,13 +13,13 @@ module.exports.Sign = msg => {
 	if (typeof msg === 'object') {
 		msg = JSON.stringify(msg);
 	}
-	let msgHash = sha256(msg, { asBytes: true });
-	return { msg: msg, pubKey: myKey.getPublic('hex'), sign: JSON.stringify(myKey.sign(msgHash)) };
+	let msgHash = sha256(msg, {asBytes: true});
+	return {msg: msg, pubKey: myKey.getPublic('hex'), sign: JSON.stringify(myKey.sign(msgHash))};
 };
 
-module.exports.Verify = ({ msg, pubKey, sign }) => {
+module.exports.Verify = ({msg, pubKey, sign}) => {
 	msg = JSON.parse(msg);
 	let key = ec.keyFromPublic(pubKey, 'hex');
-	let msgHash = sha256(JSON.stringify(msg), { asBytes: true });
+	let msgHash = sha256(JSON.stringify(msg), {asBytes: true});
 	return key.verify(msgHash, JSON.parse(sign));
 };

@@ -20,10 +20,7 @@ class Tx {
 	}
 	
 	Verify() {
-		if (Crypto.Verify(this.sign)) {
-			return true;
-		}
-		return false;
+		return Crypto.Verify(this.sign);
 	}
 	
 	get pubKeyHash() {
@@ -74,7 +71,7 @@ class PlanTx extends Tx {
 			state.txDict[this.uid] = new Plan({
 				company: this.ref.company,
 				id: this.ref.id,
-				term: newPlan
+				term: newPlan.term
 			});
 		} else if (this.action.update) {
 			let prePlan = state.txDict[this.uid];

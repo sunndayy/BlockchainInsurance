@@ -3,7 +3,7 @@ const TX = require('./tx');
 
 module.exports = class BlockData {
 	constructor(txs) {
-		this.txs = Array.isArray(txs) ? txs.map(tx => TX({ sign: tx.sign, tx: tx })) : [];
+		this.txs = Array.isArray(txs) ? txs.map(tx => TX({sign: tx.sign, tx: tx})) : [];
 	}
 	
 	get merkleRoot() {

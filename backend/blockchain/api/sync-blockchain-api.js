@@ -28,7 +28,7 @@ const MakeRequest = (url, msg, cb) => {
 		}
 	};
 	let sign = Crypto.Sign(msg);
-	request.post({ url: 'http://' + url, form: sign }, handleResponse);
+	request.post({url: 'http://' + url, form: sign}, handleResponse);
 };
 
 /**
@@ -40,7 +40,7 @@ const MakeConnectRequest = host => {
 		host: HOST,
 		time: new Date()
 	};
-	MakeRequest(host + '/version', msg,(resMsg, pubKeyHash) => {
+	MakeRequest(host + '/version', msg, (resMsg, pubKeyHash) => {
 		try {
 			if (resMsg.header === 'VER_ACK') {
 				Node.findOneAndUpdate(

@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const Plan = mongoose.model('plan');
-const Contract = mongoose.model( 'contract' );
+const Contract = mongoose.model('contract');
 
 module.exports.FindByLicensePlate = async licensePlate => {
-    return await Contract.find({ licensePlate: licensePlate });
+	return await Contract.find({licensePlate: licensePlate});
 };
 
 module.exports.FindByCompany = async company => {
-    return await Plan.find({ company: company }).populate('contracts').select('contracts');
+	return await Plan.find({company: company}).populate('contracts').select('contracts');
 };
