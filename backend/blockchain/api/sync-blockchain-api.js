@@ -84,6 +84,8 @@ const HandleAfterGetHeader = async (host, blockHeader) => {
 	blockHeader = new BlockHeader(blockHeader);
 	if (await state.ValidateBlockHeader(blockHeader)) {
 		MakeSyncDataRequest(host, blockHeader);
+	} else {
+		console.log(blockHeader.index);
 	}
 };
 

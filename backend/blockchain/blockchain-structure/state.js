@@ -63,7 +63,6 @@ module.exports = class State {
 		} else {
 			prePreBlock = blockCache1[0];
 		}
-		prePreBlock.hash = prePreBlock.blockHeader.hash;
 		
 		(new Block(prePreBlock)).save(async (err, doc) => {
 			if (err) {
