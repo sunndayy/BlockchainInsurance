@@ -44,12 +44,21 @@ module.exports = class State {
 			// console.log("Thêm 2 block tạm vào blockCache database");
 			await BlockCache.insertMany([preBlock, choosenBlock]);
 			// console.log("Reset mảng transaction");
-			for (let i = 0; i < txCache.length; i++) {
+			let i = 0;
+			while (i < txCache.length) {
 				if (await txCache[i].Validate(this)) {
 					this.PushTx(txCache[i]);
+					txCache.splice(i, 1);
+				} else {
+					i++;
 				}
 			}
-			txCache = [];
+			// for (let i = 0; i < txCache.length; i++) {
+			// 	if (await txCache[i].Validate(this)) {
+			// 		this.PushTx(txCache[i]);
+			// 	}
+			// }
+			// txCache = [];
 		} else {
 			console.log('Đây là tmp state');
 		}
@@ -128,84 +137,89 @@ module.exports = class State {
 	PushTx(tx, addToCache = false) {
 		// console.log("Kiểm tra giao dịch hợp lệ")
 		// console.log("Cập nhật trạng thái");
-		tx.UpdateState(this);
 		if (addToCache) {
-			// console.log("Thêm giao dịch vào cache");
-			this.txCache.push(tx);
-			
-			// console.log("Nếu thu thập đủ giao dịch");
-			if (this.txCache.length === NUM_TX_PER_BLOCK) {
-				// console.log("Tìm danh sách node trong top");
-				let nodesOnTop = this.GetNodesOnTop();
-				// console.log("Map danh sách node trong top thành danh sách pubKeyHash");
-				let nodesOnTopPubKeyHashes = nodesOnTop.map(node => node.pubKeyHash);
-				if (nodesOnTopPubKeyHashes.indexOf(Crypto.PUB_KEY_HASH) < 0) {
-					// console.log("Kiểm tra đã tích lũy đủ điểm");
-					// if (this.CalTimeMustWait(Crypto.PUB_KEY_HASH) <= 0) {
-					let blockData = new BlockData(this.txCache);
-					let blockHeader = new BlockHeader({
-						index: choosenBlock.blockHeader.index + 1,
-						preBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
-						merkleRoot: blockData.merkleRoot
-					});
-					
-					let _this = this;
-					// console.log("Thu thập chữ ký của các node xác nhận");
-					nodesOnTop.forEach(node => {
-						if (node.pubKeyHash !== Crypto.PUB_KEY_HASH && node.host) {
-							request.post({
-								url: 'http://' + node.host + '/agree',
-								form: Crypto.Sign({nextBlockHash: Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))})
-							}, (err, res, body) => {
-								if (err) {
-									// console.error(err);
-								} else {
-									try {
-										if (mySession === WAIT_TO_COLLECT_SIGN) {
-											let sign = JSON.parse(body);
-											let msg = JSON.parse(sign.msg);
-											
-											if (msg.curBlockHash === choosenBlock.blockHeader.hash
-												&& msg.nextBlockHash === Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
-												if (!blockHeader.validatorSigns) {
-													blockHeader.validatorSigns = [];
-												}
-												// console.log("Thêm chữ ký node xác nhận vào block mới tạo");
-												blockHeader.validatorSigns.push(sign);
+			if (this.txCache.length < NUM_TX_PER_BLOCK) {
+				// console.log("Thêm giao dịch vào cache");
+				this.txCache.push(tx);
+				tx.UpdateState(this);
+				// console.log("Nếu thu thập đủ giao dịch");
+				if (this.txCache.length === NUM_TX_PER_BLOCK) {
+					// console.log("Tìm danh sách node trong top");
+					let nodesOnTop = this.GetNodesOnTop();
+					// console.log("Map danh sách node trong top thành danh sách pubKeyHash");
+					let nodesOnTopPubKeyHashes = nodesOnTop.map(node => node.pubKeyHash);
+					if (nodesOnTopPubKeyHashes.indexOf(Crypto.PUB_KEY_HASH) < 0) {
+						// console.log("Kiểm tra đã tích lũy đủ điểm");
+						// if (this.CalTimeMustWait(Crypto.PUB_KEY_HASH) <= 0) {
+						let blockData = new BlockData(this.txCache);
+						let blockHeader = new BlockHeader({
+							index: choosenBlock.blockHeader.index + 1,
+							preBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
+							merkleRoot: blockData.merkleRoot
+						});
+						
+						let _this = this;
+						// console.log("Thu thập chữ ký của các node xác nhận");
+						nodesOnTop.forEach(node => {
+							if (node.pubKeyHash !== Crypto.PUB_KEY_HASH && node.host) {
+								request.post({
+									url: 'http://' + node.host + '/agree',
+									form: Crypto.Sign({nextBlockHash: Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))})
+								}, (err, res, body) => {
+									if (err) {
+										// console.error(err);
+									} else {
+										try {
+											if (mySession === WAIT_TO_COLLECT_SIGN) {
+												let sign = JSON.parse(body);
+												let msg = JSON.parse(sign.msg);
 												
-												if (blockHeader.validatorSigns.length === NUM_SIGN_PER_BLOCK) {
-													let validatorPubKeyHashes = blockHeader.validatorSigns.map(sign => {
-														return Crypto.Hash(sign.pubKey);
-													});
-													// console.log("Node thu thập ký tên lên danh sách node xác nhận");
-													blockHeader.Sign();
+												if (msg.curBlockHash === choosenBlock.blockHeader.hash
+													&& msg.nextBlockHash === Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
+													if (!blockHeader.validatorSigns) {
+														blockHeader.validatorSigns = [];
+													}
+													// console.log("Thêm chữ ký node xác nhận vào block mới tạo");
+													blockHeader.validatorSigns.push(sign);
 													
-													// console.log("Xử lý sau khi tạo block mới");
-													_this.HandleAfterNewBlock(blockHeader, blockData, () => {
-														// // console.log('Success');
-														_this.nodes.forEach(node => {
-															if (node.host !== HOST && node.host) {
-																request.post('http://' + node.host + '/header', {form: Crypto.Sign(blockHeader)}, (err, res, body) => {
-																
-																});
-															}
+													if (blockHeader.validatorSigns.length === NUM_SIGN_PER_BLOCK) {
+														let validatorPubKeyHashes = blockHeader.validatorSigns.map(sign => {
+															return Crypto.Hash(sign.pubKey);
 														});
-													});
-													
+														// console.log("Node thu thập ký tên lên danh sách node xác nhận");
+														blockHeader.Sign();
+														
+														// console.log("Xử lý sau khi tạo block mới");
+														_this.HandleAfterNewBlock(blockHeader, blockData, () => {
+															// // console.log('Success');
+															_this.nodes.forEach(node => {
+																if (node.host !== HOST && node.host) {
+																	request.post('http://' + node.host + '/header', {form: Crypto.Sign(blockHeader)}, (err, res, body) => {
+																	
+																	});
+																}
+															});
+														});
+														
+													}
 												}
 											}
+										} catch (e) {
+											// console.error(e);
 										}
-									} catch (e) {
-										// console.error(e);
 									}
-								}
-							});
-						}
-					});
-					// }
+								});
+							}
+						});
+						// }
+					}
 				}
+				return true;
 			}
+		} else {
+			tx.UpdateState(this);
 		}
+		return false;
 	}
 
 	AddBlock(blockHeader, blockData) {
