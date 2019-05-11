@@ -66,7 +66,7 @@ const MakeConnectRequest = host => {
 							} else {
 								globalState.nodes.push(node);
 							}
-							MakeSyncHeaderRequest(host);
+							MakeSyncHeaderRequest(host, blockCache1[0].blockHeader.index);
 						}
 					});
 			}
@@ -89,7 +89,7 @@ const HandleAfterGetHeader = async (host, blockHeader) => {
 	}
 };
 
-const MakeSyncHeaderRequest = (host, index = blockCache1[0].blockHeader.index) => {
+const MakeSyncHeaderRequest = (host, index) => {
 	if (index < 2) {
 		index = 2;
 	}

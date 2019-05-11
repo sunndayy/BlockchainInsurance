@@ -16,12 +16,12 @@ const BlockSchema = new Schema({
 		preBlockHash: {type: String},
 		merkleRoot: {type: String, require: true},
 		validatorSigns: [Schema.Types.Mixed],
-		creatorSign: Schema.Types.Mixed,
-		hash: {type: String, require: true}
+		creatorSign: Schema.Types.Mixed
 	},
 	blockData: {
 		txs: [Schema.Types.Mixed]
-	}
+	},
+	hash: {type: String, require: true}
 });
 
 BlockSchema.virtual('blockHeader.hash').get(() => {
