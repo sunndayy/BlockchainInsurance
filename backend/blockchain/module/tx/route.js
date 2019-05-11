@@ -4,6 +4,7 @@ const TX = require('../../blockchain-structure/tx');
 global.txCache = [];
 
 router.post('/tx', async (req, res) => {
+	res.end();
 	let tx = TX({
 		sign: req.body,
 		tx: JSON.parse(req.body.msg)

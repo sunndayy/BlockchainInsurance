@@ -40,10 +40,10 @@ module.exports = class BlockHeader {
 	}
 	
 	Sign() {
-		let validatorPubKeyHashes = this.validatorSigns.map(sign => {
+		let valPubKeyHashes = this.validatorSigns.map(sign => {
 			return Crypto.Hash(sign.pubKey);
 		});
-		this.creatorSign = Crypto.Sign(validatorPubKeyHashes);
+		this.creatorSign = Crypto.Sign(valPubKeyHashes);
 	}
 	
 	get infoNeedAgree() {

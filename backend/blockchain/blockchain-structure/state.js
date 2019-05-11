@@ -61,6 +61,7 @@ module.exports = class State {
 		} else {
 			prePreBlock = blockCache1[0];
 		}
+		prePreBlock.hash = prePreBlock.blockHeader.hash;
 		
 		(new Block(prePreBlock)).save(async (err, doc) => {
 			if (err) {
@@ -92,8 +93,8 @@ module.exports = class State {
 					await Node.findOneAndUpdate({pubKeyHash: creatorPubKeyHash}, {$inc: {point: CREATOR_PRIZE}});
 				}
 				
-				let validatorPubKeyHashes = prePreBlock.blockHeader.validatorSigns.map(sign => Crypto.Hash(sign.pubKey));
-				Node.updateMany({pubKeyHash: {$in: validatorPubKeyHashes}}, {$inc: {point: VALIDATOR_PRIZE}}, (err, stats) => {
+				let valPubKeyHashes = prePreBlock.blockHeader.validatorSigns.map(sign => Crypto.Hash(sign.pubKey));
+				Node.updateMany({pubKeyHash: {$in: valPubKeyHashes}}, {$inc: {point: VALIDATOR_PRIZE}}, (err, stats) => {
 					if (err) {
 					} else {
 						cb();
@@ -122,6 +123,9 @@ module.exports = class State {
 						});
 						
 						let _this = this;
+						let preBlockValPubKeyHashes = choosenBlock.blockHeader.validatorSigns.map(sign => {
+							return Crypto.Hash(sign.pubKey);
+						});
 						nodesOnTop.forEach(node => {
 							if (node.pubKeyHash !== Crypto.PUB_KEY_HASH && node.host) {
 								request.post({
@@ -135,16 +139,17 @@ module.exports = class State {
 												&& blockHeader.validatorSigns.length < NUM_SIGN_PER_BLOCK) {
 												let sign = JSON.parse(body);
 												let msg = JSON.parse(sign.msg);
-												
+												let valPubKeyHash = Crypto.Hash(sign.pubKey);
 												if (msg.curBlockHash === choosenBlock.blockHeader.hash
-													&& msg.nextBlockHash === Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
+													&& msg.nextBlockHash === Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))
+													&& preBlockValPubKeyHashes.indexOf(valPubKeyHash) < 0) {
 													if (!blockHeader.validatorSigns) {
 														blockHeader.validatorSigns = [];
 													}
 													blockHeader.validatorSigns.push(sign);
 													
 													if (blockHeader.validatorSigns.length === NUM_SIGN_PER_BLOCK) {
-														let validatorPubKeyHashes = blockHeader.validatorSigns.map(sign => {
+														let valPubKeyHashes = blockHeader.validatorSigns.map(sign => {
 															return Crypto.Hash(sign.pubKey);
 														});
 														blockHeader.Sign();
@@ -329,16 +334,16 @@ module.exports = class State {
 		/*
 		Check no node signs 2 sequence blocks
 		* */
-		let validatorPubKeyHashes = blockHeader.validatorSigns.map(sign => {
+		let valPubKeyHashes = blockHeader.validatorSigns.map(sign => {
 			return Crypto.Hash(sign.pubKey);
 		});
 		
-		let preBlockValidatorPubkeyHashes = preBlock.blockHeader.validatorSigns.map(sign => {
+		let preBlockvalPubKeyHashes = preBlock.blockHeader.validatorSigns.map(sign => {
 			return Crypto.Hash(sign.pubKey);
 		});
 		
-		if (_.union(validatorPubKeyHashes, preBlockValidatorPubkeyHashes).length
-			< validatorPubKeyHashes.length + preBlockValidatorPubkeyHashes.length) {
+		if (_.union(valPubKeyHashes, preBlockvalPubKeyHashes).length
+			< valPubKeyHashes.length + preBlockvalPubKeyHashes.length) {
 			console.log('Ky 2 block lien tiep');
 			console.log();
 			return false;
@@ -351,7 +356,7 @@ module.exports = class State {
 			return false;
 		}
 		
-		if (blockHeader.creatorSign.msg !== JSON.stringify(validatorPubKeyHashes)) {
+		if (blockHeader.creatorSign.msg !== JSON.stringify(valPubKeyHashes)) {
 			console.log('Thong tin ky node thu thap khong dung');
 			console.log();
 			return false;
