@@ -8,6 +8,9 @@
         android:id="@+id/item_cart_view_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:background="@color/colorPrimary">
 
         <ImageView
@@ -35,6 +38,9 @@
         android:id="@+id/item_cart_view_foreground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:background="@android:color/white"
         android:padding="10dp">
 
@@ -50,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/ic_item_cart_bike"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"

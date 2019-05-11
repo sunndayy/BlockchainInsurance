@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
@@ -32,9 +33,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private RecyclerView recyclerView;
-    private ItemsMainAdapter itemsMainAdapter;
-    private List<Item> itemList;
+    private RecyclerView recyclerView1, recyclerView2, recyclerView3;
+    private ItemsMainAdapter itemsMainAdapter1, itemsMainAdapter2, itemsMainAdapter3;
+    private List<Item> itemList1, itemList2, itemList3;
     private SliderLayout sliderLayout;
 
     private Button btnSignIn, btnSignUp;
@@ -85,15 +86,32 @@ public class MainActivity extends AppCompatActivity
 
         // recycle view
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_main);
-        itemList = new ArrayList<>();
+        recyclerView1 = (RecyclerView) findViewById(R.id.recycler_view_main_1);
+        recyclerView2 = (RecyclerView) findViewById(R.id.recycler_view_main_2);
+        recyclerView3 = (RecyclerView) findViewById(R.id.recycler_view_main_3);
 
-        itemsMainAdapter = new ItemsMainAdapter(this, itemList);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(2), true));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(itemsMainAdapter);
+
+        itemList1 = new ArrayList<>();
+        itemList2 = new ArrayList<>();
+        itemList3 = new ArrayList<>();
+
+        itemsMainAdapter1 = new ItemsMainAdapter(this, itemList1);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView1.setLayoutManager(layoutManager1);
+        recyclerView1.setItemAnimator(new DefaultItemAnimator());
+        recyclerView1.setAdapter(itemsMainAdapter1);
+
+        itemsMainAdapter2 = new ItemsMainAdapter(this, itemList2);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView2.setLayoutManager(layoutManager2);
+        recyclerView2.setItemAnimator(new DefaultItemAnimator());
+        recyclerView2.setAdapter(itemsMainAdapter2);
+
+        itemsMainAdapter3 = new ItemsMainAdapter(this, itemList3);
+        LinearLayoutManager layoutManager3 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView3.setLayoutManager(layoutManager3);
+        recyclerView3.setItemAnimator(new DefaultItemAnimator());
+        recyclerView3.setAdapter(itemsMainAdapter3);
 
         prepareAlbums();
 
@@ -143,75 +161,56 @@ public class MainActivity extends AppCompatActivity
                 R.drawable.winner};
 
         Item a = new Item("AB", 45000000, covers[0]);
-        itemList.add(a);
+        itemList1.add(a);
+        itemList2.add(a);
+        itemList3.add(a);
 
         a = new Item("Blade", 18000000, covers[1]);
-        itemList.add(a);
+        itemList1.add(a);
+        itemList2.add(a);
+        itemList3.add(a);
 
         a = new Item("Lead", 31000000, covers[2]);
-        itemList.add(a);
+        itemList1.add(a);
+        itemList2.add(a);
+        itemList3.add(a);
 
         a = new Item("MSX", 90000000, covers[3]);
-        itemList.add(a);
+        itemList1.add(a);
+        itemList2.add(a);
+        itemList3.add(a);
 
         a = new Item("PCX", 81000000, covers[4]);
-        itemList.add(a);
+        itemList1.add(a);
+        itemList2.add(a);
+        itemList3.add(a);
 
         a = new Item("SH", 63000000, covers[5]);
-        itemList.add(a);
+        itemList1.add(a);
+        itemList2.add(a);
+        itemList3.add(a);
 
         a = new Item("Vision", 29000000, covers[6]);
-        itemList.add(a);
+        itemList1.add(a);
+        itemList2.add(a);
+        itemList3.add(a);
 
         a = new Item("Wave", 23000000, covers[7]);
-        itemList.add(a);
+        itemList1.add(a);
+        itemList2.add(a);
+        itemList3.add(a);
 
         a = new Item("Winner", 42000000, covers[8]);
-        itemList.add(a);
+        itemList1.add(a);
+        itemList2.add(a);
+        itemList3.add(a);
 
-        itemsMainAdapter.notifyDataSetChanged();
+        itemsMainAdapter1.notifyDataSetChanged();
+        itemsMainAdapter2.notifyDataSetChanged();
+        itemsMainAdapter3.notifyDataSetChanged();
 
     }
 
-    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
-
-        private int spanCount;
-        private int spacing;
-        private boolean includeEdge;
-
-        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
-            this.spanCount = spanCount;
-            this.spacing = spacing;
-            this.includeEdge = includeEdge;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = parent.getChildAdapterPosition(view); // item position
-            int column = position % spanCount; // item column
-
-            if (includeEdge) {
-                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
-                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
-
-                if (position < spanCount) { // top edge
-                    outRect.top = spacing;
-                }
-                outRect.bottom = spacing; // item bottom
-            } else {
-                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-                if (position >= spanCount) {
-                    outRect.top = spacing; // item top
-                }
-            }
-        }
-    }
-
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
-    }
 
     private void prepareBanner() {
         TextSliderView textSliderView1 = new TextSliderView(this);

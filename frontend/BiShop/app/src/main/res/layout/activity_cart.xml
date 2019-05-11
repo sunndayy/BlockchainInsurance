@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray"
     tools:context=".CartActivity">
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_cart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:clipToPadding="false"
         android:scrollbars="vertical">
 
     </android.support.v7.widget.RecyclerView>
 
+    <TextView
+        android:text="Tổng tiền: 20.000.000 vnđ"
+        android:textColor="@color/black"
+        android:textSize="10pt"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_gravity="bottom|right"
-        android:text="Thanh toán"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Đặt mua"
         android:textColor="@color/white"
-        android:background="@color/colorPrimary" />
+        android:background="@drawable/rounded_button" />
 
-</FrameLayout>
+</LinearLayout>
