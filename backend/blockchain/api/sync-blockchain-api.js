@@ -14,7 +14,6 @@ const BlockData = require('../blockchain-structure/block-data');
 const MakeRequest = (url, msg, cb) => {
 	let handleResponse = (err, res, body) => {
 		if (err) {
-			// console.error(err);
 		} else {
 			try {
 				let sign = JSON.parse(body);
@@ -23,7 +22,6 @@ const MakeRequest = (url, msg, cb) => {
 					cb(msg, Crypto.Hash(sign.pubKey));
 				}
 			} catch (err) {
-				// console.error(err);
 			}
 		}
 	};
@@ -73,7 +71,6 @@ const MakeConnectRequest = host => {
 					});
 			}
 		} catch (err) {
-			// console.error(err);
 		}
 	});
 };
