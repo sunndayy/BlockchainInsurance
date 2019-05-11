@@ -135,7 +135,8 @@ module.exports = class State {
 									if (err) {
 									} else {
 										try {
-											if (mySession === WAIT_TO_COLLECT_SIGN) {
+											if (mySession === WAIT_TO_COLLECT_SIGN
+												&& blockHeader.validatorSigns.length < NUM_SIGN_PER_BLOCK) {
 												let sign = JSON.parse(body);
 												let msg = JSON.parse(sign.msg);
 												
