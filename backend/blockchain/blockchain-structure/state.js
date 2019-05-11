@@ -45,8 +45,6 @@ module.exports = class State {
 					i++;
 				}
 			}
-		} else {
-			console.log('Đây là tmp state');
 		}
 	}
 	
@@ -67,7 +65,6 @@ module.exports = class State {
 		(new Block(prePreBlock)).save(async (err, doc) => {
 			if (err) {
 			} else {
-				// console.log("Cập nhật lại session thành chờ sau khi nhận/tạo block mới, preBlock và prePreBlock");
 				mySession = WAIT_AFTER_NEW_BLOCK;
 				blockCache1 = blockCache2;
 				blockCache2 = [{
@@ -202,11 +199,6 @@ module.exports = class State {
 			});
 			validator.point += VALIDATOR_PRIZE;
 		});
-		
-		_this.nodes.forEach(node => {
-			console.log(node.pubKeyHash + ' ' + node.point);
-		});
-		console.log();
 	}
 	
 	// CalTimeMustWait(pubKeyHash, time = new Date()) {
@@ -288,13 +280,17 @@ module.exports = class State {
 		Validate preBlockHash and timeSign
 		* */
 		if (blockHeader.preBlockHash !== preBlock.blockHeader.hash) {
-			// console.log("PreBlockHash không hợp lệ");
+			console.log('Preblockhash khong hop le');
+			console.log(blockHeader.preBlockHash);
+			console.log(preBlock.blockHeader.hash);
+			console.log();
 			return false;
 		}
 		
 		if (preBlock.blockHeader.timestamp) {
 			if (blockHeader.firstTimeSign - preBlock.blockHeader.timestamp < DURATION) {
-				// console.log("Chưa chờ đủ thời gian giữa 2 block liên tiếp");
+				console.log('Chua cho du thoi gian');
+				console.log();
 				return false;
 			}
 		}
@@ -312,6 +308,8 @@ module.exports = class State {
 			if (!nodesOntTop.find(node => {
 				return node.pubKeyHash === pubKeyHash;
 			})) {
+				console.log('Node ky ten khong nam trong top');
+				console.log();
 				return false;
 			}
 			
@@ -319,6 +317,11 @@ module.exports = class State {
 			
 			if (msg.curBlockHash !== preBlock.blockHeader.hash
 				|| msg.nextBlockHash !== Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
+				console.log('Thong tin can xac nhan khong dung');
+				console.log(msg.curBlockHash);
+				console.log(preBlock.blockHeader.hash);
+				console.log(msg.nextBlockHash);
+				console.log(Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree)));
 				return false;
 			}
 		}
@@ -336,6 +339,8 @@ module.exports = class State {
 		
 		if (_.union(validatorPubKeyHashes, preBlockValidatorPubkeyHashes).length
 			< validatorPubKeyHashes.length + preBlockValidatorPubkeyHashes.length) {
+			console.log('Ky 2 block lien tiep');
+			console.log();
 			return false;
 		}
 		
@@ -347,6 +352,8 @@ module.exports = class State {
 		}
 		
 		if (blockHeader.creatorSign.msg !== JSON.stringify(validatorPubKeyHashes)) {
+			console.log('Thong tin ky node thu thap khong dung');
+			console.log();
 			return false;
 		}
 		
@@ -356,6 +363,8 @@ module.exports = class State {
 		let creatorPubKeyHash = Crypto.Hash(blockHeader.creatorSign.pubKey);
 		
 		if (nodesOntTop.indexOf(creatorPubKeyHash) >= 0) {
+			console.log('Node thu thap nam trong top');
+			console.log();
 			return false;
 		}
 		
@@ -428,16 +437,16 @@ module.exports = class State {
 				return;
 		}
 		
-		if (blockData.txs.length !== NUM_TX_PER_BLOCK && blockHeader.index > 1) {
-			return;
-		}
-		
-		if (blockData.merkleRoot !== blockHeader.merkleRoot) {
-			return;
+		if (blockHeader.index > 1) {
+			if (blockData.txs.length !== NUM_TX_PER_BLOCK || blockData.merkleRoot !== blockHeader.merkleRoot) {
+				return false;
+			}
 		}
 		
 		for (let i = 0; i < NUM_TX_PER_BLOCK; i++) {
 			if (await !blockData.txs[i].Validate(this)) {
+				console.log('Giao dich khong hop le');
+				console.log();
 				return;
 			}
 		}
