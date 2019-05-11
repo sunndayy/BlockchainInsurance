@@ -6,90 +6,188 @@
 
 const config = require('../config');
 Object.keys(config).forEach(key => {
-  global[key] = config[key]
+    global[key] = config[key]
 });
-const app = require('../app');
-const debug = require('debug')('blocktree:server');
-const http = require('http');
-require('../loadDB');
 
-/**
- * Normalize a port into a number, string, or false.
- */
+const mongoose = require('mongoose');
+mongoose.connect("mongodb://localhost/" + dbPrefix, { useNewUrlParser: true });
+const db = mongoose.connection;
 
-function normalizePort(val) {
-  let port = parseInt(val, 10);
+db.on('error', err => {
+    // console.error(err);
+});
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+db.once('open', async () => {
+    const initNodePromise = require('../model/init-nodes');
+    await initNodePromise();
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+    const app = require('../app');
+    const debug = require('debug')('blocktree:server');
+    const http = require('http');
 
-  return false;
-}
+    /**
+     * Normalize a port into a number, string, or false.
+     */
 
-/**
- * Event listener for HTTP server "error" event.
- */
+    function normalizePort(val) {
+        let port = parseInt(val, 10);
 
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+        if (isNaN(port)) {
+            // named pipe
+            return val;
+        }
 
-  let bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+        if (port >= 0) {
+            // port number
+            return port;
+        }
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
+        return false;
+    }
 
-/**
- * Event listener for HTTP server "listening" event.
- */
+    /**
+     * Event listener for HTTP server "error" event.
+     */
 
-function onListening() {
-  let addr = server.address();
-  let bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
+    function onError(error) {
+        if (error.syscall !== 'listen') {
+            throw error;
+        }
 
-/**
- * Get port from environment and store in Express.
- */
+        let bind = typeof port === 'string'
+            ? 'Pipe ' + port
+            : 'Port ' + port;
 
-let port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+        // handle specific listen errors with friendly messages
+        switch (error.code) {
+            case 'EACCES':
+                // console.error(bind + ' requires elevated privileges');
+                process.exit(1);
+                break;
+            case 'EADDRINUSE':
+                // console.error(bind + ' is already in use');
+                process.exit(1);
+                break;
+            default:
+                throw error;
+        }
+    }
 
-/**
- * Create HTTP server.
- */
+    /**
+     * Event listener for HTTP server "listening" event.
+     */
 
-let server = http.createServer(app);
+    function onListening() {
+        let addr = server.address();
+        let bind = typeof addr === 'string'
+            ? 'pipe ' + addr
+            : 'port ' + addr.port;
+        debug('Listening on ' + bind);
+    }
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+    /**
+     * Get port from environment and store in Express.
+     */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+    let port = normalizePort(process.env.PORT || PORT);
+    app.set('port', port);
+
+    /**
+     * Create HTTP server.
+     */
+
+    let server = http.createServer(app);
+
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
+
+    let BlockHeader = require('../blockchain-structure/block-header');
+    let BlockData = require('../blockchain-structure/block-data');
+    let BlockCache = mongoose.model('block_cache');
+
+    let blocks = await BlockCache.find({});
+    if (blocks.length == 0) {
+        blocks.push({
+            blockHeader: {
+                index: 0,
+                validatorSigns: []
+            },
+            blockData: {
+                txs: []
+            }
+        });
+        blocks.push({
+            blockHeader: {
+                index: 1,
+                validatorSigns: []
+            },
+            blockData: {
+                txs: []
+            }
+        });
+    }
+
+    blocks = blocks.map(block => {
+        return {
+            blockHeader: new BlockHeader(block.blockHeader),
+            blockData: new BlockData(block.blockData.txs)
+        };
+    });
+
+    if (blocks[0].blockHeader.index < blocks[1].blockHeader.index) {
+        global.blockCache1 = [blocks[0]];
+        global.blockCache2 = [blocks[1]];
+    } else {
+        global.blockCache1 = [blocks[1]];
+        global.blockCache2 = [blocks[0]];
+    }
+
+    global.choosenBlock = blockCache2[0];
+    const State = require('../blockchain-structure/state');
+    global.globalState = new State(true);
+    await globalState.Init();
+
+    /**
+     * Connect DNS server
+     */
+    const request = require('request');
+    const syncDNS = () => {
+        request.post({ url: dnsServer, form: { host: HOST } }, (err, res, body) => {
+            if (err) {
+                // console.error(err);
+            }
+        });
+    };
+
+    request(dnsServer, (err, res, body) => {
+        if (err) {
+            // console.error(err);
+        } else {
+            syncDNS();
+            try {
+                const { MakeConnectRequest } = require('../api/sync-blockchain-api');
+
+                /**
+                 * Connect and sync blockchain from every node in network
+                 */
+                let addrs = JSON.parse(body);
+                addrs.forEach(addr => {
+                    if (addr !== HOST) {
+                        MakeConnectRequest(addr);
+                    }
+                });
+            } catch (err) {
+                // console.error(err);
+            }
+        }
+    });
+
+    setInterval(() => {
+        syncDNS();
+    }, 1000 * 60 * 10);
+});

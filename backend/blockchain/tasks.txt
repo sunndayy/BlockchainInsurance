@@ -1,2 +1,1 @@
-1. State.js
-2. Tx.js
+﻿Khởi tạo các đối tượng

@@ -1,0 +1,1 @@
+﻿Tham số truyền vào body kiểu số bị chuyển thành kiểu chuỗi

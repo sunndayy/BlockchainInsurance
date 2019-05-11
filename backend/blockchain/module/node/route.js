@@ -1,31 +1,51 @@
 const express = require('express');
 const router = express.Router();
 
-const FindNode =require('./model').FindNode;
+const FindNode = require('./model').FindNode;
 
 const verifyMiddleware = require('../../middleware/verify-middleware');
 const Crypto = require('../../utils/crypto');
 
 router.post('/version', verifyMiddleware, async (req, res) => {
-    if (req.body.header == 'VERSION') {
-        let pubKeyHash = Crypto.Hash(req.body.pubKey);
-        if (nodes.indexOf(pubKeyHash) >= 0) {
-            let node = await FindNode(pubKeyHash);
-            if (node) {
-                let lastTime = new Date(node.lastTimeUpdateHost);
-                let newTime = new Date(req.body.time);
-                if (newTime > lastTime) {
-                    node.host = req.body.host;
-                    node.lastTimeUpdateHost = new Date();
-                    await node.Save();
-                    return res.json(Crypto.Sign(privKey, 'VERACK'));
-                }
-            }
-        }
-        res.error('Invalid node');
-    } else {
-        res.error('Invalid header');
-    }
+	if (req.body.header === 'VERSION') {
+		let pubKeyHash = req.body.pubKeyHash;
+		let node = await FindNode(pubKeyHash);
+		if (node) {
+			let add = true;
+			if (node.lastTimeUpdateHost) {
+				let lastTime = node.lastTimeUpdateHost;
+				let newTime = new Date(req.body.time);
+				if (newTime <= lastTime) {
+					add = false;
+				}
+			}
+			if (add) {
+				node.host = req.body.host;
+				if (!node.lastTimeUpdateHost) {
+					node.lastTimeUpdateHost = new Date();
+				}
+				node.save(err => {
+					if (err) {
+						// console.error(err);
+					} else {
+						let index = globalState.nodes.findIndex(_node => {
+							return _node.pubKeyHash === node.pubKeyHash;
+						});
+						if (index >= 0) {
+							globalState.nodes[index] = node;
+						}
+						res.json(Crypto.Sign({
+							header: 'VER_ACK'
+						}));
+					}
+				});
+			}
+		} else {
+			res.end('Invalid node');
+		}
+	} else {
+		res.end('Invalid header');
+	}
 });
 
 module.exports = router;
