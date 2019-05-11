@@ -64,7 +64,9 @@ const MakeConnectRequest = host => {
 								return _node.pubKeyHash === node.pubKeyHash;
 							});
 							if (index >= 0) {
-								globalState.nodes[index] = node;
+								globalState.nodes[index].host = node.host;
+							} else {
+								globalState.nodes.push(node);
 							}
 							MakeSyncHeaderRequest(host);
 						}
