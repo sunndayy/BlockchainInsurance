@@ -15,7 +15,7 @@ const BlockSchema = new Schema({
 		index: {type: Number, require: true, unique: true},
 		preBlockHash: {type: String},
 		merkleRoot: {type: String, require: true},
-		validatorSigns: [Schema.Types.Mixed],
+		valSigns: [Schema.Types.Mixed],
 		creatorSign: Schema.Types.Mixed
 	},
 	blockData: {

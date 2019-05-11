@@ -23,6 +23,7 @@ module.exports = class State {
 	
 	async Init() {
 		this.nodes = await Node.find({});
+		
 		if (this.isGlobalState) {
 			let preBlock;
 			if (choosenBlock.blockHeader.index > 1) {
@@ -32,10 +33,13 @@ module.exports = class State {
 			} else {
 				preBlock = blockCache1[0];
 			}
+			
 			this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 			this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
+			
 			await BlockCache.remove({});
 			await BlockCache.insertMany([preBlock, choosenBlock]);
+			
 			let i = 0;
 			while (i < txCache.length) {
 				if (await txCache[i].Validate(this)) {
@@ -73,16 +77,6 @@ module.exports = class State {
 					blockData: blockData
 				}];
 				
-				setTimeout(async () => {
-					mySession = WAIT_TO_COLLECT_SIGN;
-					blockCache2.sort((a, b) => {
-						return a.blockHeader.firstTimeSign - b.blockHeader.firstTimeSign;
-					});
-					choosenBlock = blockCache2[0];
-					globalState = new State(true);
-					await globalState.Init();
-				}, DURATION);
-				
 				for (let i = 0; i < prePreBlock.blockData.txs.length; i++) {
 					let tx = prePreBlock.blockData.txs[i];
 					await tx.UpdateDB(this);
@@ -93,91 +87,100 @@ module.exports = class State {
 					await Node.findOneAndUpdate({pubKeyHash: creatorPubKeyHash}, {$inc: {point: CREATOR_PRIZE}});
 				}
 				
-				let valPubKeyHashes = prePreBlock.blockHeader.validatorSigns.map(sign => Crypto.Hash(sign.pubKey));
-				Node.updateMany({pubKeyHash: {$in: valPubKeyHashes}}, {$inc: {point: VALIDATOR_PRIZE}}, (err, stats) => {
+				let valPubKeyHashes = prePreBlock.blockHeader.valSigns.map(sign => Crypto.Hash(sign.pubKey));
+				Node.updateMany({pubKeyHash: {$in: valPubKeyHashes}}, {$inc: {point: VAL_PRIZE}}, err => {
 					if (err) {
 					} else {
+						setTimeout(async () => {
+							mySession = WAIT_TO_COLLECT_SIGN;
+							blockCache2.sort((a, b) => {
+								return a.blockHeader.firstTimeSign - b.blockHeader.firstTimeSign;
+							});
+							choosenBlock = blockCache2[0];
+							globalState = new State(true);
+							await globalState.Init();
+						}, DURATION);
 						cb();
 					}
 				});
-				
 			}
 		});
 	}
 	
 	PushTx(tx, addToCache = false) {
-		if (addToCache) {
-			if (this.txCache.length < NUM_TX_PER_BLOCK) {
-				this.txCache.push(tx);
-				tx.UpdateState(this);
-				if (this.txCache.length === NUM_TX_PER_BLOCK) {
-					let nodesOnTop = this.GetNodesOnTop();
-					let nodesOnTopPubKeyHashes = nodesOnTop.map(node => node.pubKeyHash);
-					if (nodesOnTopPubKeyHashes.indexOf(Crypto.PUB_KEY_HASH) < 0) {
-						// if (this.CalTimeMustWait(Crypto.PUB_KEY_HASH) <= 0) {
-						let blockData = new BlockData(this.txCache);
-						let blockHeader = new BlockHeader({
-							index: choosenBlock.blockHeader.index + 1,
-							preBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
-							merkleRoot: blockData.merkleRoot
-						});
-						
-						let _this = this;
-						let preBlockValPubKeyHashes = choosenBlock.blockHeader.validatorSigns.map(sign => {
-							return Crypto.Hash(sign.pubKey);
-						});
-						nodesOnTop.forEach(node => {
-							if (node.pubKeyHash !== Crypto.PUB_KEY_HASH && node.host) {
-								request.post({
-									url: 'http://' + node.host + '/agree',
-									form: Crypto.Sign({nextBlockHash: Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))})
-								}, (err, res, body) => {
-									if (err) {
-									} else {
-										try {
-											if (mySession === WAIT_TO_COLLECT_SIGN
-												&& blockHeader.validatorSigns.length < NUM_SIGN_PER_BLOCK) {
-												let sign = JSON.parse(body);
-												let msg = JSON.parse(sign.msg);
-												let valPubKeyHash = Crypto.Hash(sign.pubKey);
-												if (msg.curBlockHash === choosenBlock.blockHeader.hash
-													&& msg.nextBlockHash === Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))
-													&& preBlockValPubKeyHashes.indexOf(valPubKeyHash) < 0) {
-													if (!blockHeader.validatorSigns) {
-														blockHeader.validatorSigns = [];
-													}
-													blockHeader.validatorSigns.push(sign);
+		if (addToCache && this.txCache.length < NUM_TX_PER_BLOCK) {
+			this.txCache.push(tx);
+			tx.UpdateState(this);
+			
+			if (this.txCache.length === NUM_TX_PER_BLOCK) {
+				let nodesOnTop = this.GetNodesOnTop();
+				let nodesOnTopPubKeyHashes = nodesOnTop.map(node => node.pubKeyHash);
+				if (nodesOnTopPubKeyHashes.indexOf(Crypto.PUB_KEY_HASH) < 0) {
+					// if (this.CalTimeMustWait(Crypto.PUB_KEY_HASH) <= 0) {
+					
+					let blockData = new BlockData(this.txCache);
+					let blockHeader = new BlockHeader({
+						index: choosenBlock.blockHeader.index + 1,
+						preBlockHash: Crypto.Hash(JSON.stringify(choosenBlock.blockHeader)),
+						merkleRoot: blockData.merkleRoot
+					});
+					
+					let _this = this;
+					let preBlockValPubKeyHashes = choosenBlock.blockHeader.valSigns.map(sign => {
+						return Crypto.Hash(sign.pubKey);
+					});
+					
+					nodesOnTop.forEach(node => {
+						if (node.pubKeyHash !== Crypto.PUB_KEY_HASH && node.host) {
+							request.post({
+								url: 'http://' + node.host + '/agree',
+								form: Crypto.Sign({nextBlockHash: Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))})
+							}, (err, res, body) => {
+								if (err) {
+								} else {
+									try {
+										if (mySession === WAIT_TO_COLLECT_SIGN
+											&& blockHeader.valSigns.length < NUM_SIGN_PER_BLOCK) {
+											let sign = JSON.parse(body);
+											let msg = JSON.parse(sign.msg);
+											let valPubKeyHash = Crypto.Hash(sign.pubKey);
+											
+											if (msg.curBlockHash === choosenBlock.blockHeader.hash
+												&& msg.nextBlockHash === Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))
+												&& preBlockValPubKeyHashes.indexOf(valPubKeyHash) < 0) {
+												if (!blockHeader.valSigns) {
+													blockHeader.valSigns = [];
+												}
+												blockHeader.valSigns.push(sign);
+												
+												if (blockHeader.valSigns.length === NUM_SIGN_PER_BLOCK) {
+													let valPubKeyHashes = blockHeader.valSigns.map(sign => {
+														return Crypto.Hash(sign.pubKey);
+													});
+													blockHeader.Sign();
 													
-													if (blockHeader.validatorSigns.length === NUM_SIGN_PER_BLOCK) {
-														let valPubKeyHashes = blockHeader.validatorSigns.map(sign => {
-															return Crypto.Hash(sign.pubKey);
-														});
-														blockHeader.Sign();
-														
-														_this.HandleAfterNewBlock(blockHeader, blockData, () => {
-															_this.nodes.forEach(node => {
-																if (node.host !== HOST && node.host) {
-																	request.post('http://' + node.host + '/header', {form: Crypto.Sign(blockHeader)}, (err, res, body) => {
+													_this.HandleAfterNewBlock(blockHeader, blockData, () => {
+														_this.nodes.forEach(node => {
+															if (node.host !== HOST && node.host) {
+																request.post('http://' + node.host + '/header', {form: Crypto.Sign(blockHeader)}, (err, res, body) => {
 																	
-																	});
-																}
-															});
+																});
+															}
 														});
-														
-													}
+													});
 												}
 											}
-										} catch (e) {
 										}
+									} catch (e) {
 									}
-								});
-							}
-						});
-						// }
-					}
+								}
+							});
+						}
+					});
+					// }
 				}
-				return true;
 			}
+			return true;
 		} else {
 			tx.UpdateState(this);
 		}
@@ -198,11 +201,11 @@ module.exports = class State {
 			creator.point += CREATOR_PRIZE;
 		}
 		
-		blockHeader.validatorSigns.forEach(sign => {
-			let validator = _this.nodes.find(node => {
+		blockHeader.valSigns.forEach(sign => {
+			let val = _this.nodes.find(node => {
 				return node.pubKeyHash === Crypto.Hash(sign.pubKey);
 			});
-			validator.point += VALIDATOR_PRIZE;
+			val.point += VAL_PRIZE;
 		});
 	}
 	
@@ -292,90 +295,95 @@ module.exports = class State {
 			return false;
 		}
 		
-		if (preBlock.blockHeader.timestamp) {
+		if (blockHeader.index > 1) {
 			if (blockHeader.firstTimeSign - preBlock.blockHeader.timestamp < DURATION) {
 				console.log('Chua cho du thoi gian');
 				console.log();
 				return false;
 			}
-		}
-		
-		/*
-		Verify and validate validatorSigns
-		* */
-		let nodesOntTop = this.GetNodesOnTop();
-		for (let i = 0; i < NUM_SIGN_PER_BLOCK; i++) {
-			if (!Crypto.Verify(blockHeader.validatorSigns[i])) {
+			
+			if (blockHeader.valSigns.length !== NUM_SIGN_PER_BLOCK) {
+				console.log('Khong dung so luong chu ky');
 				return false;
 			}
 			
-			let pubKeyHash = Crypto.Hash(blockHeader.validatorSigns[i].pubKey);
-			if (!nodesOntTop.find(node => {
-				return node.pubKeyHash === pubKeyHash;
-			})) {
-				console.log('Node ky ten khong nam trong top');
+			/*
+			Verify and validate valSigns
+			* */
+			let nodesOntTop = this.GetNodesOnTop();
+			for (let i = 0; i < NUM_SIGN_PER_BLOCK; i++) {
+				if (!Crypto.Verify(blockHeader.valSigns[i])) {
+					return false;
+				}
+				
+				let pubKeyHash = Crypto.Hash(blockHeader.valSigns[i].pubKey);
+				if (!nodesOntTop.find(node => {
+					return node.pubKeyHash === pubKeyHash;
+				})) {
+					console.log('Node ky ten khong nam trong top');
+					console.log();
+					return false;
+				}
+				
+				let msg = JSON.parse(blockHeader.valSigns[i].msg);
+				
+				if (msg.curBlockHash !== preBlock.blockHeader.hash
+					|| msg.nextBlockHash !== Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
+					console.log('Thong tin can xac nhan khong dung');
+					console.log(msg.curBlockHash);
+					console.log(preBlock.blockHeader.hash);
+					console.log(msg.nextBlockHash);
+					console.log(Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree)));
+					return false;
+				}
+			}
+			
+			/*
+			Check no node signs 2 sequence blocks
+			* */
+			let valPubKeyHashes = blockHeader.valSigns.map(sign => {
+				return Crypto.Hash(sign.pubKey);
+			});
+			
+			let preBlockValPubKeyHashes = preBlock.blockHeader.valSigns.map(sign => {
+				return Crypto.Hash(sign.pubKey);
+			});
+			
+			if (_.union(valPubKeyHashes, preBlockValPubKeyHashes).length
+				< valPubKeyHashes.length + preBlockValPubKeyHashes.length) {
+				console.log('Ky 2 block lien tiep');
 				console.log();
 				return false;
 			}
 			
-			let msg = JSON.parse(blockHeader.validatorSigns[i].msg);
-			
-			if (msg.curBlockHash !== preBlock.blockHeader.hash
-				|| msg.nextBlockHash !== Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
-				console.log('Thong tin can xac nhan khong dung');
-				console.log(msg.curBlockHash);
-				console.log(preBlock.blockHeader.hash);
-				console.log(msg.nextBlockHash);
-				console.log(Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree)));
+			/*
+			Verify and validate creatorSign
+			* */
+			if (!Crypto.Verify(blockHeader.creatorSign)) {
 				return false;
 			}
+			
+			if (blockHeader.creatorSign.msg !== JSON.stringify(valPubKeyHashes)) {
+				console.log('Thong tin ky node thu thap khong dung');
+				console.log();
+				return false;
+			}
+			
+			/*
+			Check creator is not on top and has waited enough
+			* */
+			let creatorPubKeyHash = Crypto.Hash(blockHeader.creatorSign.pubKey);
+			
+			if (nodesOntTop.indexOf(creatorPubKeyHash) >= 0) {
+				console.log('Node thu thap nam trong top');
+				console.log();
+				return false;
+			}
+			
+			// if (this.CalTimeMustWait(creatorPubKeyHash, new Date(blockHeader.timeStamp)) > 0) {
+			// 	return false;
+			// }
 		}
-		
-		/*
-		Check no node signs 2 sequence blocks
-		* */
-		let valPubKeyHashes = blockHeader.validatorSigns.map(sign => {
-			return Crypto.Hash(sign.pubKey);
-		});
-		
-		let preBlockvalPubKeyHashes = preBlock.blockHeader.validatorSigns.map(sign => {
-			return Crypto.Hash(sign.pubKey);
-		});
-		
-		if (_.union(valPubKeyHashes, preBlockvalPubKeyHashes).length
-			< valPubKeyHashes.length + preBlockvalPubKeyHashes.length) {
-			console.log('Ky 2 block lien tiep');
-			console.log();
-			return false;
-		}
-		
-		/*
-		Verify and validate creatorSign
-		* */
-		if (!Crypto.Verify(blockHeader.creatorSign)) {
-			return false;
-		}
-		
-		if (blockHeader.creatorSign.msg !== JSON.stringify(valPubKeyHashes)) {
-			console.log('Thong tin ky node thu thap khong dung');
-			console.log();
-			return false;
-		}
-		
-		/*
-		Check creator is not on top and has waited enough
-		* */
-		let creatorPubKeyHash = Crypto.Hash(blockHeader.creatorSign.pubKey);
-		
-		if (nodesOntTop.indexOf(creatorPubKeyHash) >= 0) {
-			console.log('Node thu thap nam trong top');
-			console.log();
-			return false;
-		}
-		
-		// if (this.CalTimeMustWait(creatorPubKeyHash, new Date(blockHeader.timeStamp)) > 0) {
-		// 	return false;
-		// }
 		
 		return true;
 	}
@@ -383,6 +391,7 @@ module.exports = class State {
 	async ValidateBlockData(blockHeader, blockData, syncHeader) {
 		let cb;
 		let preBlock;
+		
 		switch (blockHeader.index) {
 			case blockCache1[0].blockHeader.index:
 				cb = () => {
@@ -395,14 +404,20 @@ module.exports = class State {
 				break;
 			
 			case blockCache2[0].blockHeader.index:
-				preBlock = blockCache1.find(block => {
-					return block.blockHeader.hash === blockHeader.preBlockHash;
-				});
+				if (blockCache2[0].blockHeader.index === 1) {
+					preBlock = blockCache1[0];
+				} else {
+					preBlock = blockCache1.find(block => {
+						return block.blockHeader.hash === blockHeader.preBlockHash;
+					});
+				}
+				
 				if (preBlock) {
 					this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 				} else {
-					return false;
+					return;
 				}
+				
 				cb = () => {
 					blockCache2.push({
 						blockHeader: blockHeader,
@@ -414,6 +429,7 @@ module.exports = class State {
 			
 			case blockCache2[0].blockHeader.index + 1:
 				let prePreBlock;
+				
 				if (blockCache2[0].blockHeader.index === 1) {
 					preBlock = blockCache2[0];
 					prePreBlock = blockCache1[0];
@@ -425,8 +441,11 @@ module.exports = class State {
 						prePreBlock = blockCache1.find(block => {
 							return block.blockHeader.hash === preBlock.blockHeader.preBlockHash;
 						});
+					} else {
+						return;
 					}
 				}
+				
 				if (preBlock && prePreBlock) {
 					this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
 					this.AddBlock(preBlock.blockHeader, preBlock.blockData);

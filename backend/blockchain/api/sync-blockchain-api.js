@@ -52,10 +52,9 @@ const MakeConnectRequest = host => {
 						}
 					},
 					{
-						upsert: true,
 						new: true
 					}, (err, node) => {
-						if (err) {
+						if (err || !node) {
 							// console.error(err);
 						} else {
 							let index = globalState.nodes.findIndex(_node => {
@@ -84,8 +83,6 @@ const HandleAfterGetHeader = async (host, blockHeader) => {
 	blockHeader = new BlockHeader(blockHeader);
 	if (await state.ValidateBlockHeader(blockHeader)) {
 		MakeSyncDataRequest(host, blockHeader);
-	} else {
-		console.log(blockHeader.index);
 	}
 };
 

@@ -5,7 +5,7 @@ module.exports = {
 	PRIV_KEY: 'e3fb145eaa85746fbaa759c61a0797b68f93eddddb7964b23228d0e65767637d',
 	HOST: 'localhost:4000',
 	CREATOR_PRIZE: 5,
-	VALIDATOR_PRIZE: 1,
+	VAL_PRIZE: 1,
 	TOP: 2,
 	PORT: '4000',
 	DURATION: 5000,

@@ -6,17 +6,17 @@ module.exports = class BlockHeader {
 			this.index = obj.index;
 			this.preBlockHash = obj.preBlockHash || null;
 			this.merkleRoot = obj.merkleRoot || null;
-			this.validatorSigns = obj.validatorSigns || [];
+			this.valSigns = obj.valSigns || [];
 			this.creatorSign = obj.creatorSign || null;
 		}
 	}
 	
 	get timeStamp() {
-		if (this.validatorSigns.length === 0) {
+		if (this.valSigns.length === 0) {
 			return 0;
 		}
 		let max = 0;
-		this.validatorSigns.forEach(sign => {
+		this.valSigns.forEach(sign => {
 			let timeSign = JSON.parse(sign.msg).timeSign;
 			max = (timeSign > max) ? timeSign : max;
 		});
@@ -24,11 +24,11 @@ module.exports = class BlockHeader {
 	}
 	
 	get firstTimeSign() {
-		if (this.validatorSigns.length === 0) {
+		if (this.valSigns.length === 0) {
 			return 0;
 		}
 		let min;
-		this.validatorSigns.forEach(sign => {
+		this.valSigns.forEach(sign => {
 			let timeSign = JSON.parse(sign.msg).timeSign;
 			if (!min) {
 				min = timeSign;
@@ -40,7 +40,7 @@ module.exports = class BlockHeader {
 	}
 	
 	Sign() {
-		let valPubKeyHashes = this.validatorSigns.map(sign => {
+		let valPubKeyHashes = this.valSigns.map(sign => {
 			return Crypto.Hash(sign.pubKey);
 		});
 		this.creatorSign = Crypto.Sign(valPubKeyHashes);
