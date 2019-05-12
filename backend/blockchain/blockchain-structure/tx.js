@@ -167,7 +167,7 @@ class ContractTx extends Tx {
 				
 				if (this.preStateHash === Crypto.Hash(
 					JSON.stringify(plan.term)
-					+ JSON.stringify(state.txDict[this.uid].contracts))
+					+ JSON.stringify(state.txDict[this.uid].refunds))
 				) {
 					let sum = 0;
 					state.txDict[this.uid].refunds.forEach(refund => {
