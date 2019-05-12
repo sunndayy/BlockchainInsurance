@@ -34,8 +34,8 @@ module.exports = class State {
 				preBlock = blockCache1[0];
 			}
 			
-			this.AddBlock(preBlock.blockHeader, preBlock.blockData);
-			this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
+			await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+			await this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
 			
 			await BlockCache.remove({});
 			await BlockCache.insertMany([
@@ -50,7 +50,7 @@ module.exports = class State {
 			let i = 0;
 			while (i < txCache.length) {
 				if (await txCache[i].Validate(this)) {
-					this.PushTx(txCache[i]);
+					await this.PushTx(txCache[i]);
 					txCache.splice(i, 1);
 				} else {
 					i++;
@@ -114,10 +114,10 @@ module.exports = class State {
 		});
 	}
 	
-	PushTx(tx, addToCache = false) {
+	async PushTx(tx, addToCache = false) {
 		if (addToCache && this.txCache.length < NUM_TX_PER_BLOCK) {
 			this.txCache.push(tx);
-			tx.UpdateState(this);
+			await tx.UpdateState(this);
 			
 			if (this.txCache.length === NUM_TX_PER_BLOCK) {
 				let nodesOnTop = this.GetNodesOnTop();
@@ -189,16 +189,16 @@ module.exports = class State {
 			}
 			return true;
 		} else {
-			tx.UpdateState(this);
+			await tx.UpdateState(this);
 		}
 		return false;
 	}
 	
-	AddBlock(blockHeader, blockData) {
+	async AddBlock(blockHeader, blockData) {
 		let _this = this;
 		for (let i = 0; i < blockData.txs.length; i++) {
 			let tx = blockData.txs[i];
-			this.PushTx(tx);
+			await this.PushTx(tx);
 		}
 		
 		if (blockHeader.creatorSign) {
@@ -261,7 +261,7 @@ module.exports = class State {
 					return block.blockHeader.hash === blockHeader.preBlockHash;
 				});
 				if (preBlock) {
-					this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+					await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 				} else {
 					return false;
 				}
@@ -280,8 +280,8 @@ module.exports = class State {
 					} else {
 						prePreBlock = blockCache1[0];
 					}
-					this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
-					this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+					await this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
+					await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 				} else {
 					return false;
 				}
@@ -420,7 +420,7 @@ module.exports = class State {
 				}
 				
 				if (preBlock) {
-					this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+					await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 				} else {
 					return;
 				}
@@ -454,8 +454,8 @@ module.exports = class State {
 				}
 				
 				if (preBlock && prePreBlock) {
-					this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
-					this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+					await this.AddBlock(prePreBlock.blockHeader, prePreBlock.blockData);
+					await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
 				} else {
 					return;
 				}

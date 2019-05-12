@@ -84,7 +84,6 @@ class PlanTx extends Tx {
 			termKeys.forEach(key => {
 				prePlan.term[key] = newPlan.term[key];
 			});
-			newPlan.lastUpdate = new Date()
 		}
 	}
 	
