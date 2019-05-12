@@ -38,7 +38,14 @@ module.exports = class State {
 			this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
 			
 			await BlockCache.remove({});
-			await BlockCache.insertMany([preBlock, choosenBlock]);
+			await BlockCache.insertMany([
+				Object.assign({
+					hash: preBlock.blockHeader.hash
+				}, preBlock),
+				Object.assign({
+					hash: choosenBlock.blockHeader.hash
+				}, choosenBlock)
+			]);
 			
 			let i = 0;
 			while (i < txCache.length) {
