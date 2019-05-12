@@ -4,11 +4,11 @@ const Contract = mongoose.model('contract');
 const Crypto = require('../utils/crypto');
 
 class Tx {
-	constructor({ sign, tx }) {
+	constructor({sign, tx}) {
 		this.sign = sign;
 		this.type = tx.type;
 		this.ref = tx.ref;
-		this.preStateHash = tx.preStateHash || null;
+		this.preStateHash = tx.preStateHash;
 		this.action = tx.action;
 	}
 	
@@ -47,16 +47,21 @@ class PlanTx extends Tx {
 		}
 		
 		if (!state.txDict[this.uid]) {
-			state.txDict[this.uid] = await Plan.findOne({ company: this.ref.company, id: this.ref.id });
+			state.txDict[this.uid] = await Plan.findOne({company: this.ref.company, id: this.ref.id});
 		}
 		
+		/*
+		CREATE PLAN
+		* */
 		if (this.action.create && !state.txDict[this.uid]) {
 			return true;
 		}
 		
+		/*
+		UPDATE TERM
+		* */
 		if (this.action.update && state.txDict[this.uid]) {
-			let preStateHash = JSON.stringify(state.txDict[this.uid]);
-			if (preStateHash === this.preStateHash) {
+			if (Crypto.Hash(JSON.stringify(state.txDict[this.uid].term)) === this.preStateHash) {
 				return true;
 			}
 		}
@@ -98,16 +103,18 @@ class ContractTx extends Tx {
 			return false;
 		}
 		
+		// Plan reference
 		let plan;
+		if (!state.txDict[this.ref.plan.company + this.ref.plan.id]) {
+			state.txDict[this.ref.plan.company + this.ref.plan.id] = await Plan.findOne({
+				company: this.ref.plan.company,
+				id: this.ref.plan.id
+			}).populate('contracts');
+		}
+		plan = state.txDict[this.ref.plan.company + this.ref.plan.id];
 		
-		if (!state.txDict[this.uid]) {
-			// Plan reference
-			if (!state.txDict[this.ref.plan.company + this.ref.plan.id]) {
-				state.txDict[this.ref.plan.company + this.ref.plan.id] = await Plan.findOne({ company: this.ref.plan.company, id: this.ref.plan.id }).populate('contracts');
-			}
-			plan = state.txDict[this.ref.plan.company + this.ref.plan.id];
-			
-			if (plan) {
+		if (plan) {
+			if (!state.txDict[this.uid]) {
 				// Contract reference
 				let target = {
 					userInfo: this.ref.userInfo,
@@ -123,36 +130,47 @@ class ContractTx extends Tx {
 					};
 					return JSON.stringify(source) === JSON.stringify(target);
 				});
+			}
+			
+			/*
+			CREATE CONTRACT
+			* */
+			if (this.action.create && !state.txDict[this.uid]) {
+				let node = state.nodes.find(node => {
+					return node.pubKeyHash === this.pubKeyHash;
+				});
 				
-				if (this.action.create && !state.txDict[this.uid]) {
-					let node = state.nodes.find(node => {
-						return node.pubKeyHash === this.pubKeyHash;
-					});
-					
-					if (!node || node.company !== this.ref.plan.company) {
-						return false;
-					}
-					
-					if (this.preStateHash === JSON.stringify(plan) && plan.term.state) {
-						return true;
-					}
+				if (!node || node.company !== this.ref.plan.company) {
+					return false;
 				}
 				
-				if (this.action.update && state.txDict[this.uid]) {
-					if (this.ref.garaPubKeyHashes.indexOf(this.pubKeyHash) < 0) {
-						return false;
-					}
-					
-					if (this.preStateHash === Crypto.Hash( JSON.stringify(plan) + JSON.stringify(state.txDict[this.uid]))) {
-						let sum = 0;
-						state.txDict[this.uid].refunds.forEach(refund => {
-							sum += refund.refund;
-						});
-						let newRefund = this.action.update.push;
-						sum += newRefund.refund;
-						if (sum <= plan.term.maxRefund && newRefund.refund/newRefund.total <= plan.term.percentage) {
-							return true;
-						}
+				if (this.preStateHash === Crypto.Hash(JSON.stringify(plan.term))
+					&& plan.term.state) {
+					return true;
+				}
+			}
+			
+			/*
+			CREATE REFUND
+			* */
+			if (this.action.update && state.txDict[this.uid]) {
+				if (this.ref.garaPubKeyHashes.indexOf(this.pubKeyHash) < 0) {
+					return false;
+				}
+				
+				if (this.preStateHash === Crypto.Hash(
+					JSON.stringify(plan.term)
+					+ JSON.stringify(state.txDict[this.uid].contracts))
+				) {
+					let sum = 0;
+					state.txDict[this.uid].refunds.forEach(refund => {
+						sum += refund.refund;
+					});
+					let newRefund = this.action.update.push;
+					sum += newRefund.refund;
+					if (sum <= plan.term.maxRefund
+						&& newRefund.refund / newRefund.total === plan.term.percentage) {
+						return true;
 					}
 				}
 			}
@@ -178,10 +196,10 @@ class ContractTx extends Tx {
 	}
 }
 
-module.exports = ({ sign, tx }) => {
+module.exports = ({sign, tx}) => {
 	if (tx.type === 'PLAN') {
-		return new PlanTx({ sign, tx })
+		return new PlanTx({sign, tx})
 	} else {
-		return new ContractTx(({ sign, tx }));
+		return new ContractTx(({sign, tx}));
 	}
 };
