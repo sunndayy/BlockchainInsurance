@@ -49,7 +49,7 @@ class PlanTx extends Tx {
 		}
 		
 		if (!state.txDict[this.uid]) {
-			state.txDict[this.uid] = await Plan.findOne({company: this.ref.company, id: this.ref.id});
+			state.txDict[this.uid] = await Plan.findOne({company: this.ref.company, id: this.ref.id}).populate('contracts');
 		}
 		
 		/*
@@ -190,8 +190,9 @@ class ContractTx extends Tx {
 		let newContract = this.action.create ? this.action.create : this.action.update;
 		
 		if (this.action.create) {
-			state.txDict[this.uid] = new Contract(newContract);
 			state.txDict[this.ref.plan.company + this.ref.plan.id].contracts.push(state.txDict[this.uid]);
+			newContract.plan = state.txDict[this.ref.plan.company + this.ref.plan.id];
+			state.txDict[this.uid] = new Contract(newContract);
 		} else if (this.action.update) {
 			if (!state.txDict[this.uid]) {
 				try {
