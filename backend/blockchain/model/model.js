@@ -22,9 +22,16 @@ const BlockSchema = new Schema({
 		txs: [Schema.Types.Mixed]
 	},
 	hash: {type: String, require: true}
+}, {
+	toObject: {
+		virtuals: true
+	},
+	toJSON: {
+		virtuals: true
+	}
 });
 
-BlockSchema.virtual('blockHeader.hash').get(() => {
+BlockSchema.virtual('blockHeader.hash').get(function() {
 	return this.hash;
 });
 
