@@ -12,14 +12,14 @@ const BlockData = require('../blockchain-structure/block-data');
  * Make a request
  */
 const MakeRequest = (url, msg, cb) => {
-	let handleResponse = (err, res, body) => {
+	let handleResponse = async (err, res, body) => {
 		if (err) {
 		} else {
 			try {
 				let sign = JSON.parse(body);
 				if (Crypto.Verify(sign)) {
 					let msg = JSON.parse(sign.msg);
-					cb(msg, Crypto.Hash(sign.pubKey));
+					await cb(msg, Crypto.Hash(sign.pubKey));
 				}
 			} catch (err) {
 			}
@@ -38,10 +38,10 @@ const MakeConnectRequest = host => {
 		host: HOST,
 		time: new Date()
 	};
-	MakeRequest(host + '/version', msg, (resMsg, pubKeyHash) => {
+	MakeRequest(host + '/version', msg, async (resMsg, pubKeyHash) => {
 		try {
 			if (resMsg.header === 'VER_ACK') {
-				Node.findOneAndUpdate(
+				let node = await Node.findOneAndUpdate(
 					{
 						pubKeyHash: pubKeyHash
 					},
@@ -53,21 +53,18 @@ const MakeConnectRequest = host => {
 					},
 					{
 						new: true
-					}, (err, node) => {
-						if (err || !node) {
-							// console.error(err);
-						} else {
-							let index = globalState.nodes.findIndex(_node => {
-								return _node.pubKeyHash === node.pubKeyHash;
-							});
-							if (index >= 0) {
-								globalState.nodes[index].host = node.host;
-							} else {
-								globalState.nodes.push(node);
-							}
-							MakeSyncHeaderRequest(host, blockCache1[0].blockHeader.index);
-						}
 					});
+				if (node) {
+					let index = globalState.nodes.findIndex(_node => {
+						return _node.pubKeyHash === node.pubKeyHash;
+					});
+					if (index >= 0) {
+						globalState.nodes[index].host = node.host;
+					} else {
+						globalState.nodes.push(node);
+					}
+					MakeSyncHeaderRequest(host, blockCache1[0].blockHeader.index);
+				}
 			}
 		} catch (err) {
 		}

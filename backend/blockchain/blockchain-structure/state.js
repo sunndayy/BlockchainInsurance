@@ -59,7 +59,7 @@ module.exports = class State {
 		}
 	}
 	
-	HandleAfterNewBlock(blockHeader, blockData, cb) {
+	async HandleAfterNewBlock(blockHeader, blockData, cb) {
 		let preBlock = blockCache2.find(block => {
 			return block.blockHeader.hash === blockHeader.preBlockHash;
 		});
@@ -74,44 +74,40 @@ module.exports = class State {
 		}
 		prePreBlock.hash = prePreBlock.blockHeader.hash;
 		
-		(new Block(prePreBlock)).save(async (err, doc) => {
-			if (err) {
-			} else {
-				mySession = WAIT_AFTER_NEW_BLOCK;
-				blockCache1 = blockCache2;
-				blockCache2 = [{
-					blockHeader: blockHeader,
-					blockData: blockData
-				}];
-				
-				for (let i = 0; i < prePreBlock.blockData.txs.length; i++) {
-					let tx = prePreBlock.blockData.txs[i];
-					await tx.UpdateDB(this);
-				}
-				
-				if (prePreBlock.blockHeader.creatorSign) {
-					let creatorPubKeyHash = Crypto.Hash(prePreBlock.blockHeader.creatorSign.pubKey);
-					await Node.findOneAndUpdate({pubKeyHash: creatorPubKeyHash}, {$inc: {point: CREATOR_PRIZE}});
-				}
-				
-				let valPubKeyHashes = prePreBlock.blockHeader.valSigns.map(sign => Crypto.Hash(sign.pubKey));
-				Node.updateMany({pubKeyHash: {$in: valPubKeyHashes}}, {$inc: {point: VAL_PRIZE}}, err => {
-					if (err) {
-					} else {
-						setTimeout(async () => {
-							mySession = WAIT_TO_COLLECT_SIGN;
-							blockCache2.sort((a, b) => {
-								return a.blockHeader.firstTimeSign - b.blockHeader.firstTimeSign;
-							});
-							choosenBlock = blockCache2[0];
-							globalState = new State(true);
-							await globalState.Init();
-						}, DURATION);
-						cb();
-					}
-				});
+		try {
+			await (new Block(prePreBlock)).save();
+			mySession = WAIT_AFTER_NEW_BLOCK;
+			blockCache1 = blockCache2;
+			blockCache2 = [{
+				blockHeader: blockHeader,
+				blockData: blockData
+			}];
+			
+			for (let i = 0; i < prePreBlock.blockData.txs.length; i++) {
+				let tx = prePreBlock.blockData.txs[i];
+				await tx.UpdateDB(this);
 			}
-		});
+			
+			if (prePreBlock.blockHeader.creatorSign) {
+				let creatorPubKeyHash = Crypto.Hash(prePreBlock.blockHeader.creatorSign.pubKey);
+				await Node.findOneAndUpdate({pubKeyHash: creatorPubKeyHash}, {$inc: {point: CREATOR_PRIZE}});
+			}
+			
+			let valPubKeyHashes = prePreBlock.blockHeader.valSigns.map(sign => Crypto.Hash(sign.pubKey));
+			await Node.updateMany({pubKeyHash: {$in: valPubKeyHashes}}, {$inc: {point: VAL_PRIZE}});
+			
+			setTimeout(async () => {
+				mySession = WAIT_TO_COLLECT_SIGN;
+				blockCache2.sort((a, b) => {
+					return a.blockHeader.firstTimeSign - b.blockHeader.firstTimeSign;
+				});
+				choosenBlock = blockCache2[0];
+				globalState = new State(true);
+				await globalState.Init();
+			}, DURATION);
+			
+			cb();
+		} catch (e) {}
 	}
 	
 	async PushTx(tx, addToCache = false) {
@@ -122,9 +118,9 @@ module.exports = class State {
 			if (this.txCache.length === NUM_TX_PER_BLOCK) {
 				let nodesOnTop = this.GetNodesOnTop();
 				let nodesOnTopPubKeyHashes = nodesOnTop.map(node => node.pubKeyHash);
+				
 				if (nodesOnTopPubKeyHashes.indexOf(Crypto.PUB_KEY_HASH) < 0) {
 					// if (this.CalTimeMustWait(Crypto.PUB_KEY_HASH) <= 0) {
-					
 					let blockData = new BlockData(this.txCache);
 					let blockHeader = new BlockHeader({
 						index: choosenBlock.blockHeader.index + 1,
@@ -142,7 +138,7 @@ module.exports = class State {
 							request.post({
 								url: 'http://' + node.host + '/agree',
 								form: Crypto.Sign({nextBlockHash: Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))})
-							}, (err, res, body) => {
+							}, async (err, res, body) => {
 								if (err) {
 								} else {
 									try {
@@ -166,12 +162,10 @@ module.exports = class State {
 													});
 													blockHeader.Sign();
 													
-													_this.HandleAfterNewBlock(blockHeader, blockData, () => {
+													await _this.HandleAfterNewBlock(blockHeader, blockData, () => {
 														_this.nodes.forEach(node => {
 															if (node.host !== HOST && node.host) {
-																request.post('http://' + node.host + '/header', {form: Crypto.Sign(blockHeader)}, (err, res, body) => {
-																	
-																});
+																request.post('http://' + node.host + '/header', {form: Crypto.Sign(blockHeader)}, (err, res, body) => {});
 															}
 														});
 													});
@@ -459,8 +453,8 @@ module.exports = class State {
 				} else {
 					return;
 				}
-				cb = () => {
-					this.HandleAfterNewBlock(blockHeader, blockData, syncHeader);
+				cb = async () => {
+					await this.HandleAfterNewBlock(blockHeader, blockData, syncHeader);
 				};
 				break;
 			
@@ -482,6 +476,6 @@ module.exports = class State {
 			}
 		}
 		
-		cb();
+		await cb();
 	}
 };
