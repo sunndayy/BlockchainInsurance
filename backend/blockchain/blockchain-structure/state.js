@@ -21,96 +21,7 @@ module.exports = class State {
 		this.txCache = [];
 	}
 	
-	async Init() {
-		this.nodes = await Node.find({});
-		
-		if (this.isGlobalState) {
-			let preBlock;
-			if (choosenBlock.blockHeader.index > 1) {
-				preBlock = blockCache1.find(block => {
-					return block.blockHeader.hash === choosenBlock.blockHeader.preBlockHash;
-				});
-			} else {
-				preBlock = blockCache1[0];
-			}
-			
-			await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
-			await this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
-			
-			await BlockCache.remove({});
-			await BlockCache.insertMany([
-				Object.assign({
-					hash: preBlock.blockHeader.hash
-				}, preBlock),
-				Object.assign({
-					hash: choosenBlock.blockHeader.hash
-				}, choosenBlock)
-			]);
-			
-			let i = 0;
-			while (i < txCache.length) {
-				if (await txCache[i].Validate(this)) {
-					await this.PushTx(txCache[i]);
-					txCache.splice(i, 1);
-				} else {
-					i++;
-				}
-			}
-		}
-	}
-	
-	async HandleAfterNewBlock(blockHeader, blockData, cb) {
-		let preBlock = blockCache2.find(block => {
-			return block.blockHeader.hash === blockHeader.preBlockHash;
-		});
-		
-		let prePreBlock;
-		if (preBlock.blockHeader.index > 1) {
-			prePreBlock = blockCache1.find(block => {
-				return block.blockHeader.hash === preBlock.blockHeader.preBlockHash;
-			});
-		} else {
-			prePreBlock = blockCache1[0];
-		}
-		prePreBlock.hash = prePreBlock.blockHeader.hash;
-		
-		try {
-			await (new Block(prePreBlock)).save();
-			mySession = WAIT_AFTER_NEW_BLOCK;
-			blockCache1 = blockCache2;
-			blockCache2 = [{
-				blockHeader: blockHeader,
-				blockData: blockData
-			}];
-			
-			for (let i = 0; i < prePreBlock.blockData.txs.length; i++) {
-				let tx = prePreBlock.blockData.txs[i];
-				await tx.UpdateDB(this);
-			}
-			
-			if (prePreBlock.blockHeader.creatorSign) {
-				let creatorPubKeyHash = Crypto.Hash(prePreBlock.blockHeader.creatorSign.pubKey);
-				await Node.findOneAndUpdate({pubKeyHash: creatorPubKeyHash}, {$inc: {point: CREATOR_PRIZE}});
-			}
-			
-			let valPubKeyHashes = prePreBlock.blockHeader.valSigns.map(sign => Crypto.Hash(sign.pubKey));
-			await Node.updateMany({pubKeyHash: {$in: valPubKeyHashes}}, {$inc: {point: VAL_PRIZE}});
-			
-			setTimeout(async () => {
-				mySession = WAIT_TO_COLLECT_SIGN;
-				blockCache2.sort((a, b) => {
-					return a.blockHeader.firstTimeSign - b.blockHeader.firstTimeSign;
-				});
-				choosenBlock = blockCache2[0];
-				globalState = new State(true);
-				await globalState.Init();
-			}, DURATION);
-			
-			cb();
-		} catch (e) {}
-	}
-	
-	async PushTx(tx, addToCache = false) {
+	async PushTx(tx, addToCache = true) {
 		if (addToCache && this.txCache.length < NUM_TX_PER_BLOCK) {
 			this.txCache.push(tx);
 			await tx.UpdateState(this);
@@ -192,7 +103,7 @@ module.exports = class State {
 		let _this = this;
 		for (let i = 0; i < blockData.txs.length; i++) {
 			let tx = blockData.txs[i];
-			await this.PushTx(tx);
+			await this.PushTx(tx, false);
 		}
 		
 		if (blockHeader.creatorSign) {
@@ -208,6 +119,98 @@ module.exports = class State {
 			});
 			val.point += VAL_PRIZE;
 		});
+	}
+	
+	async Init() {
+		// Load nodes
+		this.nodes = await Node.find({});
+		
+		if (this.isGlobalState) {
+			let preBlock;
+			if (choosenBlock.blockHeader.index > 1) {
+				preBlock = blockCache1.find(block => {
+					return block.blockHeader.hash === choosenBlock.blockHeader.preBlockHash;
+				});
+			} else {
+				preBlock = blockCache1[0];
+			}
+			
+			await this.AddBlock(preBlock.blockHeader, preBlock.blockData);
+			await this.AddBlock(choosenBlock.blockHeader, choosenBlock.blockData);
+			
+			await BlockCache.remove({});
+			await BlockCache.insertMany([
+				Object.assign({
+					hash: preBlock.blockHeader.hash
+				}, preBlock),
+				Object.assign({
+					hash: choosenBlock.blockHeader.hash
+				}, choosenBlock)
+			]);
+			
+			let i = 0;
+			while (i < txCache.length) {
+				if (await txCache[i].Validate(this)) {
+					if (!await this.PushTx(txCache[i])) {
+						return;
+					}
+					txCache.splice(i, 1);
+				} else {
+					i++;
+				}
+			}
+		}
+	}
+	
+	async HandleAfterNewBlock(blockHeader, blockData, cb) {
+		let preBlock = blockCache2.find(block => {
+			return block.blockHeader.hash === blockHeader.preBlockHash;
+		});
+		
+		let prePreBlock;
+		if (preBlock.blockHeader.index > 1) {
+			prePreBlock = blockCache1.find(block => {
+				return block.blockHeader.hash === preBlock.blockHeader.preBlockHash;
+			});
+		} else {
+			prePreBlock = blockCache1[0];
+		}
+		prePreBlock.hash = prePreBlock.blockHeader.hash;
+		
+		try {
+			await (new Block(prePreBlock)).save();
+			mySession = WAIT_AFTER_NEW_BLOCK;
+			blockCache1 = blockCache2;
+			blockCache2 = [{
+				blockHeader: blockHeader,
+				blockData: blockData
+			}];
+			
+			for (let i = 0; i < prePreBlock.blockData.txs.length; i++) {
+				let tx = prePreBlock.blockData.txs[i];
+				await tx.UpdateDB(this);
+			}
+			
+			if (prePreBlock.blockHeader.creatorSign) {
+				let creatorPubKeyHash = Crypto.Hash(prePreBlock.blockHeader.creatorSign.pubKey);
+				await Node.findOneAndUpdate({pubKeyHash: creatorPubKeyHash}, {$inc: {point: CREATOR_PRIZE}});
+			}
+			
+			let valPubKeyHashes = prePreBlock.blockHeader.valSigns.map(sign => Crypto.Hash(sign.pubKey));
+			await Node.updateMany({pubKeyHash: {$in: valPubKeyHashes}}, {$inc: {point: VAL_PRIZE}});
+			
+			setTimeout(async () => {
+				mySession = WAIT_TO_COLLECT_SIGN;
+				blockCache2.sort((a, b) => {
+					return a.blockHeader.firstTimeSign - b.blockHeader.firstTimeSign;
+				});
+				choosenBlock = blockCache2[0];
+				globalState = new State(true);
+				await globalState.Init();
+			}, DURATION);
+			
+			cb();
+		} catch (e) {}
 	}
 	
 	// CalTimeMustWait(pubKeyHash, time = new Date()) {
@@ -464,7 +467,7 @@ module.exports = class State {
 		
 		if (blockHeader.index > 1) {
 			if (blockData.txs.length !== NUM_TX_PER_BLOCK || blockData.merkleRoot !== blockHeader.merkleRoot) {
-				return false;
+				return;
 			}
 		}
 		

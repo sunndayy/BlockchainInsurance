@@ -14,7 +14,9 @@ class Tx {
 	
 	async UpdateDB(state) {
 		if (state.txDict[this.uid]) {
-			await state.txDict[this.uid].save();
+			try {
+				await state.txDict[this.uid].save();
+			} catch (e) {}
 			delete state.txDict[this.uid];
 		}
 	}
@@ -82,7 +84,8 @@ class PlanTx extends Tx {
 			if (!state.txDict[this.uid]) {
 				state.txDict[this.uid] = await Plan.findOne({
 					company: this.ref.company,
-					id: this.ref.id});
+					id: this.ref.id
+				});
 			}
 			let prePlan = state.txDict[this.uid];
 			let termKeys = Object.keys(newPlan.term);
@@ -185,8 +188,10 @@ class ContractTx extends Tx {
 	
 	async UpdateState(state) {
 		let newContract = this.action.create ? this.action.create : this.action.update;
+		
 		if (this.action.create) {
 			state.txDict[this.uid] = new Contract(newContract);
+			state.txDict[this.ref.plan.company + this.ref.plan.id].contracts.push(state.txDict[this.uid]);
 		} else if (this.action.update) {
 			if (!state.txDict[this.uid]) {
 				try {
@@ -196,7 +201,8 @@ class ContractTx extends Tx {
 						expireTime: this.ref.expireTime
 					}).populate('plan');
 					for (let i = 0; i < contracts.length; i++) {
-						if (contracts[i].plan.company === this.ref.plan.company && contracts[i].plan.id === this.ref.plan.id) {
+						if (contracts[i].plan.company === this.ref.plan.company
+							&& contracts[i].plan.id === this.ref.plan.id) {
 							state.txDict[this.uid] = contracts[i];
 							break;
 						}
@@ -215,6 +221,16 @@ class ContractTx extends Tx {
 			+ JSON.stringify(this.ref.userInfo)
 			+ JSON.stringify(this.ref.garaPubKeyHashes)
 			+ JSON.stringify(this.ref.expireTime);
+	}
+	
+	async UpdateDB(state) {
+		super.UpdateDB(state);
+		if (state.txDict[this.ref.company + this.ref.id]) {
+			try {
+				await state.txDict[this.ref.company + this.ref.id].save();
+				delete state.txDict[this.ref.company + this.ref.id];
+			} catch (e) {}
+		}
 	}
 }
 

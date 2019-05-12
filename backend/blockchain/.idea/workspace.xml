@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b696cc9-e63a-46b7-961d-38ee5ef81080" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/api/sync-blockchain-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/sync-blockchain-api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blockchain-structure/state.js" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain-structure/state.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blockchain-structure/tx.js" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain-structure/tx.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/tx/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/tx/route.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,31 +20,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/blockchain-structure/state.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="167" column="135" selection-start-line="167" selection-start-column="135" selection-end-line="167" selection-end-column="135" />
+            <state relative-caret-position="92">
+              <caret line="469" column="14" selection-start-line="469" selection-start-column="14" selection-end-line="469" selection-end-column="14" />
               <folding>
                 <element signature="e#571#654#0" />
-                <element signature="e#671#1552#0" />
-                <element signature="e#1655#1723#0" />
-                <element signature="e#1786#1916#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/sync-blockchain-api.js">
+        <entry file="file://$PROJECT_DIR$/module/tx/route.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-25">
-              <caret line="85" column="47" selection-start-line="85" selection-start-column="47" selection-end-line="85" selection-end-column="47" />
-              <folding>
-                <element signature="e#347#372#0" />
-                <element signature="e#411#779#0" />
-                <element signature="e#849#1619#0" />
-                <element signature="e#862#920#0" />
-                <element signature="e#1715#1908#0" />
-                <element signature="e#1958#2247#0" />
-              </folding>
+            <state relative-caret-position="136">
+              <caret line="8" column="19" lean-forward="true" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -53,8 +42,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>makeSyncHeader</find>
-      <find>console.lo</find>
       <find>handleAfternew</find>
       <find>validate</find>
       <find>return fal</find>
@@ -77,12 +64,14 @@
       <find>lastupdate</find>
       <find>updateStat</find>
       <find>updateState</find>
-      <find>pushtx</find>
       <find>addblock</find>
       <find>makeRe</find>
       <find>UpdateState</find>
       <find>HandleAfterNewBlock</find>
       <find>handleAfterNewBlock</find>
+      <find>_this</find>
+      <find>pushtx</find>
+      <find>validateBlockData</find>
     </findStrings>
     <replaceStrings>
       <replace>mySession</replace>
@@ -170,9 +159,9 @@
         <option value="$PROJECT_DIR$/model/model.js" />
         <option value="$PROJECT_DIR$/bin/www" />
         <option value="$PROJECT_DIR$/config.js" />
-        <option value="$PROJECT_DIR$/module/tx/route.js" />
-        <option value="$PROJECT_DIR$/blockchain-structure/tx.js" />
         <option value="$PROJECT_DIR$/api/sync-blockchain-api.js" />
+        <option value="$PROJECT_DIR$/blockchain-structure/tx.js" />
+        <option value="$PROJECT_DIR$/module/tx/route.js" />
         <option value="$PROJECT_DIR$/blockchain-structure/state.js" />
       </list>
     </option>
@@ -451,7 +440,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="256222000" />
+    <option name="totallyTimeSpent" value="257698000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -469,10 +458,10 @@
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="npm" order="1" side_tool="true" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.1559815" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.1559815" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3243626" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31586403" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.31586403" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4220963" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -744,20 +733,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bin/www">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="126" column="25" selection-start-line="126" selection-start-column="25" selection-end-line="126" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/init-nodes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="20" lean-forward="true" selection-end-line="23" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/module/block/model.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -779,10 +754,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/tx/route.js">
+    <entry file="file://$PROJECT_DIR$/model/model.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+        <state relative-caret-position="184">
+          <caret line="46" column="16" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -795,39 +770,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/blockchain-structure/block-header.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="697">
+        <state relative-caret-position="24">
           <caret line="41" column="2" selection-start-line="41" selection-start-column="2" selection-end-line="41" selection-end-column="2" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/blockchain-structure/tx.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="207" column="69" selection-start-line="207" selection-start-column="69" selection-end-line="207" selection-end-column="69" />
+        <state relative-caret-position="211">
+          <caret line="230" column="60" selection-end-line="242" selection-end-column="2" />
           <folding>
-            <element signature="n#Tx#0" />
             <element signature="n#!!block;n#constructor#0;n#Tx#0" />
-            <element signature="n#!!block;n#UpdateDB#0;n#Tx#0" />
             <element signature="n#!!block;n#Verify#0;n#Tx#0" />
             <element signature="n#!!block;n#pubKeyHash#0;n#Tx#0" />
             <element signature="n#!!block;n#constructor#0;n#PlanTx#0" />
+            <element signature="n#!!block;n#Validate#0;n#PlanTx#0" />
+            <element signature="n#!!block;n#UpdateState#0;n#PlanTx#0" />
             <element signature="n#!!block;n#uid#0;n#PlanTx#0" />
             <element signature="n#!!block;n#constructor#0;n#ContractTx#0" />
+            <element signature="n#!!block;n#Validate#0;n#ContractTx#0" />
+            <element signature="n#!!block;n#UpdateState#0;n#ContractTx#0" />
+            <element signature="n#!!block;n#uid#0;n#ContractTx#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/model.js">
+    <entry file="file://$PROJECT_DIR$/bin/www">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="46" column="16" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="16" />
+        <state relative-caret-position="286">
+          <caret line="126" column="25" selection-start-line="126" selection-start-column="25" selection-end-line="126" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/api/sync-blockchain-api.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-25">
-          <caret line="85" column="47" selection-start-line="85" selection-start-column="47" selection-end-line="85" selection-end-column="47" />
+        <state relative-caret-position="-248">
+          <caret line="85" column="47" lean-forward="true" selection-start-line="85" selection-start-column="47" selection-end-line="85" selection-end-column="47" />
           <folding>
             <element signature="e#347#372#0" />
             <element signature="e#411#779#0" />
@@ -839,15 +817,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/model/init-nodes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="14" column="9" lean-forward="true" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/tx/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="19" lean-forward="true" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/blockchain-structure/state.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="167" column="135" selection-start-line="167" selection-start-column="135" selection-end-line="167" selection-end-column="135" />
+        <state relative-caret-position="92">
+          <caret line="469" column="14" selection-start-line="469" selection-start-column="14" selection-end-line="469" selection-end-column="14" />
           <folding>
             <element signature="e#571#654#0" />
-            <element signature="e#671#1552#0" />
-            <element signature="e#1655#1723#0" />
-            <element signature="e#1786#1916#0" />
           </folding>
         </state>
       </provider>

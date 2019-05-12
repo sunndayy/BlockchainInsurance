@@ -10,11 +10,11 @@ router.post('/tx', async (req, res) => {
 		tx: JSON.parse(req.body.msg)
 	});
 	if (mySession === WAIT_TO_COLLECT_SIGN && await tx.Validate(globalState)) {
-		if (await globalState.PushTx(tx, true)) {
+		if (await globalState.PushTx(tx)) {
 			return;
 		}
 	}
-	txCache.push(tx, true);
+	txCache.push(tx);
 });
 
 module.exports = router;
