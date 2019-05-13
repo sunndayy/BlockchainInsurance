@@ -39,34 +39,31 @@ const MakeConnectRequest = host => {
 		time: new Date()
 	};
 	MakeRequest(host + '/version', msg, async (resMsg, pubKeyHash) => {
-		try {
-			if (resMsg.header === 'VER_ACK') {
-				let node = await Node.findOneAndUpdate(
-					{
-						pubKeyHash: pubKeyHash
-					},
-					{
-						$set: {
-							host: host,
-							lastTimeUpdateHost: new Date()
-						}
-					},
-					{
-						new: true
-					});
-				if (node) {
-					let index = globalState.nodes.findIndex(_node => {
-						return _node.pubKeyHash === node.pubKeyHash;
-					});
-					if (index >= 0) {
-						globalState.nodes[index].host = node.host;
-					} else {
-						globalState.nodes.push(node);
+		if (resMsg.header === 'VER_ACK') {
+			let node = await Node.findOneAndUpdate(
+				{
+					pubKeyHash: pubKeyHash
+				},
+				{
+					$set: {
+						host: host,
+						lastTimeUpdateHost: new Date()
 					}
-					MakeSyncHeaderRequest(host, blockCache1[0].blockHeader.index);
+				},
+				{
+					new: true
+				});
+			if (node) {
+				let index = globalState.nodes.findIndex(_node => {
+					return _node.pubKeyHash === node.pubKeyHash;
+				});
+				if (index >= 0) {
+					globalState.nodes[index].host = node.host;
+				} else {
+					globalState.nodes.push(node);
 				}
+				MakeSyncHeaderRequest(host, blockCache1[0].blockHeader.index);
 			}
-		} catch (err) {
 		}
 	});
 };

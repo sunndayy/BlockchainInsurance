@@ -201,20 +201,17 @@ class ContractTx extends Tx {
 			state.txDict[this.uid] = new Contract(newContract);
 		} else if (this.action.update) {
 			if (!state.txDict[this.uid]) {
-				try {
-					let contracts = await Contract.find({
-						userInfo: this.ref.userInfo,
-						garaPubKeyHashes: this.ref.garaPubKeyHashes,
-						expireTime: this.ref.expireTime
-					}).populate('plan');
-					for (let i = 0; i < contracts.length; i++) {
-						if (contracts[i].plan.company === this.ref.plan.company
-							&& contracts[i].plan.id === this.ref.plan.id) {
-							state.txDict[this.uid] = contracts[i];
-							break;
-						}
+				let contracts = await Contract.find({
+					userInfo: this.ref.userInfo,
+					garaPubKeyHashes: this.ref.garaPubKeyHashes,
+					expireTime: this.ref.expireTime
+				}).populate('plan');
+				for (let i = 0; i < contracts.length; i++) {
+					if (contracts[i].plan.company === this.ref.plan.company
+						&& contracts[i].plan.id === this.ref.plan.id) {
+						state.txDict[this.uid] = contracts[i];
+						break;
 					}
-				} catch (e) {
 				}
 			}
 			if (state.txDict[this.uid]) {

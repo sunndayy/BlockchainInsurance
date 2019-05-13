@@ -13,6 +13,7 @@ const BlockCache = mongoose.model('block_cache');
 const request = require('request');
 const _ = require('lodash');
 
+const debug = require('debug');
 
 module.exports = class State {
 	constructor(isGlobalState = false) {
@@ -292,22 +293,15 @@ module.exports = class State {
 		Validate preBlockHash and timeSign
 		* */
 		if (blockHeader.preBlockHash !== preBlock.blockHeader.hash) {
-			console.log('Preblockhash khong hop le');
-			console.log(blockHeader.preBlockHash);
-			console.log(preBlock.blockHeader.hash);
-			console.log();
 			return false;
 		}
 		
 		if (blockHeader.index > 1) {
 			if (blockHeader.firstTimeSign - preBlock.blockHeader.time < DURATION) {
-				console.log('Chua cho du thoi gian');
-				console.log();
 				return false;
 			}
 			
 			if (blockHeader.valSigns.length !== NUM_SIGN_PER_BLOCK) {
-				console.log('Khong dung so luong chu ky');
 				return false;
 			}
 			
@@ -324,8 +318,6 @@ module.exports = class State {
 				if (!nodesOntTop.find(node => {
 					return node.pubKeyHash === pubKeyHash;
 				})) {
-					console.log('Node ky ten khong nam trong top');
-					console.log();
 					return false;
 				}
 				
@@ -333,11 +325,6 @@ module.exports = class State {
 				
 				if (msg.curBlockHash !== preBlock.blockHeader.hash
 					|| msg.nextBlockHash !== Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))) {
-					console.log('Thong tin can xac nhan khong dung');
-					console.log(msg.curBlockHash);
-					console.log(preBlock.blockHeader.hash);
-					console.log(msg.nextBlockHash);
-					console.log(Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree)));
 					return false;
 				}
 			}
@@ -355,8 +342,6 @@ module.exports = class State {
 			
 			if (_.union(valPubKeyHashes, preBlockValPubKeyHashes).length
 				< valPubKeyHashes.length + preBlockValPubKeyHashes.length) {
-				console.log('Ky 2 block lien tiep');
-				console.log();
 				return false;
 			}
 			
@@ -368,8 +353,6 @@ module.exports = class State {
 			}
 			
 			if (blockHeader.creatorSign.msg !== JSON.stringify(valPubKeyHashes)) {
-				console.log('Thong tin ky node thu thap khong dung');
-				console.log();
 				return false;
 			}
 			
@@ -379,8 +362,6 @@ module.exports = class State {
 			let creatorPubKeyHash = Crypto.Hash(blockHeader.creatorSign.pubKey);
 			
 			if (nodesOntTop.indexOf(creatorPubKeyHash) >= 0) {
-				console.log('Node thu thap nam trong top');
-				console.log();
 				return false;
 			}
 			
@@ -473,8 +454,6 @@ module.exports = class State {
 		
 		for (let i = 0; i < NUM_TX_PER_BLOCK; i++) {
 			if (await !blockData.txs[i].Validate(this)) {
-				console.log('Giao dich khong hop le');
-				console.log();
 				return;
 			}
 		}
