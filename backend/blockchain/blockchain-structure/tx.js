@@ -35,7 +35,7 @@ class PlanTx extends Tx {
 	
 	async Validate(state) {
 		if (!super.Verify()) {
-			return false;
+			throw new Error('Invalid signature');
 		}
 		
 		let node = state.nodes.find(node => {
@@ -43,7 +43,7 @@ class PlanTx extends Tx {
 		});
 		
 		if (!node || node.company !== this.ref.company) {
-			return false;
+			throw new Error('Invalid node');
 		}
 		
 		if (!state.txDict[this.uid]) {
@@ -66,7 +66,7 @@ class PlanTx extends Tx {
 			}
 		}
 		
-		return false;
+		throw new Error('Undefined error');
 	}
 	
 	async UpdateState(state) {
@@ -105,7 +105,7 @@ class ContractTx extends Tx {
 	
 	async Validate(state) {
 		if (!super.Verify()) {
-			return false;
+			throw new Error('Invalid signature');
 		}
 		
 		// Plan reference
@@ -146,7 +146,7 @@ class ContractTx extends Tx {
 				});
 				
 				if (!node || node.company !== this.ref.plan.company) {
-					return false;
+					throw new Error('Invalid company');
 				}
 				
 				if (this.preStateHash === Crypto.Hash(JSON.stringify(plan.term))
@@ -160,7 +160,7 @@ class ContractTx extends Tx {
 			* */
 			if (this.action.update && state.txDict[this.uid]) {
 				if (this.ref.garaPubKeyHashes.indexOf(this.pubKeyHash) < 0) {
-					return false;
+					throw new Error('Invalid gara');
 				}
 				
 				if (this.preStateHash === Crypto.Hash(JSON.stringify(plan.term) + JSON.stringify(state.txDict[this.uid].refunds))
@@ -186,7 +186,7 @@ class ContractTx extends Tx {
 			}
 		}
 		
-		return false;
+		throw new Error('Undefined error');
 	}
 	
 	async UpdateState(state) {
