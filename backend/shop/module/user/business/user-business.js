@@ -4,18 +4,20 @@ const jsonwebtoken = require('jsonwebtoken');
 const validator = require('validator');
 const moment = require('moment');
 
-module.exports.signIn = async (userName, password) => {
-	let user = await User.findOne({userName: userName});
-	if (await bcrypt.compare(password, user.passwordHash)) {
-		return await jsonwebtoken.sign({
-			userName: user.userName
-		}, 'secretkey');
+module.exports.signIn = async (username, password) => {
+	let user = await User.findOne({username: username});
+	if (user) {
+		if (await bcrypt.compare(password, user.passwordHash)) {
+			return await jsonwebtoken.sign({
+				username: user.username
+			}, 'secretkey');
+		}
 	}
-	throw new Error('Username or password not correct');
+	throw new Error('username or password not correct');
 };
 
 module.exports.signUp = async userInfo => {
-	if (userInfo.userName === '') {
+	if (userInfo.username === '') {
 		throw new Error('Empty username');
 	}
 	if (userInfo.password.length < 6) {
@@ -39,8 +41,8 @@ module.exports.signUp = async userInfo => {
 	if (!validator.isEmail(userInfo.email)) {
 		throw new Error('Invalid email');
 	}
-	if (await User.findOne({userName: userInfo.userName})) {
-		throw new Error('Username was used');
+	if (await User.findOne({username: userInfo.username})) {
+		throw new Error('username was used');
 	}
 	if (await User.findOne({email: userInfo.email})) {
 		throw new Error('Email was used');
@@ -50,7 +52,7 @@ module.exports.signUp = async userInfo => {
 	userInfo.birthDay = new Date(parseInt(userInfo.birthDay.year), parseInt(userInfo.birthDay.month), parseInt(userInfo.birthDay.day));
 	await User.create(userInfo);
 	return await jsonwebtoken.sign({
-		userName: userInfo.userName
+		username: userInfo.username
 	}, 'secretkey');
 };
 

@@ -18,7 +18,7 @@ router.post('/sign-up', async (req, res) => {
 
 router.post('/sign-in', async (req, res) => {
 	try {
-		let token = await userBusiness.signIn(req.body.userName, req.body.password);
+		let token = await userBusiness.signIn(req.body.username, req.body.password);
 		res.json({
 			token
 		});
