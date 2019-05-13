@@ -31,7 +31,7 @@ const BlockSchema = new Schema({
 	}
 });
 
-BlockSchema.virtual('blockHeader.hash').get(function() {
+BlockSchema.virtual('blockHeader.hash').get(function () {
 	return this.hash;
 });
 
@@ -66,7 +66,9 @@ const ContractSchema = new Schema({
 	},
 	refunds: [{
 		total: {type: Number, require: true},
-		refund: {type: Number, require: true}
+		refund: {type: Number, require: true},
+		time: {type: Date, require: true},
+		garaPubKeyHash: {type: String, require: true}
 	}]
 });
 

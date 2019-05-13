@@ -300,7 +300,7 @@ module.exports = class State {
 		}
 		
 		if (blockHeader.index > 1) {
-			if (blockHeader.firstTimeSign - preBlock.blockHeader.timestamp < DURATION) {
+			if (blockHeader.firstTimeSign - preBlock.blockHeader.time < DURATION) {
 				console.log('Chua cho du thoi gian');
 				console.log();
 				return false;
@@ -384,7 +384,7 @@ module.exports = class State {
 				return false;
 			}
 			
-			// if (this.CalTimeMustWait(creatorPubKeyHash, new Date(blockHeader.timeStamp)) > 0) {
+			// if (this.CalTimeMustWait(creatorPubKeyHash, new Date(blockHeader.time)) > 0) {
 			// 	return false;
 			// }
 		}

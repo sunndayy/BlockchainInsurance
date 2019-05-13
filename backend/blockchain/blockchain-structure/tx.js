@@ -16,7 +16,8 @@ class Tx {
 		if (state.txDict[this.uid]) {
 			try {
 				await state.txDict[this.uid].save();
-			} catch (e) {}
+			} catch (e) {
+			}
 			delete state.txDict[this.uid];
 		}
 	}
@@ -165,19 +166,24 @@ class ContractTx extends Tx {
 					return false;
 				}
 				
-				if (this.preStateHash === Crypto.Hash(
-					JSON.stringify(plan.term)
-					+ JSON.stringify(state.txDict[this.uid].refunds))
+				if (this.preStateHash === Crypto.Hash(JSON.stringify(plan.term) + JSON.stringify(state.txDict[this.uid].refunds))
 				) {
 					let sum = 0;
 					state.txDict[this.uid].refunds.forEach(refund => {
 						sum += refund.refund;
 					});
 					let newRefund = this.action.update.push;
-					sum += newRefund.refund;
-					if (sum <= plan.term.maxRefund
-						&& newRefund.refund / newRefund.total === plan.term.percentage) {
-						return true;
+					if (newRefund.garaPubKeyHash === this.pubKeyHash) {
+						let time = new Date(newRefund.time);
+						let timeStart = new Date(state.txDict[this.uid].expireTime.timeStart);
+						let timeEnd = new Date(state.txDict[this.uid].expireTime.timeEnd);
+						if (timeStart < time && time < timeEnd) {
+							sum += newRefund.refund;
+							if (sum <= plan.term.maxRefund
+								&& newRefund.refund / newRefund.total === plan.term.percentage) {
+								return true;
+							}
+						}
 					}
 				}
 			}
@@ -230,7 +236,8 @@ class ContractTx extends Tx {
 			try {
 				await state.txDict[this.ref.company + this.ref.id].save();
 				delete state.txDict[this.ref.company + this.ref.id];
-			} catch (e) {}
+			} catch (e) {
+			}
 		}
 	}
 }

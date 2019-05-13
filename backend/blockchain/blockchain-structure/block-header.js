@@ -11,7 +11,7 @@ module.exports = class BlockHeader {
 		}
 	}
 	
-	get timeStamp() {
+	get time() {
 		if (this.valSigns.length === 0) {
 			return 0;
 		}
