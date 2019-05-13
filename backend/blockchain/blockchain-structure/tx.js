@@ -180,7 +180,7 @@ class ContractTx extends Tx {
 						if (timeStart < time && time < timeEnd) {
 							sum += newRefund.refund;
 							if (sum <= plan.term.maxRefund
-								&& newRefund.refund / newRefund.total === plan.term.percentage) {
+								&& newRefund.refund / newRefund.total <= plan.term.percentage) {
 								return true;
 							}
 						}
