@@ -14,10 +14,7 @@ class Tx {
 	
 	async UpdateDB(state) {
 		if (state.txDict[this.uid]) {
-			try {
-				await state.txDict[this.uid].save();
-			} catch (e) {
-			}
+			await state.txDict[this.uid].save();
 			delete state.txDict[this.uid];
 		}
 	}
@@ -230,11 +227,8 @@ class ContractTx extends Tx {
 	async UpdateDB(state) {
 		super.UpdateDB(state);
 		if (state.txDict[this.ref.company + this.ref.id]) {
-			try {
-				await state.txDict[this.ref.company + this.ref.id].save();
-				delete state.txDict[this.ref.company + this.ref.id];
-			} catch (e) {
-			}
+			await state.txDict[this.ref.company + this.ref.id].save();
+			delete state.txDict[this.ref.company + this.ref.id];
 		}
 	}
 }
