@@ -48,7 +48,7 @@ const PlanSchema = new Schema({
 });
 
 const ContractSchema = new Schema({
-	plan: {PlanSchema},
+	plan: {type: Schema.Types.ObjectId, ref: 'plan'},
 	userInfo: {
 		identityCard: {type: String, require: true},
 		licensePlate: {type: String, require: true},

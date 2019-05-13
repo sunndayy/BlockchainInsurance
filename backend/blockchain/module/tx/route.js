@@ -13,11 +13,12 @@ router.post('/tx', async (req, res) => {
 		});
 		if (mySession === WAIT_TO_COLLECT_SIGN && await tx.Validate(globalState)) {
 			if (await globalState.PushTx(tx)) {
+				res.end('Valid tx');
 				return;
 			}
 		}
 		txCache.push(tx);
-		res.end('Valid tx');
+		res.end();
 	} catch (e) {
 		res.end(e.message);
 	}
