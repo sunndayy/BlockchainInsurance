@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b696cc9-e63a-46b7-961d-38ee5ef81080" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/blockchain-structure/tx.js" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain-structure/tx.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shop/module/order/controller/order-controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shop/module/order/model/order-model.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shop/module/order/route/order-route.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shop/module/product/controller/product-controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shop/module/product/model/product-model.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shop/module/product/route/product-route.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shop/module/user/controller/user-controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shop/module/user/model/user-model.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shop/module/user/route/user-route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -15,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blockchain-structure/tx.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="167" column="8" lean-forward="true" selection-start-line="167" selection-start-column="8" selection-end-line="167" selection-end-column="8" />
+            <state relative-caret-position="17">
+              <caret line="167" column="8" selection-start-line="167" selection-start-column="8" selection-end-line="167" selection-end-column="8" />
               <folding>
                 <element signature="n#!!block;n#Verify#0;n#Tx#0" />
                 <element signature="n#!!block;n#pubKeyHash#0;n#Tx#0" />
@@ -29,6 +38,15 @@
                 <element signature="n#!!block;n#UpdateState#0;n#PlanTx#0" />
                 <element signature="n#!!block;n#uid#0;n#PlanTx#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" selection-start-line="9" selection-end-line="10" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -161,11 +179,10 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="978" />
-    <option name="height" value="1039" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="952" />
+    <option name="width" value="977" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -389,11 +406,13 @@
       <workItem from="1557660594786" duration="14000" />
       <workItem from="1557661786003" duration="310000" />
       <workItem from="1557716085772" duration="1405000" />
+      <workItem from="1557718370355" duration="68000" />
+      <workItem from="1557725384293" duration="647000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="263450000" />
+    <option name="totallyTimeSpent" value="264165000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -405,16 +424,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="762" y="0" width="781" height="830" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="npm" order="1" side_tool="true" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="3" weight="0.5261071" />
+      <window_info content_ui="combo" id="Project" order="3" weight="0.5255376" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3243626" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.31518623" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.31444758" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.5157593" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -642,13 +661,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="37" column="3" lean-forward="true" selection-start-line="37" selection-start-column="3" selection-end-line="37" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -796,8 +808,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/blockchain-structure/tx.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="167" column="8" lean-forward="true" selection-start-line="167" selection-start-column="8" selection-end-line="167" selection-end-column="8" />
+        <state relative-caret-position="17">
+          <caret line="167" column="8" selection-start-line="167" selection-start-column="8" selection-end-line="167" selection-end-column="8" />
           <folding>
             <element signature="n#!!block;n#Verify#0;n#Tx#0" />
             <element signature="n#!!block;n#pubKeyHash#0;n#Tx#0" />
@@ -807,6 +819,13 @@
             <element signature="n#!!block;n#UpdateState#0;n#PlanTx#0" />
             <element signature="n#!!block;n#uid#0;n#PlanTx#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" selection-start-line="9" selection-end-line="10" selection-end-column="49" />
         </state>
       </provider>
     </entry>
