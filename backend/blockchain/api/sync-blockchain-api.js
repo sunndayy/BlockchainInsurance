@@ -21,7 +21,8 @@ const MakeRequest = (url, msg, cb) => {
 					let msg = JSON.parse(sign.msg);
 					await cb(msg, Crypto.Hash(sign.pubKey));
 				}
-			} catch (err) {
+			} catch (e) {
+				debug(e);
 			}
 		}
 	};

@@ -85,6 +85,7 @@ module.exports = class State {
 											}
 										}
 									} catch (e) {
+										debug(e);
 									}
 								}
 							});
@@ -211,7 +212,9 @@ module.exports = class State {
 			}, DURATION);
 			
 			cb();
-		} catch (e) {}
+		} catch (e) {
+			debug(e);
+		}
 	}
 	
 	// CalTimeMustWait(pubKeyHash, time = new Date()) {

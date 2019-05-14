@@ -20,6 +20,7 @@ router.post('/tx', async (req, res) => {
 		txCache.push(tx);
 		res.end();
 	} catch (e) {
+		debug(e);
 		res.end(e.message);
 	}
 });
