@@ -199,6 +199,12 @@ class ContractTx extends Tx {
 				garaPubKeyHashes: this.ref.garaPubKeyHashes,
 				expireTime: this.ref.expireTime
 			});
+			if (!state.txDict[this.ref.plan.company + this.ref.plan.id]) {
+				state.txDict[this.ref.plan.company + this.ref.plan.id] = await Plan.findOne({
+					company: this.ref.plan.company,
+					id: this.ref.plan.id
+				}).populate('contracts');
+			}
 			state.txDict[this.ref.plan.company + this.ref.plan.id].contracts.push(state.txDict[this.uid]);
 		} else if (this.action.update) {
 			if (!state.txDict[this.uid]) {
