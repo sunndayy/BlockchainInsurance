@@ -77,7 +77,8 @@ module.exports = class State {
 													await _this.HandleAfterNewBlock(blockHeader, blockData, () => {
 														_this.nodes.forEach(node => {
 															if (node.host !== HOST && node.host) {
-																request.post('http://' + node.host + '/header', {form: Crypto.Sign(blockHeader)}, (err, res, body) => {});
+																request.post('http://' + node.host + '/header', {form: Crypto.Sign(blockHeader)}, (err, res, body) => {
+																});
 															}
 														});
 													});
@@ -125,7 +126,7 @@ module.exports = class State {
 	
 	async Init() {
 		// Load nodes
-		this.nodes = await Node.find({});
+		this.nodes = await Node.find({}).sort({company: 1});
 		
 		if (this.isGlobalState) {
 			let preBlock;
