@@ -120,20 +120,17 @@ class ContractTx extends Tx {
 		
 		if (plan) {
 			if (!state.txDict[this.uid]) {
-				// Contract reference
-				let target = {
-					userInfo: this.ref.userInfo,
-					garaPubKeyHashes: this.ref.garaPubKeyHashes,
-					expireTime: this.ref.expireTime
+				let compareDate = (date1, date2) => {
+					let _date1 = new Date(date1);
+					let _date2 = new Date(date2);
+					return _date1.getDate() === _date2.getDate() && _date1.getMonth() === _date2.getMonth() && _date1.getFullYear() === _date2.getFullYear();
 				};
 				
 				state.txDict[this.uid] = plan.contracts.find(contract => {
-					let source = {
-						userInfo: contract.userInfo,
-						garaPubKeyHashes: contract.garaPubKeyHashes,
-						expireTime: contract.expireTime
-					};
-					return JSON.stringify(source) === JSON.stringify(target);
+					return JSON.stringify(this.ref.userInfo) === JSON.stringify(contract.userInfo)
+						&& JSON.stringify(this.ref.garaPubKeyHashes) === JSON.stringify(contract.garaPubKeyHashes)
+						&& compareDate(this.ref.expireTime.timeStart, contract.expireTime.timeStart)
+						&& compareDate(this.ref.expireTime.timeEnd, contract.expireTime.timeEnd);
 				});
 			}
 			
@@ -211,11 +208,18 @@ class ContractTx extends Tx {
 				let contracts = await Contract.find({
 					userInfo: this.ref.userInfo,
 					garaPubKeyHashes: this.ref.garaPubKeyHashes,
-					expireTime: this.ref.expireTime
+					// expireTime: this.ref.expireTime
 				}).populate('plan');
+				let compareDate = (date1, date2) => {
+					let _date1 = new Date(date1);
+					let _date2 = new Date(date2);
+					return _date1.getDate() === _date2.getDate() && _date1.getMonth() === _date2.getMonth() && _date1.getFullYear() === _date2.getFullYear();
+				};
 				for (let i = 0; i < contracts.length; i++) {
 					if (contracts[i].plan.company === this.ref.plan.company
-						&& contracts[i].plan.id === this.ref.plan.id) {
+						&& contracts[i].plan.id === this.ref.plan.id
+						&& compareDate(contracts[i].expireTime.timeStart, this.ref.expireTime.timeStart)
+						&& compareDate(contracts[i].expireTime.timeEnd, this.ref.expireTime.timeEnd)) {
 						state.txDict[this.uid] = contracts[i];
 						break;
 					}
