@@ -6,8 +6,7 @@ const NodeSchema = new Schema({
 	company: {type: String, require: true, unique: true},
 	host: {type: String},
 	point: {type: Number, default: 0},
-	lastTimeCreateBlock: {type: Number},
-	lastTimeUpdateHost: {type: Date}
+	// lastTimeCreateBlock: {type: Number}
 });
 
 const BlockSchema = new Schema({

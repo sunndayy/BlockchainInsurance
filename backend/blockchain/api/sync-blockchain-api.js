@@ -48,8 +48,7 @@ const MakeConnectRequest = host => {
 				},
 				{
 					$set: {
-						host: host,
-						lastTimeUpdateHost: new Date()
+						host: host
 					}
 				},
 				{
