@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b696cc9-e63a-46b7-961d-38ee5ef81080" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/contract/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/contract/model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/plan/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/plan/model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blockchain-structure/tx.js" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain-structure/tx.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -17,29 +15,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/module/plan/model.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="2" lean-forward="true" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/module/contract/model.js">
+        <entry file="file://$PROJECT_DIR$/blockchain-structure/tx.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="73" selection-end-line="11" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/model.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="26" column="4" lean-forward="true" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
+            <state relative-caret-position="570">
+              <caret line="206" column="9" selection-start-line="206" selection-start-column="9" selection-end-line="206" selection-end-column="9" />
+              <folding>
+                <element signature="n#Tx#0" />
+                <element signature="n#!!block;n#Verify#0;n#Tx#0" />
+                <element signature="n#!!block;n#pubKeyHash#0;n#Tx#0" />
+                <element signature="n#!!block;n#constructor#0;n#PlanTx#0" />
+                <element signature="n#!!block;n#uid#0;n#PlanTx#0" />
+                <element signature="n#!!block;n#constructor#0;n#ContractTx#0" />
+                <element signature="n#!!block;n#Validate#0;n#ContractTx#0" />
+                <element signature="e#2397#2573#0" />
+                <element signature="e#2654#4580#0" />
+                <element signature="e#3250#3591#0" />
+                <element signature="n#!!block;n#uid#0;n#ContractTx#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -162,17 +155,17 @@
         <option value="$PROJECT_DIR$/module/block/route.js" />
         <option value="$PROJECT_DIR$/bin/www" />
         <option value="$PROJECT_DIR$/config.js" />
-        <option value="$PROJECT_DIR$/blockchain-structure/tx.js" />
         <option value="$PROJECT_DIR$/module/tx/route.js" />
         <option value="$PROJECT_DIR$/module/node/route.js" />
         <option value="$PROJECT_DIR$/api/sync-blockchain-api.js" />
         <option value="$PROJECT_DIR$/model/model.js" />
         <option value="$PROJECT_DIR$/module/plan/model.js" />
         <option value="$PROJECT_DIR$/module/contract/model.js" />
+        <option value="$PROJECT_DIR$/blockchain-structure/tx.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="950" />
     <option name="width" value="980" />
     <option name="height" value="1040" />
@@ -452,11 +445,12 @@
       <workItem from="1557823149986" duration="20000" />
       <workItem from="1557823334084" duration="550000" />
       <workItem from="1557823904532" duration="85000" />
+      <workItem from="1557824123666" duration="126000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="274500000" />
+    <option name="totallyTimeSpent" value="274626000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -474,7 +468,7 @@
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="npm" order="1" side_tool="true" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.36412317" />
+      <window_info content_ui="combo" id="Project" order="3" weight="0.36412317" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3243626" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.30714285" />
@@ -748,21 +742,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blockchain-structure/state.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="196" column="31" lean-forward="true" selection-start-line="196" selection-start-column="31" selection-end-line="196" selection-end-column="31" />
-          <folding>
-            <element signature="e#7204#7310#0" />
-            <element signature="e#7318#7609#0" />
-            <element signature="e#7617#8242#0" />
-            <element signature="e#10447#10631#0" />
-            <element signature="e#10639#11173#0" />
-            <element signature="e#11181#12022#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -815,40 +794,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blockchain-structure/tx.js">
+    <entry file="file://$PROJECT_DIR$/model/model.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="36" column="2" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="2" />
-          <folding>
-            <element signature="n#Tx#0" />
-            <element signature="n#!!block;n#Verify#0;n#Tx#0" />
-            <element signature="n#!!block;n#pubKeyHash#0;n#Tx#0" />
-            <element signature="n#!!block;n#constructor#0;n#PlanTx#0" />
-            <element signature="n#!!block;n#uid#0;n#PlanTx#0" />
-            <element signature="n#ContractTx#0" />
-            <element signature="n#!!block;n#constructor#0;n#ContractTx#0" />
-            <element signature="n#!!block;n#Validate#0;n#ContractTx#0" />
-            <element signature="e#2397#2573#0" />
-            <element signature="e#2654#4580#0" />
-            <element signature="e#3250#3591#0" />
-            <element signature="n#!!block;n#UpdateState#0;n#ContractTx#0" />
-            <element signature="n#!!block;n#uid#0;n#ContractTx#0" />
-            <element signature="n#!!block;n#UpdateDB#0;n#ContractTx#0" />
-          </folding>
+        <state relative-caret-position="17">
+          <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/module/plan/model.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
-          <caret line="10" column="2" lean-forward="true" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/model.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="26" column="4" lean-forward="true" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
+          <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -856,6 +812,33 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="73" selection-end-line="11" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blockchain-structure/state.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="196" column="31" lean-forward="true" selection-start-line="196" selection-start-column="31" selection-end-line="196" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blockchain-structure/tx.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="206" column="9" selection-start-line="206" selection-start-column="9" selection-end-line="206" selection-end-column="9" />
+          <folding>
+            <element signature="n#Tx#0" />
+            <element signature="n#!!block;n#Verify#0;n#Tx#0" />
+            <element signature="n#!!block;n#pubKeyHash#0;n#Tx#0" />
+            <element signature="n#!!block;n#constructor#0;n#PlanTx#0" />
+            <element signature="n#!!block;n#uid#0;n#PlanTx#0" />
+            <element signature="n#!!block;n#constructor#0;n#ContractTx#0" />
+            <element signature="n#!!block;n#Validate#0;n#ContractTx#0" />
+            <element signature="e#2397#2573#0" />
+            <element signature="e#2654#4580#0" />
+            <element signature="e#3250#3591#0" />
+            <element signature="n#!!block;n#uid#0;n#ContractTx#0" />
+          </folding>
         </state>
       </provider>
     </entry>
