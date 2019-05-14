@@ -236,9 +236,9 @@ class ContractTx extends Tx {
 	
 	async UpdateDB(state) {
 		super.UpdateDB(state);
-		if (state.txDict[this.ref.company + this.ref.id]) {
-			await state.txDict[this.ref.company + this.ref.id].save();
-			delete state.txDict[this.ref.company + this.ref.id];
+		if (state.txDict[this.ref.plan.company + this.ref.plan.id]) {
+			await state.txDict[this.ref.plan.company + this.ref.plan.id].save();
+			delete state.txDict[this.ref.plan.company + this.ref.plan.id];
 		}
 	}
 }
