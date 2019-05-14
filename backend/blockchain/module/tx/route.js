@@ -11,14 +11,19 @@ router.post('/tx', async (req, res) => {
 			sign: req.body,
 			tx: JSON.parse(req.body.msg)
 		});
-		if (mySession === WAIT_TO_COLLECT_SIGN && await tx.Validate(globalState)) {
-			if (await globalState.PushTx(tx)) {
-				res.end('Valid tx');
-				return;
+		
+		if (tx) {
+			if (mySession === WAIT_TO_COLLECT_SIGN && await tx.Validate(globalState)) {
+				if (await globalState.PushTx(tx)) {
+					res.end('Valid tx');
+					return;
+				}
 			}
+			txCache.push(tx);
+			res.end();
+		} else {
+			res.end('Invalid type');
 		}
-		txCache.push(tx);
-		res.end();
 	} catch (e) {
 		debug(e);
 		res.end(e.message);

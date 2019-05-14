@@ -246,7 +246,8 @@ class ContractTx extends Tx {
 module.exports = ({sign, tx}) => {
 	if (tx.type === 'PLAN') {
 		return new PlanTx({sign, tx})
-	} else {
+	} else if (tx.type === 'CONTRACT') {
 		return new ContractTx(({sign, tx}));
 	}
+	return null;
 };
