@@ -16,7 +16,7 @@ module.exports.signIn = async (username, password) => {
 	throw new Error('username or password not correct');
 };
 
-module.exports.signUp = async userInfo => {
+module.exports.signUp = async (userInfo, isAdmin = false) => {
 	if (userInfo.username === '') {
 		throw new Error('Empty username');
 	}
@@ -47,7 +47,7 @@ module.exports.signUp = async userInfo => {
 	if (await User.findOne({email: userInfo.email})) {
 		throw new Error('Email was used');
 	}
-	userInfo.role = 1;
+	userInfo.role = isAdmin ? 0 : 1;
 	userInfo.passwordHash = await bcrypt.hash(userInfo.password, 10);
 	userInfo.birthDay = new Date(parseInt(userInfo.birthDay.year), parseInt(userInfo.birthDay.month), parseInt(userInfo.birthDay.day));
 	await User.create(userInfo);

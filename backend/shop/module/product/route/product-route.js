@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const upload = multer({dest: 'uploads/'});
 const userMiddleware = require('../../../middleware/user-middleware');
 const productBusiness = require('../business/product-business');
+const fs = require('fs');
 
 router.get('/products', async (req, res) => {
 	try {
@@ -10,6 +13,18 @@ router.get('/products', async (req, res) => {
 	} catch (e) {
 		res.json({
 			error: e.message
+		});
+	}
+});
+
+router.get('/product-image/:id', async (req, res) => {
+	let buffer = await productBusiness.GetImage(req.params.id);
+	if (buffer) {
+		res.set({'Content-Type': 'image/gif'});
+		res.end(buffer);
+	} else {
+		res.json({
+			error: 'Image not found'
 		});
 	}
 });
@@ -36,16 +51,24 @@ router.get('/products-by-producer/:producer', async (req, res) => {
 	}
 });
 
-router.post('/create-product', userMiddleware.authMiddleware, async (req, res) => {
+router.post('/create-product', userMiddleware.authMiddleware, upload.single('image'), async (req, res) => {
 	if (req.user.role === 0) {
-		try {
-			let product = await productBusiness.CreateProduct(req.body);
-			res.json(product);
-		} catch (e) {
-			res.json({
-				error: e.message
-			});
-		}
+		fs.readFile(req.file.path, async (e, data) => {
+			if (e) {
+				res.json({
+					error: e.message
+				});
+			} else {
+				req.body.image = data;
+				let product = await productBusiness.CreateProduct(req.body);
+				res.json(product);
+				fs.unlink(req.file.path, async e => {
+					if (e) {
+						console.error(e);
+					}
+				});
+			}
+		});
 	} else {
 		res.json({
 			error: 'Not authorization'

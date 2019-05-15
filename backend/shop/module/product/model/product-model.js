@@ -8,7 +8,8 @@ let productSchema = new Schema({
 	type: {type: Number, min: 0, max: 2},
 	price: {type: Number, require: true},
 	amount: {type: Number, default: 0},
-	producer: {type: String, require: true}
+	producer: {type: String, require: true},
+	image: {type: Buffer}
 });
 
 module.exports = mongoose.model('product', productSchema);
