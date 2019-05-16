@@ -1,10 +1,13 @@
 const User = require('../model/user-model');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jsonwebtoken = require('jsonwebtoken');
 const validator = require('validator');
 const moment = require('moment');
+const myValidator = require('../../../utils/validator');
 
 module.exports.signIn = async (username, password) => {
+	myValidator(username, 'string', 'username');
+	myValidator(password, 'string', 'password');
 	let user = await User.findOne({username: username});
 	if (user) {
 		if (await bcrypt.compare(password, user.passwordHash)) {
@@ -13,10 +16,18 @@ module.exports.signIn = async (username, password) => {
 			}, 'secretkey');
 		}
 	}
-	throw new Error('username or password not correct');
+	throw new Error('Username or password not correct');
 };
 
 module.exports.signUp = async (userInfo, isAdmin = false) => {
+	myValidator(userInfo.username, 'string', 'username');
+	myValidator(userInfo.password, 'string', 'password');
+	myValidator(userInfo.name, 'string', 'name');
+	myValidator(userInfo.identityCard, 'string', 'identityCard');
+	myValidator(userInfo.birthday, 'object', 'birthday');
+	myValidator(userInfo.phoneNumber, 'string', 'phone number');
+	myValidator(userInfo.email, 'string', 'email');
+	
 	if (userInfo.username === '') {
 		throw new Error('Empty username');
 	}
@@ -29,7 +40,7 @@ module.exports.signUp = async (userInfo, isAdmin = false) => {
 	if (!/^[0-9]{9}/.test(userInfo.identityCard)) {
 		throw new Error('Invalid identity card');
 	}
-	if (!moment(userInfo.birthDay.year + '-' + userInfo.birthDay.month + '-' + userInfo.birthDay.day, 'YYYY-MM-DD').isValid()) {
+	if (!moment(userInfo.birthday.year + '-' + userInfo.birthday.month + '-' + userInfo.birthday.day, 'YYYY-MM-DD').isValid()) {
 		throw new Error('Invalid birthday');
 	}
 	if (userInfo.address === '') {
@@ -47,9 +58,11 @@ module.exports.signUp = async (userInfo, isAdmin = false) => {
 	if (await User.findOne({email: userInfo.email})) {
 		throw new Error('Email was used');
 	}
+	
 	userInfo.role = isAdmin ? 0 : 1;
 	userInfo.passwordHash = await bcrypt.hash(userInfo.password, 10);
-	userInfo.birthDay = new Date(parseInt(userInfo.birthDay.year), parseInt(userInfo.birthDay.month), parseInt(userInfo.birthDay.day));
+	userInfo.birthday = new Date(userInfo.birthday.year, userInfo.birthday.month, userInfo.birthday.day);
+	
 	await User.create(userInfo);
 	return await jsonwebtoken.sign({
 		username: userInfo.username

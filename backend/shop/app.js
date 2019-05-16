@@ -23,7 +23,7 @@ db.once('open', async () => {
 				'password': 'phhoang',
 				'identityCard': '352421937',
 				'name': 'Pham Huy Hoang',
-				'birthDay': {
+				'birthday': {
 					'day': 21,
 					'month': 9,
 					'year': 1997
@@ -45,6 +45,7 @@ db.once('open', async () => {
 		
 		app.use('/', require('./module/user/route/user-route'));
 		app.use('/', require('./module/product/route/product-route'));
+		app.use('/', require('./module/order/route/order-route'));
 
 // catch 404 and forward to error handler
 		app.use(function (req, res, next) {

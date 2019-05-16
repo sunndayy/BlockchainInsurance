@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userMiddleware = require('../../../middleware/user-middleware');
 const orderBusiness = require('../business/order-business');
+const request = require('request');
 
 router.get('/orders', userMiddleware.authMiddleware, async (req, res) => {
 	if (req.user.role === 0) {
@@ -57,6 +58,14 @@ router.get('/orders-by-status/:status', userMiddleware.authMiddleware, async (re
 router.post('/create-order', userMiddleware.authMiddleware, async (req, res) => {
 	try {
 		let order = await orderBusiness.CreateOrder(req.user, req.body);
+		order = order._doc;
+		order.items = order.items.map(item => {
+			return {
+				id: item._doc.product.id,
+				price: item._doc.price
+			}
+		});
+		delete order.user;
 		res.json(order);
 	} catch (e) {
 		res.json({
@@ -68,8 +77,22 @@ router.post('/create-order', userMiddleware.authMiddleware, async (req, res) => 
 router.put('/update-order/:id', userMiddleware.authMiddleware, async (req, res) => {
 	if (req.user.role === 0) {
 		try {
-			let data = orderBusiness.UpdateOrder(req.params.id, req.body);
+			let data = await orderBusiness.UpdateOrder(req.params.id, req.body);
 			res.json(data);
+			if (data.contract) {
+				request.post({url: 'http://bcinsurence.herokuapp.com', form: data.contract}, (e, res, body) => {
+					if (e) {
+						console.error(e);
+					} else {
+						try {
+							body = JSON.parse(body);
+							console.log(body);
+						} catch (e) {
+							console.error(e);
+						}
+					}
+				});
+			}
 		} catch (e) {
 			res.json({
 				error: e.message

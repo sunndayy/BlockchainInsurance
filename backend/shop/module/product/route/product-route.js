@@ -53,22 +53,33 @@ router.get('/products-by-producer/:producer', async (req, res) => {
 
 router.post('/create-product', userMiddleware.authMiddleware, upload.single('image'), async (req, res) => {
 	if (req.user.role === 0) {
-		fs.readFile(req.file.path, async (e, data) => {
-			if (e) {
+		let cb = async () => {
+			try {
+				let product = await productBusiness.CreateProduct(req.body);
+				res.json(product);
+			} catch (e) {
 				res.json({
 					error: e.message
 				});
-			} else {
-				req.body.image = data;
-				let product = await productBusiness.CreateProduct(req.body);
-				res.json(product);
-				fs.unlink(req.file.path, async e => {
-					if (e) {
-						console.error(e);
-					}
-				});
 			}
-		});
+		};
+		
+		if (req.file) {
+			fs.readFile(req.file.path, async (e, data) => {
+				if (e) {
+					res.json({
+						error: e.message
+					});
+				} else {
+					req.body.image = data;
+					fs.unlink(req.file.path, e => {
+					});
+					await cb();
+				}
+			});
+		} else {
+			await cb();
+		}
 	} else {
 		res.json({
 			error: 'Not authorization'
@@ -76,15 +87,34 @@ router.post('/create-product', userMiddleware.authMiddleware, upload.single('ima
 	}
 });
 
-router.put('/update-product/:id', userMiddleware.authMiddleware, async (req, res) => {
+router.put('/update-product/:id', userMiddleware.authMiddleware, upload.single('image'), async (req, res) => {
 	if (req.user.role === 0) {
-		try {
-			let product = await productBusiness.UpdateProduct(req.params.id, req.body);
-			res.json(product);
-		} catch (e) {
-			res.json({
-				error: e.message
+		let cb = async () => {
+			try {
+				let product = await productBusiness.UpdateProduct(req.params.id, req.body);
+				res.json(product);
+			} catch (e) {
+				res.json({
+					error: e.message
+				});
+			}
+		};
+		
+		if (req.file) {
+			fs.readFile(req.file.path, async (e, data) => {
+				if (e) {
+					res.json({
+						error: e.message
+					});
+				} else {
+					req.body.image = data;
+					fs.unlink(req.file.path, e => {
+					});
+					await cb();
+				}
 			});
+		} else {
+			await cb();
 		}
 	} else {
 		res.json({
