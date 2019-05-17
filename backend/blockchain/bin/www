@@ -8,6 +8,7 @@ const config = require('../config');
 Object.keys(config).forEach(key => {
     global[key] = config[key]
 });
+global.txCache = [];
 
 const mongoose = require('mongoose');
 mongoose.connect(DB, { useNewUrlParser: true });
@@ -18,177 +19,181 @@ db.on('error', err => {
 });
 
 db.once('open', async () => {
-    const initNodePromise = require('../model/init-nodes');
-    await initNodePromise();
+		try {
+		    const initNodePromise = require('../model/init-nodes');
+        await initNodePromise();
 
-    const app = require('../app');
-    const debug = require('debug')('blocktree:server');
-    const http = require('http');
+		    let BlockHeader = require('../blockchain-structure/block-header');
+		    let BlockData = require('../blockchain-structure/block-data');
+		    let BlockCache = mongoose.model('block_cache');
 
-    /**
-     * Normalize a port into a number, string, or false.
-     */
+		    let blocks = await BlockCache.find({});
+		    if (blocks.length == 0) {
+		        blocks.push({
+		            blockHeader: {
+		                index: 0,
+		                valSigns: []
+		            },
+		            blockData: {
+		                txs: []
+		            }
+		        });
+		        blocks.push({
+		            blockHeader: {
+		                index: 1,
+		                valSigns: []
+		            },
+		            blockData: {
+		                txs: []
+		            }
+		        });
+		    }
 
-    function normalizePort(val) {
-        let port = parseInt(val, 10);
+		    blocks = blocks.map(block => {
+		        return {
+		            blockHeader: new BlockHeader(block.blockHeader),
+		            blockData: new BlockData(block.blockData.txs)
+		        };
+		    });
 
-        if (isNaN(port)) {
-            // named pipe
-            return val;
+		    if (blocks[0].blockHeader.index < blocks[1].blockHeader.index) {
+		        global.blockCache1 = [blocks[0]];
+		        global.blockCache2 = [blocks[1]];
+		    } else {
+		        global.blockCache1 = [blocks[1]];
+		        global.blockCache2 = [blocks[0]];
+		    }
+
+		    global.choosenBlock = blockCache2[0];
+		    const State = require('../blockchain-structure/state');
+		    global.globalState = new State(true);
+		    await globalState.Init();
+
+		    /**
+		     * Connect DNS server
+		     */
+		    const request = require('request');
+		    const syncDNS = () => {
+		        request.post({ url: DNS_SERVER, form: { host: HOST } }, (err, res, body) => {
+		            if (err) {
+		                console.error(err);
+		            }
+		        });
+		    };
+
+		    request(DNS_SERVER, (err, res, body) => {
+		        if (err) {
+		            console.error(err);
+		        } else {
+		            console.log('Sync DNS server');
+		            syncDNS();
+		            try {
+		                const { MakeConnectRequest } = require('../api/sync-blockchain-api');
+
+		                /**
+		                 * Connect and sync blockchain from every node in network
+		                 */
+		                let addrs = JSON.parse(body);
+		                addrs.forEach(addr => {
+		                    if (addr !== HOST) {
+		                        MakeConnectRequest(addr);
+		                    }
+		                });
+		            } catch (e) {
+		                console.error(e);
+		            }
+		        }
+		    });
+
+		    setInterval(() => {
+		        syncDNS();
+		    }, 1000 * 60 * 10);
+
+        const app = require('../app');
+        const debug = require('debug')('blocktree:server');
+        const http = require('http');
+
+        /**
+         * Normalize a port into a number, string, or false.
+         */
+
+        function normalizePort(val) {
+            let port = parseInt(val, 10);
+
+            if (isNaN(port)) {
+                // named pipe
+                return val;
+            }
+
+            if (port >= 0) {
+                // port number
+                return port;
+            }
+
+            return false;
         }
 
-        if (port >= 0) {
-            // port number
-            return port;
-        }
+        /**
+         * Event listener for HTTP server "error" event.
+         */
 
-        return false;
-    }
-
-    /**
-     * Event listener for HTTP server "error" event.
-     */
-
-    function onError(error) {
-        if (error.syscall !== 'listen') {
-            throw error;
-        }
-
-        let bind = typeof port === 'string'
-            ? 'Pipe ' + port
-            : 'Port ' + port;
-
-        // handle specific listen errors with friendly messages
-        switch (error.code) {
-            case 'EACCES':
-                // console.error(bind + ' requires elevated privileges');
-                process.exit(1);
-                break;
-            case 'EADDRINUSE':
-                // console.error(bind + ' is already in use');
-                process.exit(1);
-                break;
-            default:
+        function onError(error) {
+            if (error.syscall !== 'listen') {
                 throw error;
-        }
-    }
-
-    /**
-     * Event listener for HTTP server "listening" event.
-     */
-
-    function onListening() {
-        let addr = server.address();
-        let bind = typeof addr === 'string'
-            ? 'pipe ' + addr
-            : 'port ' + addr.port;
-        debug('Listening on ' + bind);
-    }
-
-    /**
-     * Get port from environment and store in Express.
-     */
-
-    let port = normalizePort(process.env.PORT || PORT);
-    app.set('port', port);
-
-    /**
-     * Create HTTP server.
-     */
-
-    let server = http.createServer(app);
-
-    /**
-     * Listen on provided port, on all network interfaces.
-     */
-
-    server.listen(port);
-    server.on('error', onError);
-    server.on('listening', onListening);
-
-    let BlockHeader = require('../blockchain-structure/block-header');
-    let BlockData = require('../blockchain-structure/block-data');
-    let BlockCache = mongoose.model('block_cache');
-
-    let blocks = await BlockCache.find({});
-    if (blocks.length == 0) {
-        blocks.push({
-            blockHeader: {
-                index: 0,
-                valSigns: []
-            },
-            blockData: {
-                txs: []
             }
-        });
-        blocks.push({
-            blockHeader: {
-                index: 1,
-                valSigns: []
-            },
-            blockData: {
-                txs: []
-            }
-        });
-    }
 
-    blocks = blocks.map(block => {
-        return {
-            blockHeader: new BlockHeader(block.blockHeader),
-            blockData: new BlockData(block.blockData.txs)
-        };
-    });
+            let bind = typeof port === 'string'
+                ? 'Pipe ' + port
+                : 'Port ' + port;
 
-    if (blocks[0].blockHeader.index < blocks[1].blockHeader.index) {
-        global.blockCache1 = [blocks[0]];
-        global.blockCache2 = [blocks[1]];
-    } else {
-        global.blockCache1 = [blocks[1]];
-        global.blockCache2 = [blocks[0]];
-    }
-
-    global.choosenBlock = blockCache2[0];
-    const State = require('../blockchain-structure/state');
-    global.globalState = new State(true);
-    await globalState.Init();
-
-    /**
-     * Connect DNS server
-     */
-    const request = require('request');
-    const syncDNS = () => {
-        request.post({ url: DNS_SERVER, form: { host: HOST } }, (err, res, body) => {
-            if (err) {
-                console.error(err);
-            }
-        });
-    };
-
-    request(DNS_SERVER, (err, res, body) => {
-        if (err) {
-            // console.error(err);
-        } else {
-            syncDNS();
-            try {
-                const { MakeConnectRequest } = require('../api/sync-blockchain-api');
-
-                /**
-                 * Connect and sync blockchain from every node in network
-                 */
-                let addrs = JSON.parse(body);
-                addrs.forEach(addr => {
-                    if (addr !== HOST) {
-                        MakeConnectRequest(addr);
-                    }
-                });
-            } catch (e) {
-                // debug(e);
-                console.error(err);
+            // handle specific listen errors with friendly messages
+            switch (error.code) {
+                case 'EACCES':
+                    // console.error(bind + ' requires elevated privileges');
+                    process.exit(1);
+                    break;
+                case 'EADDRINUSE':
+                    // console.error(bind + ' is already in use');
+                    process.exit(1);
+                    break;
+                default:
+                    throw error;
             }
         }
-    });
 
-    setInterval(() => {
-        syncDNS();
-    }, 1000 * 60 * 10);
+        /**
+         * Event listener for HTTP server "listening" event.
+         */
+
+        function onListening() {
+            let addr = server.address();
+            let bind = typeof addr === 'string'
+                ? 'pipe ' + addr
+                : 'port ' + addr.port;
+            debug('Listening on ' + bind);
+        }
+
+        /**
+         * Get port from environment and store in Express.
+         */
+
+        let port = normalizePort(process.env.PORT || PORT);
+        app.set('port', port);
+
+        /**
+         * Create HTTP server.
+         */
+
+        let server = http.createServer(app);
+
+        /**
+         * Listen on provided port, on all network interfaces.
+         */
+
+        server.listen(port);
+        server.on('error', onError);
+        server.on('listening', onListening);
+		} catch (e) {
+				console.error(e);
+		}
 });

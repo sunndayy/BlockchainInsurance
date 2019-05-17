@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ebe119c0-7738-4c00-9e5a-9fb41ef256f0" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/utils/validator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../blockchain/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../blockchain/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../blockchain/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/bin/www" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../blockchain/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/module/order/business/order-business.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/order/business/order-business.js" afterDir="false" />
@@ -77,9 +81,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="width" value="977" />
-    <option name="height" value="1038" />
+    <option name="x" value="-9" />
+    <option name="width" value="978" />
+    <option name="height" value="1039" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -87,7 +91,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -181,6 +184,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -232,11 +236,12 @@
       <workItem from="1557979534359" duration="162000" />
       <workItem from="1557983913452" duration="606000" />
       <workItem from="1558008360977" duration="8058000" />
+      <workItem from="1558102686496" duration="18000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32887000" />
+    <option name="totallyTimeSpent" value="32905000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -248,9 +253,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="0" width="781" height="830" extended-state="0" />
+    <frame x="-7" y="0" width="782" height="831" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3548387" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.35436243" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -299,19 +304,16 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/module/order/route/order-route.js</url>
           <line>68</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/module/order/route/order-route.js</url>
           <line>7</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/module/order/route/order-route.js</url>
           <line>10</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
@@ -395,15 +397,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/order/controller/order-controller.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/product/controller/product-controller.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/user/controller/user-controller.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/module/order/controller/order-controller.js" />
+    <entry file="file://$PROJECT_DIR$/module/product/controller/product-controller.js" />
+    <entry file="file://$PROJECT_DIR$/module/user/controller/user-controller.js" />
     <entry file="file://$PROJECT_DIR$/middleware/user-middleware.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">

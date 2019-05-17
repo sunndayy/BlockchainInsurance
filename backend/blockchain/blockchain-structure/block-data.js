@@ -1,4 +1,4 @@
-const Crypto = require('../utils/Crypto');
+const Crypto = require('../utils/crypto');
 const TX = require('./tx');
 
 module.exports = class BlockData {

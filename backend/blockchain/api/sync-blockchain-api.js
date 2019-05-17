@@ -73,7 +73,7 @@ const MakeConnectRequest = host => {
  * Make get header request
  */
 const HandleAfterGetHeader = async (host, blockHeader) => {
-	let state = new State();
+	let state = new State(false);
 	await state.Init();
 	blockHeader = new BlockHeader(blockHeader);
 	if (await state.ValidateBlockHeader(blockHeader)) {
@@ -102,7 +102,7 @@ const MakeSyncHeaderRequest = (host, index) => {
  * Make get data request
  */
 const HandleAfterGetData = async (host, blockHeader, blockData) => {
-	let state = new State();
+	let state = new State(false);
 	await state.Init();
 	blockData = new BlockData(blockData.txs);
 	await state.ValidateBlockData(blockHeader, blockData, () => {
