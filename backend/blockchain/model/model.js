@@ -52,7 +52,7 @@ const ContractSchema = new Schema({
 		identityCard: {type: String, require: true},
 		licensePlate: {type: String, require: true},
 		name: {type: String},
-		birthDay: {type: Date},
+		birthday: {type: Number},
 		sex: {type: Boolean},
 		address: {type: String},
 		phoneNumber: {type: String},
@@ -60,13 +60,13 @@ const ContractSchema = new Schema({
 	},
 	garaPubKeyHashes: [{type: String, require: true}],
 	expireTime: {
-		timeStart: {type: Date, require: true},
-		timeEnd: {type: Date, require: true}
+		timeStart: {type: Number, require: true},
+		timeEnd: {type: Number, require: true}
 	},
 	refunds: [{
 		total: {type: Number, require: true},
 		refund: {type: Number, require: true},
-		time: {type: Date, require: true},
+		time: {type: Number, require: true},
 		garaPubKeyHash: {type: String, require: true}
 	}]
 });

@@ -10,7 +10,7 @@ Object.keys(config).forEach(key => {
 });
 
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost/" + dbPrefix, { useNewUrlParser: true });
+mongoose.connect(DB, { useNewUrlParser: true });
 const db = mongoose.connection;
 
 db.on('error', err => {
@@ -157,14 +157,14 @@ db.once('open', async () => {
      */
     const request = require('request');
     const syncDNS = () => {
-        request.post({ url: dnsServer, form: { host: HOST } }, (err, res, body) => {
+        request.post({ url: DNS_SERVER, form: { host: HOST } }, (err, res, body) => {
             if (err) {
                 // console.error(err);
             }
         });
     };
 
-    request(dnsServer, (err, res, body) => {
+    request(DNS_SERVER, (err, res, body) => {
         if (err) {
             // console.error(err);
         } else {
