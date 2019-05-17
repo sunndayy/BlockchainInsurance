@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://phhoang:phhoang21997@ds155916.mlab.com:55916/shop', {useNewUrlParser: true});
+mongoose.connect('mongodb://phhoang:phhoang1512180@ds155916.mlab.com:55916/shop', {useNewUrlParser: true});
 const db = mongoose.connection;
 db.on('error', err => {
 	console.error(err);
