@@ -6,8 +6,7 @@ const NodeSchema = new Schema({
 	company: {type: String, require: true, unique: true},
 	host: {type: String},
 	point: {type: Number, default: 0},
-	lastTimeCreateBlock: {type: Number},
-	lastTimeUpdateHost: {type: Date}
+	// lastTimeCreateBlock: {type: Number}
 });
 
 const BlockSchema = new Schema({
@@ -15,16 +14,23 @@ const BlockSchema = new Schema({
 		index: {type: Number, require: true, unique: true},
 		preBlockHash: {type: String},
 		merkleRoot: {type: String, require: true},
-		validatorSigns: [Schema.Types.Mixed],
+		valSigns: [Schema.Types.Mixed],
 		creatorSign: Schema.Types.Mixed
 	},
 	blockData: {
 		txs: [Schema.Types.Mixed]
 	},
 	hash: {type: String, require: true}
+}, {
+	toObject: {
+		virtuals: true
+	},
+	toJSON: {
+		virtuals: true
+	}
 });
 
-BlockSchema.virtual('blockHeader.hash').get(() => {
+BlockSchema.virtual('blockHeader.hash').get(function () {
 	return this.hash;
 });
 
@@ -41,7 +47,7 @@ const PlanSchema = new Schema({
 });
 
 const ContractSchema = new Schema({
-	plan: {PlanSchema},
+	plan: {type: Schema.Types.ObjectId, ref: 'plan'},
 	userInfo: {
 		identityCard: {type: String, require: true},
 		licensePlate: {type: String, require: true},
@@ -59,7 +65,9 @@ const ContractSchema = new Schema({
 	},
 	refunds: [{
 		total: {type: Number, require: true},
-		refund: {type: Number, require: true}
+		refund: {type: Number, require: true},
+		time: {type: Date, require: true},
+		garaPubKeyHash: {type: String, require: true}
 	}]
 });
 

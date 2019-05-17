@@ -11,35 +11,22 @@ router.post('/version', verifyMiddleware, async (req, res) => {
 		let pubKeyHash = req.body.pubKeyHash;
 		let node = await FindNode(pubKeyHash);
 		if (node) {
-			let add = true;
-			if (node.lastTimeUpdateHost) {
-				let lastTime = node.lastTimeUpdateHost;
-				let newTime = new Date(req.body.time);
-				if (newTime <= lastTime) {
-					add = false;
-				}
-			}
-			if (add) {
-				node.host = req.body.host;
-				if (!node.lastTimeUpdateHost) {
-					node.lastTimeUpdateHost = new Date();
-				}
-				node.save(err => {
-					if (err) {
-						// console.error(err);
-					} else {
-						let index = globalState.nodes.findIndex(_node => {
-							return _node.pubKeyHash === node.pubKeyHash;
-						});
-						if (index >= 0) {
-							globalState.nodes[index] = node;
-						}
-						res.json(Crypto.Sign({
-							header: 'VER_ACK'
-						}));
+			node.host = req.body.host;
+			node.save(err => {
+				if (err) {
+					// console.error(err);
+				} else {
+					let index = globalState.nodes.findIndex(_node => {
+						return _node.pubKeyHash === node.pubKeyHash;
+					});
+					if (index >= 0) {
+						globalState.nodes[index] = node;
 					}
-				});
-			}
+					res.json(Crypto.Sign({
+						header: 'VER_ACK'
+					}));
+				}
+			});
 		} else {
 			res.end('Invalid node');
 		}

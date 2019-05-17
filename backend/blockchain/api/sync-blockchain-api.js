@@ -7,21 +7,23 @@ const Node = mongoose.model('node');
 const State = require('../blockchain-structure/state');
 const BlockHeader = require('../blockchain-structure/block-header');
 const BlockData = require('../blockchain-structure/block-data');
+const debug = require('debug');
 
 /**
  * Make a request
  */
 const MakeRequest = (url, msg, cb) => {
-	let handleResponse = (err, res, body) => {
+	let handleResponse = async (err, res, body) => {
 		if (err) {
 		} else {
 			try {
 				let sign = JSON.parse(body);
 				if (Crypto.Verify(sign)) {
 					let msg = JSON.parse(sign.msg);
-					cb(msg, Crypto.Hash(sign.pubKey));
+					await cb(msg, Crypto.Hash(sign.pubKey));
 				}
-			} catch (err) {
+			} catch (e) {
+				debug(e);
 			}
 		}
 	};
@@ -38,39 +40,31 @@ const MakeConnectRequest = host => {
 		host: HOST,
 		time: new Date()
 	};
-	MakeRequest(host + '/version', msg, (resMsg, pubKeyHash) => {
-		try {
-			if (resMsg.header === 'VER_ACK') {
-				Node.findOneAndUpdate(
-					{
-						pubKeyHash: pubKeyHash
-					},
-					{
-						$set: {
-							host: host,
-							lastTimeUpdateHost: new Date()
-						}
-					},
-					{
-						upsert: true,
-						new: true
-					}, (err, node) => {
-						if (err) {
-							// console.error(err);
-						} else {
-							let index = globalState.nodes.findIndex(_node => {
-								return _node.pubKeyHash === node.pubKeyHash;
-							});
-							if (index >= 0) {
-								globalState.nodes[index].host = node.host;
-							} else {
-								globalState.nodes.push(node);
-							}
-							MakeSyncHeaderRequest(host, blockCache1[0].blockHeader.index);
-						}
-					});
+	MakeRequest(host + '/version', msg, async (resMsg, pubKeyHash) => {
+		if (resMsg.header === 'VER_ACK') {
+			let node = await Node.findOneAndUpdate(
+				{
+					pubKeyHash: pubKeyHash
+				},
+				{
+					$set: {
+						host: host
+					}
+				},
+				{
+					new: true
+				});
+			if (node) {
+				let index = globalState.nodes.findIndex(_node => {
+					return _node.pubKeyHash === node.pubKeyHash;
+				});
+				if (index >= 0) {
+					globalState.nodes[index].host = node.host;
+				} else {
+					globalState.nodes.push(node);
+				}
+				MakeSyncHeaderRequest(host, blockCache1[0].blockHeader.index);
 			}
-		} catch (err) {
 		}
 	});
 };
@@ -84,8 +78,6 @@ const HandleAfterGetHeader = async (host, blockHeader) => {
 	blockHeader = new BlockHeader(blockHeader);
 	if (await state.ValidateBlockHeader(blockHeader)) {
 		MakeSyncDataRequest(host, blockHeader);
-	} else {
-		console.log(blockHeader.index);
 	}
 };
 

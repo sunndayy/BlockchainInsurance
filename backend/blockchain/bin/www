@@ -115,7 +115,7 @@ db.once('open', async () => {
         blocks.push({
             blockHeader: {
                 index: 0,
-                validatorSigns: []
+                valSigns: []
             },
             blockData: {
                 txs: []
@@ -124,7 +124,7 @@ db.once('open', async () => {
         blocks.push({
             blockHeader: {
                 index: 1,
-                validatorSigns: []
+                valSigns: []
             },
             blockData: {
                 txs: []
@@ -181,7 +181,8 @@ db.once('open', async () => {
                         MakeConnectRequest(addr);
                     }
                 });
-            } catch (err) {
+            } catch (e) {
+            debug(e);
                 // console.error(err);
             }
         }
