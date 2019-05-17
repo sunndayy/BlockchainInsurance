@@ -36,7 +36,7 @@ public class ItemsMainAdapter extends RecyclerView.Adapter<ItemsMainAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        Item item = itemList.get(i);
+        final Item item = itemList.get(i);
         myViewHolder.txtvName.setText(item.getName());
         myViewHolder.txtvPrice.setText(Common.beautifyPrice(item.getPrice()));
 
@@ -45,14 +45,32 @@ public class ItemsMainAdapter extends RecyclerView.Adapter<ItemsMainAdapter.MyVi
         myViewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, ItemDetailActivity.class));
+                Intent intent = new Intent(context, ItemDetailActivity.class);
+                intent.putExtra("id", item.getId());
+                intent.putExtra("name", item.getName());
+                intent.putExtra("type", item.getType());
+                intent.putExtra("price", item.getPrice());
+                intent.putExtra("producer", item.getProducer());
+                intent.putExtra("describe", item.getDescribe());
+
+                context.startActivity(intent);
             }
         });
 
         myViewHolder.imgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, ItemDetailActivity.class));
+                Intent intent = new Intent(context, ItemDetailActivity.class);
+                intent.putExtra("id", item.getId());
+                intent.putExtra("name", item.getName());
+                intent.putExtra("type", item.getType());
+                intent.putExtra("price", item.getPrice());
+                intent.putExtra("amount", item.getAmount());
+                intent.putExtra("producer", item.getProducer());
+                intent.putExtra("describe", item.getDescribe());
+                intent.putExtra("image", item.getImage());
+
+                context.startActivity(intent);
             }
         });
     }

@@ -3,10 +3,16 @@ package com.example.bishop;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -27,9 +33,28 @@ public class SignInActivity extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignInActivity.this, MainActivity.class));
-                finish();
-            }
+//                startActivity(new Intent(SignInActivity.this, MainActivity.class));
+//                finish();
+
+                ApiService apiService = ApiUtils.getApiService();
+                apiService.SignIn(edtUserName.getText().toString(), edtPassword.getText().toString())
+                        .enqueue(new Callback<User>() {
+                            @Override
+                            public void onResponse(Call<User> call, Response<User> response) {
+                                if (response.body().getError() == null) {
+                                    Toast.makeText(SignInActivity.this, "Sign in success", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Toast.makeText(SignInActivity.this, response.body().getError(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<User> call, Throwable t) {
+                                Toast.makeText(SignInActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+             }
         });
 
         txtvSignUp.setOnClickListener(new View.OnClickListener() {

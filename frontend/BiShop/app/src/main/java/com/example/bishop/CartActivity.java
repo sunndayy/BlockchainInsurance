@@ -1,5 +1,6 @@
 package com.example.bishop;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -7,6 +8,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +20,8 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
     private RecyclerView recyclerView;
     private ItemsCartAdapter itemsCartAdapter;
     private List<Item> itemList;
+    private Button btnOrder;
+    private TextView tvNotifi, tvSumPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +30,31 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        btnOrder = (Button) findViewById(R.id.btn_order_cart);
+        btnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CartActivity.this, PaymentActivity.class));
+            }
+        });
+
+        tvNotifi = (TextView) findViewById(R.id.tv_cart_notifi);
+        tvSumPrice = (TextView) findViewById(R.id.tv_cart_sum_price);
+
+
+        if (Common.cart.size() == 0) {
+            btnOrder.setVisibility(View.GONE);
+            tvSumPrice.setVisibility(View.GONE);
+        } else {
+            tvNotifi.setVisibility(View.GONE);
+            Long sumPrice = Long.valueOf(0);
+            for (int i = 0; i < Common.cart.size(); i++) {
+                sumPrice += Common.cart.get(i).getPrice();
+            }
+
+            tvSumPrice.setText("Tổng giá trị: " + Common.beautifyPrice(sumPrice));
+        }
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_cart);
         itemList = new ArrayList<>();
@@ -37,7 +68,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
 
-        prepareAlbums();
+        prepareCartView();
     }
 
     @Override
@@ -52,6 +83,20 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 
             // remove the item from recycler view
             itemsCartAdapter.removeItem(viewHolder.getAdapterPosition());
+
+            Common.cart.remove(position);
+            if (Common.cart.size() == 0) {
+                btnOrder.setVisibility(View.GONE);
+                tvSumPrice.setVisibility(View.GONE);
+                tvNotifi.setVisibility(View.VISIBLE);
+            } else {
+                Long sumPrice = Long.valueOf(0);
+                for (int i = 0; i < Common.cart.size(); i++) {
+                    sumPrice += Common.cart.get(i).getPrice();
+                }
+
+                tvSumPrice.setText("Tổng giá trị: " + Common.beautifyPrice(sumPrice));
+            }
         }
     }
 
@@ -63,44 +108,10 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         return super.onOptionsItemSelected(menuItem);
     }
 
-    private void prepareAlbums() {
-        int[] covers = new int[]{
-                R.drawable.ab,
-                R.drawable.blade,
-                R.drawable.lead,
-                R.drawable.msx,
-                R.drawable.pcx,
-                R.drawable.sh,
-                R.drawable.vision,
-                R.drawable.wave,
-                R.drawable.winner};
-
-        Item a = new Item("AB", 45000000, covers[0]);
-        itemList.add(a);
-
-        a = new Item("Blade", 18000000, covers[1]);
-        itemList.add(a);
-
-        a = new Item("Lead", 31000000, covers[2]);
-        itemList.add(a);
-
-        a = new Item("MSX", 90000000, covers[3]);
-        itemList.add(a);
-
-        a = new Item("PCX", 81000000, covers[4]);
-        itemList.add(a);
-
-        a = new Item("SH", 63000000, covers[5]);
-        itemList.add(a);
-
-        a = new Item("Vision", 29000000, covers[6]);
-        itemList.add(a);
-
-        a = new Item("Wave", 23000000, covers[7]);
-        itemList.add(a);
-
-        a = new Item("Winner", 42000000, covers[8]);
-        itemList.add(a);
+    private void prepareCartView() {
+        for (int i = 0; i < Common.cart.size(); i++) {
+            itemList.add(Common.cart.get(i));
+        }
 
         itemsCartAdapter.notifyDataSetChanged();
     }

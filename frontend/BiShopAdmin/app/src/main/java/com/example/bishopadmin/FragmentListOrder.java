@@ -2,6 +2,7 @@ package com.example.bishopadmin;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ public class FragmentListOrder extends Fragment {
     private RecyclerView recyclerView;
     private OrdersAdapter ordersAdapter;
     private List<Order> orderList;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public FragmentListOrder() {
 
@@ -41,10 +43,24 @@ public class FragmentListOrder extends Fragment {
         recyclerView.setAdapter(ordersAdapter);
 
         prepareAlbums();
+
+
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_order);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                prepareAlbums();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         return rootView;
     }
 
     private void prepareAlbums() {
+
+        orderList.clear();
+
         Order a = new Order("AB", "45.000.000d", "20/12/2018");
         orderList.add(a);
 

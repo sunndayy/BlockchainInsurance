@@ -11,14 +11,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".InsuraceOrderActivity"
+            android:label="Bảo hiểm" />
+        <activity
             android:name=".PaymentActivity"
-            android:label="Thanh toán"/>
+            android:label="Thanh toán" />
         <activity
             android:name=".InfoActivity"
-            android:label="Thông tin cá nhân"/>
+            android:label="Thông tin cá nhân" />
         <activity
             android:name=".HistoryActivity"
-            android:label="Lịch sử mua hàng"/>
+            android:label="Lịch sử mua hàng" />
         <activity
             android:name=".CartActivity"
             android:label="Giỏ hàng của bạn" />

@@ -51,39 +51,23 @@
             <EditText android:id="@+id/txt_signup_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="text"
                 android:hint="Họ tên" />
         </android.support.design.widget.TextInputLayout>
 
 
-        <!-- gender picker -->
-        <RadioGroup
+        <!-- Ngay sinh -->
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/txt_signup_birthday"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nam"/>
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="Nữ"/>
-        </RadioGroup>
-
-        <!--<DatePicker-->
-        <!--android:id="@+id/datePicker"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:calendarViewShown="false"-->
-        <!--android:datePickerMode="spinner"-->
-        <!--android:spinnersShown="true"-->
-        <!--/>-->
+                android:inputType="textPersonName"
+                android:hint="Ngày sinh" />
+        </android.support.design.widget.TextInputLayout>
 
         <!-- ID Label -->
         <android.support.design.widget.TextInputLayout

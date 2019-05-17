@@ -2,15 +2,23 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EEEEEE"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_insurance"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_insurance"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:scrollbars="vertical" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_insurance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:scrollbars="vertical" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <ImageView
         android:id="@+id/btn_add_insurance"
@@ -19,7 +27,8 @@
         android:layout_marginBottom="75dp"
         android:clickable="true"
         android:layout_gravity="bottom|right"
-        android:layout_width="80dp"
-        android:layout_height="80dp" />
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
 
 </FrameLayout>
