@@ -159,7 +159,7 @@ db.once('open', async () => {
     const syncDNS = () => {
         request.post({ url: DNS_SERVER, form: { host: HOST } }, (err, res, body) => {
             if (err) {
-                // console.error(err);
+                console.error(err);
             }
         });
     };
@@ -182,8 +182,8 @@ db.once('open', async () => {
                     }
                 });
             } catch (e) {
-            debug(e);
-                // console.error(err);
+                // debug(e);
+                console.error(err);
             }
         }
     });
