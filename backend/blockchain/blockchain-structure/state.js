@@ -1,4 +1,3 @@
-const {MakeSyncHeaderRequest} = require('../api/sync-blockchain-api');
 const Crypto = require('../utils/crypto');
 
 const FindByIndex = require('../module/block/model').FindByIndex;
@@ -13,11 +12,8 @@ const BlockCache = mongoose.model('block_cache');
 const request = require('request');
 const _ = require('lodash');
 
-const debug = require('debug');
-
 module.exports = class State {
 	constructor(isGlobalState) {
-		console.log('Alo');
 		this.txDict = {};
 		this.isGlobalState = isGlobalState;
 		this.txCache = [];
@@ -87,7 +83,6 @@ module.exports = class State {
 											}
 										}
 									} catch (e) {
-										debug(e);
 									}
 								}
 							});
@@ -215,7 +210,6 @@ module.exports = class State {
 
 			cb();
 		} catch (e) {
-			debug(e);
 		}
 	}
 

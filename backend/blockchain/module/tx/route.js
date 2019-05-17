@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const debug = require('debug');
 const TX = require('../../blockchain-structure/tx');
 
 router.post('/tx', async (req, res) => {
@@ -23,7 +22,6 @@ router.post('/tx', async (req, res) => {
 			res.end('Invalid type');
 		}
 	} catch (e) {
-		debug(e);
 		res.end(e.message);
 	}
 });

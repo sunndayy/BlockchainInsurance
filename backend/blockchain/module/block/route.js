@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const debug = require('debug');
 
 const {FindByIndex, FindByHash} = require('./model');
 const GetHost = require('../node/model').GetHost;
@@ -73,7 +72,6 @@ router.post('/header', verifyMiddleware, async (req, res) => {
 		await SyncBlockChainApi.HandleAfterGetHeader(host, req.body);
 		res.end();
 	} catch (e) {
-		debug(e);
 		res.end(e.message);
 	}
 });

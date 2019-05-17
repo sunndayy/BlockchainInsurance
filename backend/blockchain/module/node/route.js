@@ -14,7 +14,6 @@ router.post('/version', verifyMiddleware, async (req, res) => {
 			node.host = req.body.host;
 			node.save(err => {
 				if (err) {
-					// console.error(err);
 				} else {
 					let index = globalState.nodes.findIndex(_node => {
 						return _node.pubKeyHash === node.pubKeyHash;
