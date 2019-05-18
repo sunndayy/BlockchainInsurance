@@ -9,4 +9,7 @@ router.route('/plans')
 router.route('/contracts')
 	.get(authMiddleware, queryController.queryContract);
 
+router.route('/contracts-by-license-plate/:licensePlate')
+	.get(queryController.queryContractByLicensePlate);
+
 module.exports = router;

@@ -42,3 +42,26 @@ module.exports.getAllContracts = cb => {
 		time: new Date()
 	}, '/get-contracts-by-company', cb);
 };
+
+const getContractsByLicensePlate = (licensePlate, cb) => {
+	callApiToBlockchain({
+		header: 'GET_CONTRACTS_BY_LICENSE_PLATE',
+		company: licensePlate,
+		// licensePlate,
+		time: new Date()
+	}, '/get-contracts-by-license-plate', cb);
+};
+
+module.exports.getContractsByLicensePlate = (licensePlate, cb) => {
+	getContractsByLicensePlate(licensePlate, (e, body) => {
+		if (e) {
+			cb(e, null);
+		} else {
+			let contracts = JSON.parse(body);
+			contracts = contracts.filter(contract => {
+				return contract.plan.company === config.myCompany;
+			});
+			cb(null, JSON.stringify(contracts));
+		}
+	});
+};

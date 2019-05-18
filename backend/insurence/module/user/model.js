@@ -6,7 +6,11 @@ const userSchema = new Schema({
 	passwordHash: {type: String, require: true},
 	name: {type: String, require: true},
 	identityCard: {type: String, require: true},
-	birthday: {type: Date, require: true},
+	birthday: {
+		day: {type: Number, require: true},
+		month: {type: Number, require: true},
+		year: {type: Number, require: true}
+	},
 	sex: {type: Boolean, require: true},
 	address: {type: String, require: true},
 	phoneNumber: {type: String},

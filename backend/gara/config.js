@@ -6,5 +6,8 @@ module.exports = {
 		'bcinsurence1.herokuapp.com',
 		'bcinsurence2.herokuapp.com',
 		'bcinsurence3.herokuapp.com'
-	]
+	],
+	company: {
+		phhoang: 'hdinsurence.herokuapp.com'
+	}
 };

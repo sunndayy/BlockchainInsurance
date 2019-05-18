@@ -33,6 +33,12 @@ class QueryController {
 			this.handleAfterQuery(e, body);
 		});
 	}
+	
+	queryContractByLicensePlate() {
+		queryBusiness.getContractsByLicensePlate(this.req.params.licensePlate, (e, body) => {
+			this.handleAfterQuery(e, body);
+		});
+	}
 }
 
 module.exports.queryPlan = (req, res) => {
@@ -43,4 +49,9 @@ module.exports.queryPlan = (req, res) => {
 module.exports.queryContract = (req, res) => {
 	let controller = new QueryController(req, res);
 	controller.queryContract();
+};
+
+module.exports.queryContractByLicensePlate = (req, res) => {
+	let controller = new QueryController(req, res);
+	controller.queryContractByLicensePlate();
 };
