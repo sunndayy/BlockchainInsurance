@@ -22,6 +22,7 @@ const MakeRequest = (url, msg, cb) => {
 					await cb(msg, Crypto.Hash(sign.pubKey));
 				}
 			} catch (e) {
+				console.log(e);
 			}
 		}
 	};

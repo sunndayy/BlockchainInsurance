@@ -56,6 +56,7 @@ router.post('/create-product', userMiddleware.authMiddleware, upload.single('ima
 		let cb = async () => {
 			try {
 				let product = await productBusiness.CreateProduct(req.body);
+				delete product._doc.image;
 				res.json(product);
 			} catch (e) {
 				res.json({

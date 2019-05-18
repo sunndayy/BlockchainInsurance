@@ -73,6 +73,7 @@ router.post('/header', verifyMiddleware, async (req, res) => {
 		res.end();
 	} catch (e) {
 		res.end(e.message);
+		console.log(e);
 	}
 });
 

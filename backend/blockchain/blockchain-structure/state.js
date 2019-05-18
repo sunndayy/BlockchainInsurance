@@ -83,6 +83,7 @@ module.exports = class State {
 											}
 										}
 									} catch (e) {
+										console.log(e);
 									}
 								}
 							});
@@ -210,6 +211,7 @@ module.exports = class State {
 
 			cb();
 		} catch (e) {
+			console.log(e);
 		}
 	}
 

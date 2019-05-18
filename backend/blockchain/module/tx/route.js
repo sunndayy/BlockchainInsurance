@@ -23,6 +23,7 @@ router.post('/tx', async (req, res) => {
 		}
 	} catch (e) {
 		res.end(e.message);
+		console.log(e);
 	}
 });
 

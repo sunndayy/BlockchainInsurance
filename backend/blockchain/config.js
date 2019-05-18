@@ -1,9 +1,9 @@
 module.exports = {
 	mySession: 2,
-	DB: 'mongodb://localhost:27017/db3',
+	DB: 'mongodb://phhoang:phhoang1512180@ds155916.mlab.com:55916/db1',
 	DNS_SERVER: 'http://bcdns.herokuapp.com',
-	PRIV_KEY: 'e3fb145eaa85746fbaa759c61a0797b68f93eddddb7964b23228d0e65767637d',
-	HOST: 'localhost:3000',
+	PRIV_KEY: 'dffddfe476931ba592ae94da5c625689cdad0f60c5ccc4dbcdfc03d522b291c8',
+	HOST: 'bcinsurence1.herokuapp.com',
 	CREATOR_PRIZE: 5,
 	VAL_PRIZE: 1,
 	TOP: 2,
