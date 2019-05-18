@@ -1,7 +1,7 @@
 module.exports = {
 	db: 'mongodb://localhost:27017/insurence',
 	myCompany: 'phhoang',
-	myPrivKey: '70f8bbfd075aa6191f792dc8b3499a312660c86c12ef341e3c047222acbcd357',
+	myPrivKey: 'dffddfe476931ba592ae94da5c625689cdad0f60c5ccc4dbcdfc03d522b291c8',
 	dnsServer: 'http://bcdns.herokuapp.com',
 	defaultNodes: [
 		'bcinsurence1.herokuapp.com',

@@ -1,11 +1,11 @@
-var User = require('./model');
-var bcrypt = require('bcryptjs');
-var jsonwebtoken = require('jsonwebtoken');
-var validator = require('validator');
-var moment = require('moment');
+const User = require('./model');
+const bcrypt = require('bcryptjs');
+const jsonwebtoken = require('jsonwebtoken');
+const validator = require('validator');
+const moment = require('moment');
 
 module.exports.signIn = async (username, password) => {
-	var user = await User.findOne({username: username});
+	let user = await User.findOne({username: username});
 	if (user) {
 		if (await bcrypt.compare(password, user.passwordHash)) {
 			return await jsonwebtoken.sign({
