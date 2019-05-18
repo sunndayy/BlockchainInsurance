@@ -8,6 +8,11 @@ router.get('/orders', userMiddleware.authMiddleware, async (req, res) => {
 	if (req.user.role === 0) {
 		try {
 			let orders = await orderBusiness.GetAllOrders();
+			orders.forEach(order => {
+				order.items.forEach(item => {
+					delete item.product._doc.image;
+				});
+			});
 			res.json(orders);
 		} catch (e) {
 			res.json({
@@ -25,6 +30,11 @@ router.get('/orders-by-user/:username', userMiddleware.authMiddleware, async (re
 	if (req.user.role === 0 || req.user.username === req.params.username) {
 		try {
 			let orders = await orderBusiness.GetOrdersByUser(req.params.username);
+			orders.forEach(order => {
+				order.items.forEach(item => {
+					delete item.product._doc.image;
+				});
+			});
 			res.json(orders);
 		} catch (e) {
 			res.json({
@@ -42,6 +52,11 @@ router.get('/orders-by-status/:status', userMiddleware.authMiddleware, async (re
 	if (req.user.role === 0) {
 		try {
 			let orders = await orderBusiness.GetOrdersByStatus(req.params.status);
+			orders.forEach(order => {
+				order.items.forEach(item => {
+					delete item.product._doc.image;
+				});
+			});
 			res.json(orders);
 		} catch (e) {
 			res.json({
@@ -65,7 +80,6 @@ router.post('/create-order', userMiddleware.authMiddleware, async (req, res) => 
 				price: item._doc.price
 			}
 		});
-		delete order.user;
 		res.json(order);
 	} catch (e) {
 		res.json({
@@ -77,10 +91,18 @@ router.post('/create-order', userMiddleware.authMiddleware, async (req, res) => 
 router.put('/update-order/:id', userMiddleware.authMiddleware, async (req, res) => {
 	if (req.user.role === 0) {
 		try {
-			let data = await orderBusiness.UpdateOrder(req.params.id, req.body);
-			res.json(data);
-			if (data.contract) {
-				request.post({url: 'http://bcinsurence.herokuapp.com', form: data.contract}, (e, res, body) => {
+			let order = await orderBusiness.UpdateOrder(req.params.id, req.body);
+			order = order._doc;
+			order.items = order.items.map(item => {
+				return {
+					id: item._doc.product.id,
+					price: item._doc.price
+				}
+			});
+			res.json(order);
+			
+			if (order.contract) {
+				request.post({url: 'http://bcinsurence.herokuapp.com', form: order.contract}, (e, res, body) => {
 					if (e) {
 						console.error(e);
 					} else {

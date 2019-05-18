@@ -2,7 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b696cc9-e63a-46b7-961d-38ee5ef81080" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/.idea/insurence.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/middleware/user-middleware.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/query-blockchain/business/query-business.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/query-blockchain/route/query-route.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/tx/business/tx-business.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/tx/model/tx-model.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/tx/route/tx-route.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/user/business/user-business.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/user/model/user-model.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/user/route/user-route.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/utils/sign.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/contract/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/contract/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shop/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shop/module/order/business/order-business.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/module/order/business/order-business.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shop/module/order/route/order-route.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/module/order/route/order-route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shop/module/user/business/user-business.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/module/user/business/user-business.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shop/module/user/model/user-model.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/module/user/model/user-model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shop/module/user/route/user-route.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/module/user/route/user-route.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -14,17 +33,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/config.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="21" selection-end-line="16" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -132,7 +141,6 @@
         <option value="$PROJECT_DIR$/middleware/verify-middleware.js" />
         <option value="$USER_HOME$/Desktop/test/test.js" />
         <option value="$PROJECT_DIR$/utils/test.js" />
-        <option value="$PROJECT_DIR$/module/contract/route.js" />
         <option value="$PROJECT_DIR$/module/node/route.js" />
         <option value="$PROJECT_DIR$/module/plan/model.js" />
         <option value="$PROJECT_DIR$/module/contract/model.js" />
@@ -149,13 +157,14 @@
         <option value="$PROJECT_DIR$/blockchain-structure/state.js" />
         <option value="$PROJECT_DIR$/bin/www" />
         <option value="$PROJECT_DIR$/config.js" />
+        <option value="$PROJECT_DIR$/module/contract/route.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="952" />
-    <option name="width" value="977" />
-    <option name="height" value="1038" />
+    <option name="x" value="951" />
+    <option name="width" value="978" />
+    <option name="height" value="1039" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -190,6 +199,18 @@
               <item name="blockchain" type="462c0819:PsiDirectoryNode" />
               <item name="module" type="462c0819:PsiDirectoryNode" />
               <item name="block" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="module" type="462c0819:PsiDirectoryNode" />
+              <item name="contract" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="module" type="462c0819:PsiDirectoryNode" />
+              <item name="plan" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
@@ -424,12 +445,16 @@
       <workItem from="1558105304448" duration="2492000" />
       <workItem from="1558107822412" duration="844000" />
       <workItem from="1558112829655" duration="13000" />
-      <workItem from="1558136314289" duration="1433000" />
+      <workItem from="1558136314289" duration="1180000" />
+      <workItem from="1558149523183" duration="13000" />
+      <workItem from="1558161228406" duration="9000" />
+      <workItem from="1558161500840" duration="3127000" />
+      <workItem from="1558168690984" duration="690000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="290344000" />
+    <option name="totallyTimeSpent" value="293930000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -441,13 +466,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="762" y="0" width="781" height="830" extended-state="0" />
-    <editor active="true" />
+    <frame x="761" y="0" width="782" height="831" extended-state="0" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="npm" order="1" side_tool="true" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="3" weight="0.7513441" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.40536913" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3243626" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3042857" />
@@ -581,20 +605,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/contract/route.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="46" column="24" selection-start-line="46" selection-start-column="24" selection-end-line="46" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/plan/route.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="10" lean-forward="true" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Desktop/test/test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -603,13 +613,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bug.txt" />
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/middleware/verify-middleware.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -742,8 +745,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="21" selection-end-line="16" selection-end-column="2" />
+        <state relative-caret-position="102">
+          <caret line="6" column="19" lean-forward="true" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/contract/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/plan/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
         </state>
       </provider>
     </entry>

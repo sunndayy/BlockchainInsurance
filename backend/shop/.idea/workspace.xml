@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ebe119c0-7738-4c00-9e5a-9fb41ef256f0" name="Default Changelist" comment="" />
+    <list default="true" id="ebe119c0-7738-4c00-9e5a-9fb41ef256f0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../insurence/.idea/insurence.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/middleware/user-middleware.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/query-blockchain/business/query-business.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/query-blockchain/route/query-route.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/tx/business/tx-business.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/tx/model/tx-model.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/tx/route/tx-route.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/user/business/user-business.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/user/model/user-model.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/module/user/route/user-route.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurence/utils/sign.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../blockchain/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../blockchain/module/contract/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/module/contract/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/user/business/user-business.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/user/business/user-business.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/user/model/user-model.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/user/model/user-model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/user/route/user-route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/user/route/user-route.js" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -13,34 +32,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/module/product/route/product-route.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="59" column="4" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="4" />
+            <state relative-caret-position="124">
+              <caret line="53" column="53" lean-forward="true" selection-start-line="53" selection-start-column="53" selection-end-line="53" selection-end-column="53" />
               <folding>
                 <element signature="e#556#756#0" />
-                <element signature="e#819#993#0" />
                 <element signature="e#1063#1235#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/middleware/user-middleware.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="30" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+            <state relative-caret-position="85">
+              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -78,29 +87,31 @@
       <list>
         <option value="$PROJECT_DIR$/module/product/controller/product-controller.js" />
         <option value="$PROJECT_DIR$/module/user/controller/user-controller.js" />
-        <option value="$PROJECT_DIR$/module/user/model/user-model.js" />
         <option value="$PROJECT_DIR$/module/user/middleware/user-middleware.js" />
         <option value="$PROJECT_DIR$/module/order/model/order-model.js" />
         <option value="$PROJECT_DIR$/module/product/model/product-model.js" />
-        <option value="$PROJECT_DIR$/module/user/route/user-route.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/utils/validate.js" />
         <option value="$PROJECT_DIR$/utils/validator.js" />
         <option value="$PROJECT_DIR$/module/product/business/product-business.js" />
-        <option value="$PROJECT_DIR$/module/user/business/user-business.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/middleware/user-middleware.js" />
-        <option value="$PROJECT_DIR$/module/order/route/order-route.js" />
         <option value="$PROJECT_DIR$/module/order/controller/order-controller.js" />
-        <option value="$PROJECT_DIR$/module/order/business/order-business.js" />
         <option value="$PROJECT_DIR$/module/product/route/product-route.js" />
+        <option value="$PROJECT_DIR$/module/user/route/user-route.js" />
+        <option value="$PROJECT_DIR$/module/user/model/user-model.js" />
+        <option value="$PROJECT_DIR$/module/user/business/user-business.js" />
+        <option value="$USER_HOME$/Desktop/test/test.js" />
+        <option value="$USER_HOME$/Desktop/test/test2.js" />
+        <option value="$PROJECT_DIR$/module/order/business/order-business.js" />
+        <option value="$PROJECT_DIR$/module/order/route/order-route.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="952" />
-    <option name="width" value="977" />
-    <option name="height" value="1038" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="951" />
+    <option name="width" value="978" />
+    <option name="height" value="1039" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -119,11 +130,6 @@
             <path>
               <item name="shop" type="b2602c69:ProjectViewProjectNode" />
               <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="middleware" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="shop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
               <item name="module" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -164,20 +170,6 @@
               <item name="shop" type="462c0819:PsiDirectoryNode" />
               <item name="module" type="462c0819:PsiDirectoryNode" />
               <item name="product" type="462c0819:PsiDirectoryNode" />
-              <item name="business" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="shop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="module" type="462c0819:PsiDirectoryNode" />
-              <item name="product" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="shop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="module" type="462c0819:PsiDirectoryNode" />
-              <item name="product" type="462c0819:PsiDirectoryNode" />
               <item name="route" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -192,6 +184,20 @@
               <item name="module" type="462c0819:PsiDirectoryNode" />
               <item name="user" type="462c0819:PsiDirectoryNode" />
               <item name="business" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="shop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="shop" type="462c0819:PsiDirectoryNode" />
+              <item name="module" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="shop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="shop" type="462c0819:PsiDirectoryNode" />
+              <item name="module" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+              <item name="route" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="shop" type="b2602c69:ProjectViewProjectNode" />
@@ -215,6 +221,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\shop\module" />
       <recent name="C:\Users\LEGION\Documents\GitHub\BlockchainInsurance\backend\shop\middleware" />
     </key>
   </component>
@@ -255,12 +262,13 @@
       <workItem from="1558008360977" duration="8058000" />
       <workItem from="1558102686496" duration="18000" />
       <workItem from="1558145545313" duration="1185000" />
-      <workItem from="1558146773182" duration="809000" />
+      <workItem from="1558146773182" duration="7466000" />
+      <workItem from="1558161262659" duration="7259000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34899000" />
+    <option name="totallyTimeSpent" value="48815000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -272,17 +280,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="762" y="0" width="781" height="830" extended-state="0" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.3548387" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.48248512" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32808024" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4858357" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.42351276" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
@@ -318,15 +325,17 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>userMiddleware.authMiddleware</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/routes/index.js" />
-    <entry file="file://$USER_HOME$/Desktop/test/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="519">
-          <caret line="97" selection-start-line="97" selection-end-line="98" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/haravan/mongose/query.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -338,20 +347,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="19" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/user/model/user-model.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="3" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/user/route/user-route.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="14" lean-forward="true" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -379,28 +374,27 @@
     <entry file="file://$PROJECT_DIR$/module/order/controller/order-controller.js" />
     <entry file="file://$PROJECT_DIR$/module/product/controller/product-controller.js" />
     <entry file="file://$PROJECT_DIR$/module/user/controller/user-controller.js" />
-    <entry file="file://$PROJECT_DIR$/module/order/model/order-model.js">
+    <entry file="file://$PROJECT_DIR$/module/product/business/product-business.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="3" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+        <state relative-caret-position="323">
+          <caret line="19" column="2" lean-forward="true" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/order/route/order-route.js">
+    <entry file="file://$PROJECT_DIR$/../blockchain/api/sync-blockchain-api.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
-          <folding>
-            <element signature="e#642#945#0" />
-            <element signature="e#1040#1298#0" />
-          </folding>
+        <state relative-caret-position="799">
+          <caret line="65" column="21" lean-forward="true" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/module/user/business/user-business.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="52">
-          <caret line="64" column="2" lean-forward="true" selection-start-line="64" selection-start-column="2" selection-end-line="64" selection-end-column="2" />
+        <state relative-caret-position="221">
+          <caret line="63" selection-start-line="63" selection-end-line="63" />
           <folding>
             <element signature="e#1164#1205#0" />
             <element signature="e#1241#1282#0" />
@@ -416,27 +410,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/product/business/product-business.js">
+    <entry file="file://$PROJECT_DIR$/module/user/model/user-model.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="2" lean-forward="true" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
+        <state relative-caret-position="204">
+          <caret line="12" column="35" selection-end-line="20" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/user/route/user-route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="7" lean-forward="true" selection-start-line="27" selection-start-column="7" selection-end-line="27" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/test/test2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="10" selection-end-line="7" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/test/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="109" column="21" selection-start-line="109" selection-end-line="110" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/module/order/business/order-business.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="26" column="34" lean-forward="true" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
+        <state relative-caret-position="305">
+          <caret line="33" column="42" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/order/route/order-route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="72" column="8" lean-forward="true" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="8" />
+          <folding>
+            <element signature="e#311#662#0" />
+            <element signature="e#757#1175#0" />
+            <element signature="e#1270#1643#0" />
+            <element signature="e#1727#2024#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/order/model/order-model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="19" column="18" lean-forward="true" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/module/product/route/product-route.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="59" column="4" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="4" />
+        <state relative-caret-position="124">
+          <caret line="53" column="53" lean-forward="true" selection-start-line="53" selection-start-column="53" selection-end-line="53" selection-end-column="53" />
           <folding>
             <element signature="e#556#756#0" />
-            <element signature="e#819#993#0" />
             <element signature="e#1063#1235#0" />
           </folding>
         </state>
@@ -444,15 +478,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/middleware/user-middleware.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="30" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+        <state relative-caret-position="85">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
         </state>
       </provider>
     </entry>

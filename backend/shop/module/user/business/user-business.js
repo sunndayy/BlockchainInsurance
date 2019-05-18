@@ -61,7 +61,6 @@ module.exports.signUp = async (userInfo, isAdmin = false) => {
 	
 	userInfo.role = isAdmin ? 0 : 1;
 	userInfo.passwordHash = await bcrypt.hash(userInfo.password, 10);
-	userInfo.birthday = new Date(userInfo.birthday.year, userInfo.birthday.month, userInfo.birthday.day);
 	
 	await User.create(userInfo);
 	return await jsonwebtoken.sign({
