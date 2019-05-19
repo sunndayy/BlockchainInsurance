@@ -12,9 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FragmentListProduct extends Fragment {
 
@@ -73,42 +78,27 @@ public class FragmentListProduct extends Fragment {
 
     private void prepareAlbums() {
 
-        itemList.clear();
+        ApiService apiService = ApiUtils.getApiService();
 
-        Item a = new Item("1", "AB", "Xe hot 2019", 1, 45000000,
-                15, "Honda", R.drawable.ic_add_circle_black_24dp);
-        itemList.add(a);
-        a = new Item("1", "AB", "Xe hot 2019", 1, 45000000,
-                15, "Honda", R.drawable.ic_add_circle_black_24dp);
-        itemList.add(a);
-        a = new Item("1", "AB", "Xe hot 2019", 1, 45000000,
-                15, "Honda", R.drawable.ic_add_circle_black_24dp);
-        itemList.add(a);
-        a = new Item("1", "AB", "Xe hot 2019", 1, 45000000,
-                15, "Honda", R.drawable.ic_add_circle_black_24dp);
-        itemList.add(a);
-        a = new Item("1", "AB", "Xe hot 2019", 1, 45000000,
-                15, "Honda", R.drawable.ic_add_circle_black_24dp);
-        itemList.add(a);
-        a = new Item("1", "AB", "Xe hot 2019", 1, 45000000,
-                15, "Honda", R.drawable.ic_add_circle_black_24dp);
-        itemList.add(a);
-        a = new Item("1", "AB", "Xe hot 2019", 1, 45000000,
-                15, "Honda", R.drawable.ic_add_circle_black_24dp);
-        itemList.add(a);
-        a = new Item("1", "AB", "Xe hot 2019", 1, 45000000,
-                15, "Honda", R.drawable.ic_add_circle_black_24dp);
-        itemList.add(a);
-        a = new Item("1", "AB", "Xe hot 2019", 1, 45000000,
-                15, "Honda", R.drawable.ic_add_circle_black_24dp);
-        itemList.add(a);
-        a = new Item("1", "AB", "Xe hot 2019", 1, 45000000,
-                15, "Honda", R.drawable.ic_add_circle_black_24dp);
-        itemList.add(a);
-        a = new Item("1", "AB", "Xe hot 2019", 1, 45000000,
-                15, "Honda", R.drawable.ic_add_circle_black_24dp);
-        itemList.add(a);
+        apiService.GetProducts().enqueue(
+                new Callback<List<Item>>() {
+                    @Override
+                    public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                        if (response.body().size() != 0) {
+                            for (int i = 0; i < response.body().size(); i++) {
+                                Item item = response.body().get(i);
+                                item.setImage(ApiUtils.BASE_URL + "/product-image/" + item.getId());
+                                itemList.add(item);
+                            }
+                            itemsAdapter.notifyDataSetChanged();
+                        }
+                    }
 
-        itemsAdapter.notifyDataSetChanged();
+                    @Override
+                    public void onFailure(Call<List<Item>> call, Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
     }
 }

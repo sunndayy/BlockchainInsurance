@@ -39,7 +39,7 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         imgItem = (ImageView) findViewById(R.id.ic_detail_item);
 
-        Glide.with(this).load(getIntent().getExtras().getInt("image"))
+        Glide.with(this).load(getIntent().getExtras().getString("image"))
                 .into(imgItem);
 
         btnAddCart = (Button) findViewById(R.id.btn_detail_addcart);
@@ -81,7 +81,7 @@ public class ItemDetailActivity extends AppCompatActivity {
                         getIntent().getExtras().getLong("price"),
                         getIntent().getExtras().getInt("amount"),
                         tvProducer.getText().toString(),
-                        getIntent().getExtras().getInt("image"));
+                        getIntent().getExtras().getString("image"));
 
                 Boolean flag = false;
                 for (int i = 0; i < Common.cart.size(); i++) {

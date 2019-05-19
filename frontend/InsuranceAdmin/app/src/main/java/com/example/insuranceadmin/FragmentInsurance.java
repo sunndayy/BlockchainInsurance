@@ -7,13 +7,19 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FragmentInsurance extends Fragment {
     private RecyclerView recyclerView;
@@ -71,17 +77,25 @@ public class FragmentInsurance extends Fragment {
     private void prepareAlbums() {
         insurancePackages.clear();
 
-        InsurancePackage a = new InsurancePackage("0001", "Bao hiem A", "12.000", "30");
-        insurancePackages.add(a);
-        a = new InsurancePackage("0001", "Bao hiem A", "12.000", "30");
-        insurancePackages.add(a);
-        a = new InsurancePackage("0001", "Bao hiem A", "12.000", "30");
-        insurancePackages.add(a);
-        a = new InsurancePackage("0001", "Bao hiem A", "12.000", "30");
-        insurancePackages.add(a);
-        a = new InsurancePackage("0001", "Bao hiem A", "12.000", "30");
-        insurancePackages.add(a);
 
-        insurancePackagesAdapter.notifyDataSetChanged();
+        ApiService apiService = ApiUtils.getApiService();
+        apiService.GetInsurances(Common.AccessToken)
+                .enqueue(new Callback<List<InsurancePackage>>() {
+                    @Override
+                    public void onResponse(Call<List<InsurancePackage>> call, Response<List<InsurancePackage>> response) {
+                        for (int i = 0; i <response.body().size(); i++) {
+                            InsurancePackage item = response.body().get(i);
+                            if (item.getTerm().getState()) {
+                                insurancePackages.add(item);
+                            }
+                            insurancePackagesAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<InsurancePackage>> call, Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ public class SignInActivity extends AppCompatActivity {
     private Button btnSignIn;
     private EditText edtUserName, edtPassword;
     private TextView txtvSignUp;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,22 +31,40 @@ public class SignInActivity extends AppCompatActivity {
         edtUserName = (EditText) findViewById(R.id.txt_signin_username);
         edtPassword = (EditText) findViewById(R.id.txt_signin_password);
         txtvSignUp = (TextView) findViewById(R.id.txt_signin_signup);
+        progressBar = (ProgressBar) findViewById(R.id.progress_signin);
+
+        progressBar.setVisibility(View.GONE);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(SignInActivity.this, MainActivity.class));
-//                finish();
 
-                ApiService apiService = ApiUtils.getApiService();
+                progressBar.setVisibility(View.VISIBLE);
+
+                final ApiService apiService = ApiUtils.getApiService();
                 apiService.SignIn(edtUserName.getText().toString(), edtPassword.getText().toString())
                         .enqueue(new Callback<User>() {
                             @Override
-                            public void onResponse(Call<User> call, Response<User> response) {
+                            public void onResponse(Call<User> call, final Response<User> response) {
                                 if (response.body().getError() == null) {
-                                    Toast.makeText(SignInActivity.this, "Sign in success", Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(SignInActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                    apiService.GetUserInfo(response.body().getToken()).enqueue(new Callback<User>() {
+                                        @Override
+                                        public void onResponse(Call<User> call1, Response<User> response1) {
+                                            Common.user = response1.body();
+                                            Common.user.setToken(response.body().getToken());
+                                            startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<User> call1, Throwable t1) {
+                                            Toast.makeText(SignInActivity.this, t1.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
                                 else {
+                                    progressBar.setVisibility(View.GONE);
                                     Toast.makeText(SignInActivity.this, response.body().getError(), Toast.LENGTH_SHORT).show();
                                 }
                             }

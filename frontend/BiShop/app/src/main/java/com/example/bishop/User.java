@@ -4,6 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
+    @SerializedName("birthday")
+    @Expose
+    private Birthday birthday;
     @SerializedName("username")
     @Expose
     private String username;
@@ -16,9 +19,6 @@ public class User {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("birthDay")
-    @Expose
-    private BirthDay birthDay;
     @SerializedName("address")
     @Expose
     private String address;
@@ -28,6 +28,9 @@ public class User {
     @SerializedName("email")
     @Expose
     private String email;
+    @SerializedName("role")
+    @Expose
+    private Integer role;
     @SerializedName("token")
     @Expose
     private String token;
@@ -35,19 +38,12 @@ public class User {
     @Expose
     private String error;
 
-    public User(String username, String password, String identityCard,
-                String name, BirthDay birthDay, String address,
-                String phoneNumber, String email, String token, String error) {
-        this.username = username;
-        this.password = password;
-        this.identityCard = identityCard;
-        this.name = name;
-        this.birthDay = birthDay;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.token = token;
-        this.error = error;
+    public Birthday getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Birthday birthday) {
+        this.birthday = birthday;
     }
 
     public String getUsername() {
@@ -56,14 +52,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getIdentityCard() {
@@ -80,14 +68,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public BirthDay getBirthDay() {
-        return birthDay;
-    }
-
-    public void setBirthDay(BirthDay birthDay) {
-        this.birthDay = birthDay;
     }
 
     public String getAddress() {
@@ -114,6 +94,14 @@ public class User {
         this.email = email;
     }
 
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
     public String getToken() {
         return token;
     }
@@ -130,4 +118,30 @@ public class User {
         this.error = error;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public User() {
+
+    }
+
+    public User(String username, String password, String identityCard,
+                String name, Birthday birthDay, String address,
+                String phoneNumber, String email, String token, String error) {
+        this.username = username;
+        this.password = password;
+        this.identityCard = identityCard;
+        this.name = name;
+        this.birthday = birthDay;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.token = token;
+        this.error = error;
+    }
 }

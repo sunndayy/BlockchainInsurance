@@ -8,27 +8,35 @@ import java.util.List;
 public class Common {
 
     public static String beautifyPrice(long price) {
+
+        long temp = price;
         String str = "";
-        while (price / 1000 != 0) {
-            str += ".000";
-            price = price / 1000;
+
+        while (temp >= 1000) {
+            long i = temp % 1000;
+            if (i == 0) {
+                str = ".000" + str;
+            } else {
+                if (i < 10) {
+                    str = ".00" + i + str;
+                } else {
+                    if (i < 100) {
+                        str = ".0" + i + str;
+                    } else {
+                        if (i > 100) {
+                            str = "." + i + str;
+                        }
+                    }
+                }
+            }
+
+            temp = temp / 1000;
         }
-        str = Long.toString(price) + str + " vnđ";
-        return  str;
+
+        return String.valueOf(temp) + str + " VNĐ";
     }
 
     public static List<Item> cart = new ArrayList<>();
 
-    public static User user = new User(
-            "Duong",
-            "adsadsa",
-            "251096839",
-            "Duong",
-            null,
-            "TP HCM",
-            "0919670339",
-            "duong@gmail.com",
-            "123123",
-            ""
-    );
+    public static User user = null;
 }

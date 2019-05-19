@@ -1,11 +1,15 @@
 package com.example.bishop;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Headers;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ApiService {
 
@@ -15,12 +19,27 @@ public interface ApiService {
                       @Field("password") String password);
 
     @POST("/sign-up")
-    @FormUrlEncoded
-    Call<User> SignUp(@Field("username") String username,
-                      @Field("password") String password,
-                      @Field("identityCard") String identityCard,
-                      @Field("birthDay") BirthDay birthDay,
-                      @Field("address") String address,
-                      @Field("phoneNumber") String phoneNumber,
-                      @Field("email") String email);
+    Call<User> SignUp(@Body User user);
+
+    @GET("/products-by-types/0")
+    Call<List<Item>> GetXeSo();
+
+    @GET("/products-by-types/1")
+    Call<List<Item>> GetXeTayGa();
+
+    @GET("/products-by-types/2")
+    Call<List<Item>> GetXeConTay();
+
+    @GET("/user-info")
+    Call<User> GetUserInfo(@Header("AccessToken") String AccessToken);
+
+    @POST("/create-order")
+    Call<Orders> CreateOrder(@Header("AccessToken") String AccessToken,
+                           @Body Orders orders);
+    @GET("orders-by-user/{username}")
+    Call<List<History>> GetOrders(@Header("AccessToken") String AccessToken,
+                                  @Path("username") String username);
+
+
+
 }

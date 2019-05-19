@@ -9,9 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FragmentListOrder extends Fragment {
 
@@ -61,24 +66,24 @@ public class FragmentListOrder extends Fragment {
 
         orderList.clear();
 
-        Order a = new Order("AB", "45.000.000d", "20/12/2018");
-        orderList.add(a);
+        ApiService apiService = ApiUtils.getApiService();
 
-        a = new Order("AB", "45.000.000d", "20/12/2018");
-        orderList.add(a);
+        apiService.GetOrders(Common.AccessToken).enqueue(
+                new Callback<List<Order>>() {
+                    @Override
+                    public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
+                        for (int i = 0; i < response.body().size(); i ++) {
+                            Order order = response.body().get(i);
+                            orderList.add(order);
+                        }
+                        ordersAdapter.notifyDataSetChanged();
+                    }
 
-        a = new Order("AB", "45.000.000d", "20/12/2018");
-        orderList.add(a);
-
-        a = new Order("AB", "45.000.000d", "20/12/2018");
-        orderList.add(a);
-
-        a = new Order("AB", "45.000.000d", "20/12/2018");
-        orderList.add(a);
-
-        a = new Order("AB", "45.000.000d", "20/12/2018");
-        orderList.add(a);
-
-        ordersAdapter.notifyDataSetChanged();
+                    @Override
+                    public void onFailure(Call<List<Order>> call, Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
     }
 }

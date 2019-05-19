@@ -1,54 +1,40 @@
 package com.example.bishopadmin;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Item {
+    @SerializedName("amount")
+    @Expose
+    private Integer amount;
+    @SerializedName("id")
+    @Expose
     private String id;
+    @SerializedName("name")
+    @Expose
     private String name;
+    @SerializedName("describe")
+    @Expose
     private String describe;
-    private int type;
-    private long price;
-    private int amount;
+    @SerializedName("type")
+    @Expose
+    private Integer type;
+    @SerializedName("price")
+    @Expose
+    private Long price;
+    @SerializedName("producer")
+    @Expose
     private String producer;
-    private int image;
+    @SerializedName("image")
+    @Expose
+    private String image;
 
-    public Item() {
-
+    public Integer getAmount() {
+        return amount;
     }
 
-    public Item(String id, String name, String describe, int type,
-                long price, int amount, String producer, int image) {
-        this.id = id;
-        this.name = name;
-        this.describe = describe;
-        this.type = type;
-        this.price = price;
+    public void setAmount(Integer amount) {
         this.amount = amount;
-        this.producer = producer;
-        this.image = image;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public void setPrice(long price) {
-        this.price = price;
-    }
-
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
     }
 
     public String getId() {
@@ -59,6 +45,14 @@ public class Item {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescribe() {
         return describe;
     }
@@ -67,20 +61,20 @@ public class Item {
         this.describe = describe;
     }
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
-    public int getAmount() {
-        return amount;
+    public Long getPrice() {
+        return price;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setPrice(Long price) {
+        this.price = price;
     }
 
     public String getProducer() {
@@ -89,5 +83,28 @@ public class Item {
 
     public void setProducer(String producer) {
         this.producer = producer;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Item() {
+
+    }
+
+    public Item(String id, String name, int type, String describe, long price, int amount, String producer, String image) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.describe = describe;
+        this.price = price;
+        this.amount = amount;
+        this.producer = producer;
+        this.image = image;
     }
 }
