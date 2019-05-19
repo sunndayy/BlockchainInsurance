@@ -10,8 +10,9 @@ module.exports.createOrder = async orderInfo => {
 module.exports.updateOrder = async (id, orderInfo) => {
 	delete orderInfo.id;
 	let order = await Order.findOneAndUpdate({id}, {$set: orderInfo}, {new: true});
+	
 	if (order.state) {
-		request(`http://${config.company[order.insurence.company]}/contracts-by-license-plate/${orderInfo.licensePlate}`, (e, res, body) => {
+		request(`http://${config.company[orderInfo.insurence.company]}/contracts-by-license-plate/${orderInfo.insurence.licensePlate}`, (e, res, body) => {
 			if (e) {
 				console.error(e);
 			} else {
@@ -61,6 +62,8 @@ module.exports.updateOrder = async (id, orderInfo) => {
 							request.post({url: `http://${node}/tx`, form: sign}, (e, res, body) => {
 								if (e) {
 									console.error(e);
+								} else {
+									console.log(body.toString())
 								}
 							});
 						});
@@ -71,4 +74,8 @@ module.exports.updateOrder = async (id, orderInfo) => {
 			}
 		});
 	}
+};
+
+module.exports.getOrders = async () => {
+	return await Order.find({});
 };

@@ -8,6 +8,7 @@ const myValidator = require('../../../utils/validator');
 module.exports.signIn = async (username, password) => {
 	myValidator(username, 'string', 'username');
 	myValidator(password, 'string', 'password');
+	
 	let user = await User.findOne({username: username});
 	if (user) {
 		if (await bcrypt.compare(password, user.passwordHash)) {
@@ -16,6 +17,7 @@ module.exports.signIn = async (username, password) => {
 			}, 'secretkey');
 		}
 	}
+	
 	throw new Error('Username or password not correct');
 };
 

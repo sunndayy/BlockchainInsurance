@@ -74,6 +74,7 @@ router.post('/create-product', userMiddleware.authMiddleware, upload.single('ima
 				} else {
 					req.body.image = data;
 					fs.unlink(req.file.path, e => {
+						console.error(e);
 					});
 					await cb();
 				}
@@ -110,6 +111,7 @@ router.put('/update-product/:id', userMiddleware.authMiddleware, upload.single('
 				} else {
 					req.body.image = data;
 					fs.unlink(req.file.path, e => {
+						console.error(e);
 					});
 					await cb();
 				}

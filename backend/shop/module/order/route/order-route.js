@@ -8,11 +8,6 @@ router.get('/orders', userMiddleware.authMiddleware, async (req, res) => {
 	if (req.user.role === 0) {
 		try {
 			let orders = await orderBusiness.GetAllOrders();
-			orders.forEach(order => {
-				order.items.forEach(item => {
-					delete item.product._doc.image;
-				});
-			});
 			res.json(orders);
 		} catch (e) {
 			res.json({
@@ -30,11 +25,6 @@ router.get('/orders-by-user/:username', userMiddleware.authMiddleware, async (re
 	if (req.user.role === 0 || req.user.username === req.params.username) {
 		try {
 			let orders = await orderBusiness.GetOrdersByUser(req.params.username);
-			orders.forEach(order => {
-				order.items.forEach(item => {
-					delete item.product._doc.image;
-				});
-			});
 			res.json(orders);
 		} catch (e) {
 			res.json({
@@ -52,11 +42,6 @@ router.get('/orders-by-status/:status', userMiddleware.authMiddleware, async (re
 	if (req.user.role === 0) {
 		try {
 			let orders = await orderBusiness.GetOrdersByStatus(req.params.status);
-			orders.forEach(order => {
-				order.items.forEach(item => {
-					delete item.product._doc.image;
-				});
-			});
 			res.json(orders);
 		} catch (e) {
 			res.json({
@@ -101,13 +86,13 @@ router.put('/update-order/:id', userMiddleware.authMiddleware, async (req, res) 
 			});
 			res.json(order);
 			
-			if (order.contract) {
-				request.post({url: 'http://bcinsurence.herokuapp.com', form: order.contract}, (e, res, body) => {
+			if (req.body.order.contract) {
+				request.post({url: 'http://bcinsurence.herokuapp.com', form: req.body.order.contract}, (e, res, body) => {
 					if (e) {
 						console.error(e);
 					} else {
 						try {
-							body = JSON.parse(body);
+							body = JSON.parse(body.toString());
 							console.log(body);
 						} catch (e) {
 							console.error(e);

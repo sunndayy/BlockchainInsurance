@@ -13,9 +13,6 @@ module.exports.GetProductsByProducer = async producer => {
 };
 
 module.exports.CreateProduct = async data => {
-	// data.type = parseInt(data.type);
-	// data.price = parseInt(data.price);
-	// data.amount = parseInt(data.amount);
 	return await Product.create(data);
 };
 

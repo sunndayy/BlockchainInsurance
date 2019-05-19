@@ -46,8 +46,7 @@ module.exports.getAllContracts = cb => {
 const getContractsByLicensePlate = (licensePlate, cb) => {
 	callApiToBlockchain({
 		header: 'GET_CONTRACTS_BY_LICENSE_PLATE',
-		company: licensePlate,
-		// licensePlate,
+		licensePlate,
 		time: new Date()
 	}, '/get-contracts-by-license-plate', cb);
 };
