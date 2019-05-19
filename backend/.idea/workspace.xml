@@ -2,9 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e09958ef-a5bc-4b41-8439-4ff792cc9b34" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/shop/utils/validator.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blockchain/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blockchain/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blockchain/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain/bin/www" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blockchain/blockchain-structure/block-data.js" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain/blockchain-structure/block-data.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blockchain/blockchain-structure/block-header.js" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain/blockchain-structure/block-header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blockchain/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blockchain/module/block/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain/module/block/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blockchain/module/tx/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain/module/tx/route.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dns-server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dns-server/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shop/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/module/order/business/order-business.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop/module/order/business/order-business.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/module/order/route/order-route.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop/module/order/route/order-route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/module/product/business/product-business.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop/module/product/business/product-business.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/module/product/route/product-route.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop/module/product/route/product-route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/module/user/business/user-business.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop/module/user/business/user-business.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/module/user/model/user-model.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop/module/user/model/user-model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop/package.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -17,37 +35,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/blockchain/config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blockchain/api/sync-blockchain-api.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1632" />
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blockchain/blockchain-structure/block-data.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-93" />
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blockchain/blockchain-structure/block-header.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-144" />
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/blockchain" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/dns-server/company.json" />
         <option value="$PROJECT_DIR$/dns-server/app.js" />
+        <option value="$PROJECT_DIR$/blockchain/config.js" />
       </list>
     </option>
   </component>
@@ -61,10 +83,10 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-10" />
-    <option name="width" value="980" />
-    <option name="height" value="1040" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="952" />
+    <option name="width" value="977" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -144,17 +166,18 @@
       <updated>1556893985320</updated>
       <workItem from="1556893988077" duration="779000" />
       <workItem from="1557397414332" duration="47000" />
+      <workItem from="1558105051565" duration="241000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="826000" />
+    <option name="totallyTimeSpent" value="1067000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <frame x="762" y="0" width="781" height="830" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24983476" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -186,18 +209,19 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/blockchain/api/sync-blockchain-api.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1632" />
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/blockchain/blockchain-structure/block-data.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-93" />
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/blockchain/blockchain-structure/block-header.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blockchain/config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-144" />
+        <state relative-caret-position="34">
+          <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
+        </state>
       </provider>
     </entry>
   </component>

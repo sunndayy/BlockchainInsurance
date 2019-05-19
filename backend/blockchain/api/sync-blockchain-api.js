@@ -7,7 +7,6 @@ const Node = mongoose.model('node');
 const State = require('../blockchain-structure/state');
 const BlockHeader = require('../blockchain-structure/block-header');
 const BlockData = require('../blockchain-structure/block-data');
-const debug = require('debug');
 
 /**
  * Make a request
@@ -23,7 +22,7 @@ const MakeRequest = (url, msg, cb) => {
 					await cb(msg, Crypto.Hash(sign.pubKey));
 				}
 			} catch (e) {
-				debug(e);
+				console.log(e);
 			}
 		}
 	};
@@ -73,7 +72,7 @@ const MakeConnectRequest = host => {
  * Make get header request
  */
 const HandleAfterGetHeader = async (host, blockHeader) => {
-	let state = new State();
+	let state = new State(false);
 	await state.Init();
 	blockHeader = new BlockHeader(blockHeader);
 	if (await state.ValidateBlockHeader(blockHeader)) {
@@ -102,7 +101,7 @@ const MakeSyncHeaderRequest = (host, index) => {
  * Make get data request
  */
 const HandleAfterGetData = async (host, blockHeader, blockData) => {
-	let state = new State();
+	let state = new State(false);
 	await state.Init();
 	blockData = new BlockData(blockData.txs);
 	await state.ValidateBlockData(blockHeader, blockData, () => {

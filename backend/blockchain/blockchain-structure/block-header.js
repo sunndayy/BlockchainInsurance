@@ -1,4 +1,4 @@
-const Crypto = require('../utils/Crypto');
+const Crypto = require('../utils/crypto');
 
 module.exports = class BlockHeader {
 	constructor(obj) {

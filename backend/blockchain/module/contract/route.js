@@ -30,7 +30,7 @@ router.post('/get-contracts-by-license-plate', verifyMiddleware, async (req, res
 			return node.pubKeyHash === req.body.pubKeyHash;
 		});
 		if (index >= 0 && new Date() - new Date(req.body.time) < DURATION) {
-			let contracts = await FindByLicensePlate(req.body.company);
+			let contracts = await FindByLicensePlate(req.body.licensePlate);
 			if (contracts.length > 0) {
 				res.json(contracts);
 			} else {

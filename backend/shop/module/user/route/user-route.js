@@ -29,4 +29,15 @@ router.post('/sign-in', async (req, res) => {
 	}
 });
 
+router.get('/user-info', userMiddleware.authMiddleware, async (req, res) => {
+	try {
+		delete req.user._doc.passwordHash;
+		res.json(req.user);
+	} catch (e) {
+		res.json({
+			error: e.message
+		});
+	}
+});
+
 module.exports = router;

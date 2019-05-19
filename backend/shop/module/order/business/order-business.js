@@ -3,16 +3,16 @@ const User = require('../../user/model/user-model');
 const Product = require('../../product/model/product-model');
 
 module.exports.GetAllOrders = async () => {
-	return await Order.find({});
+	return await Order.find({}).populate('items.product', '-image');
 };
 
 module.exports.GetOrdersByStatus = async status => {
-	return await Order.find({status});
+	return await Order.find({status}).populate('items.product', '-image');
 };
 
 module.exports.GetOrdersByUser = async username => {
 	let user = await User.findOne({username: username});
-	return await Orders.find({user});
+	return await Order.find({user}).populate('items.product', '-image');
 };
 
 module.exports.CreateOrder = async (user, data) => {
@@ -31,5 +31,5 @@ module.exports.UpdateOrder = async (id, data) => {
 	if (data.id) {
 		delete data.id;
 	}
-	return await Order.findOneAndUpdate({id}, {$set: data}, {new: true});
+	return await Order.findOneAndUpdate({id}, {$set: data}, {new: true, fields: '-image'});
 };

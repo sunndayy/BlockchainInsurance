@@ -65,7 +65,6 @@ router.post('/create-order', userMiddleware.authMiddleware, async (req, res) => 
 				price: item._doc.price
 			}
 		});
-		delete order.user;
 		res.json(order);
 	} catch (e) {
 		res.json({
@@ -77,15 +76,23 @@ router.post('/create-order', userMiddleware.authMiddleware, async (req, res) => 
 router.put('/update-order/:id', userMiddleware.authMiddleware, async (req, res) => {
 	if (req.user.role === 0) {
 		try {
-			let data = await orderBusiness.UpdateOrder(req.params.id, req.body);
-			res.json(data);
-			if (data.contract) {
-				request.post({url: 'http://bcinsurence.herokuapp.com', form: data.contract}, (e, res, body) => {
+			let order = await orderBusiness.UpdateOrder(req.params.id, req.body);
+			order = order._doc;
+			order.items = order.items.map(item => {
+				return {
+					id: item._doc.product.id,
+					price: item._doc.price
+				}
+			});
+			res.json(order);
+			
+			if (req.body.order.contract) {
+				request.post({url: 'http://bcinsurence.herokuapp.com', form: req.body.order.contract}, (e, res, body) => {
 					if (e) {
 						console.error(e);
 					} else {
 						try {
-							body = JSON.parse(body);
+							body = JSON.parse(body.toString());
 							console.log(body);
 						} catch (e) {
 							console.error(e);
