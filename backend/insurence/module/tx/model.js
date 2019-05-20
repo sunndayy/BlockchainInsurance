@@ -8,7 +8,7 @@ const txSchema = new Schema({
 	type: {type: String, enum: ['PLAN', 'CONTRACT'], require: true},
 	ref: {type: Schema.Types.Mixed, require: true},
 	preStateHash: {type: String},
-	action: {type: Schema.Types.Mixed, require: true},
+	action: {type: Schema.Types.Mixed},
 	time: {type: Date, default: new Date()},
 	status: {type: Boolean, default: false}
 });

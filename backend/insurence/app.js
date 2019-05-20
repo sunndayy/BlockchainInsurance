@@ -9,6 +9,7 @@ const userBusiness = require('./module/user/business');
 const userRoute = require('./module/user/route');
 const txRoute = require('./module/tx/route');
 const queryRoute = require('./module/query-blockchain/route');
+const bodyParser = require('body-parser');
 
 mongoose.connect(config.db, {useNewUrlParser: true});
 const db = mongoose.connection;
@@ -38,6 +39,9 @@ db.once('open', async () => {
 });
 
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));

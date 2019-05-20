@@ -2,28 +2,20 @@ const request = require('request');
 const config = require('../../config');
 const sign = require('../../utils/sign');
 
-const query = (msg, url, cb, failCount, success) => {
-	let sign = sign(msg);
-	request.post({url, form: sign}, (e, res, body) => {
+const query = (msg, url, cb) => {
+	let _sign = sign(msg);
+	request.post({url, form: _sign}, (e, res, body) => {
 		if (e) {
-			failCount++;
-			if (failCount === config.defaultNodes.length) {
-				cb(new Error('Cannot connect to blockchain'), null);
-			}
+			cb(e, null);
 		} else {
-			if (!success) {
-				cb(null, body.toString());
-				success = true;
-			}
+			cb(null, body.toString());
 		}
 	});
 };
 
 const callApiToBlockchain = (msg, url, cb) => {
-	let success = false;
-	let failCount = 0;
 	config.defaultNodes.forEach(host => {
-		query(msg, 'http://' + host + url, cb, failCount, success);
+		query(msg, 'http://' + host + url, cb);
 	});
 };
 
@@ -46,7 +38,7 @@ module.exports.getAllContracts = cb => {
 const getContractsByLicensePlate = (licensePlate, cb) => {
 	callApiToBlockchain({
 		header: 'GET_CONTRACTS_BY_LICENSE_PLATE',
-		licensePlate,
+		company: licensePlate,
 		time: new Date()
 	}, '/get-contracts-by-license-plate', cb);
 };

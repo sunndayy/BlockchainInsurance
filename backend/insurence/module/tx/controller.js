@@ -11,13 +11,18 @@ class TxController {
 		this.res.json(txs);
 	}
 	
-	async createTx() {
-		let tx = await txBusiness.createTx(this.req.body);
+	async updateTx() {
+		let tx = await txBusiness.updateTx(parseInt(this.req.params.id), this.req.body);
 		this.res.json(tx);
 	}
 	
-	async updateTx() {
-		let tx = await txBusiness.updateTx(this.req.params.id, this.req.body);
+	async createPlanTx() {
+		let tx = await txBusiness.createPlanTx(this.req.body);
+		this.res.json(tx);
+	}
+	
+	async createContractTx() {
+		let tx = await txBusiness.createContractTx(this.req.body);
 		this.res.json(tx);
 	}
 }
@@ -33,10 +38,10 @@ module.exports.getAllTx = async (req, res) => {
 	}
 };
 
-module.exports.createTx = async (req, res) => {
+module.exports.updateTx = async (req, res) => {
 	try {
 		let controller = new TxController(req, res);
-		await controller.createTx();
+		await controller.updateTx();
 	} catch (e) {
 		res.json({
 			error: e.message
@@ -44,10 +49,21 @@ module.exports.createTx = async (req, res) => {
 	}
 };
 
-module.exports.updateTx = async (req, res) => {
+module.exports.createPlanTx = async (req, res) => {
 	try {
 		let controller = new TxController(req, res);
-		await controller.updateTx();
+		await controller.createPlanTx();
+	} catch (e) {
+		res.json({
+			error: e.message
+		});
+	}
+};
+
+module.exports.createContractTx = async (req, res) => {
+	try {
+		let controller = new TxController(req, res);
+		await controller.createContractTx();
 	} catch (e) {
 		res.json({
 			error: e.message

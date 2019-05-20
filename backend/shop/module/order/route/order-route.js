@@ -86,8 +86,38 @@ router.put('/update-order/:id', userMiddleware.authMiddleware, async (req, res) 
 			});
 			res.json(order);
 			
-			if (req.body.order.contract) {
-				request.post({url: 'http://bcinsurence.herokuapp.com', form: req.body.order.contract}, (e, res, body) => {
+			if (req.body.company && req.body.contractId) {
+				let now = new Date().getTime();
+				let body = {
+					type: 'CONTRACT',
+					ref: {
+						plan: {
+							company: req.body.company,
+							id: req.body.contractId
+						},
+						userInfo: {
+							identityCard: req.user.identityCard,
+							licensePlate: req.body.licensePlate,
+							name: req.user.name,
+							birthday: new Date(parseInt(req.user.birthday.year),
+								parseInt(req.user.birthday.month - 1),
+								parseInt(req.user.birthday.day), 0, 0, 0).getTime(),
+							sex: req.user.sex,
+							address: req.user.address,
+							phoneNumber: req.user.phoneNumber,
+							email: req.user.email
+						},
+						garaPubKeyHashes: ['368a5b069220e0919d2481f07161c5625ee4167e0a886a9c5c01be81d7b7db12'],
+						expireTime: {
+							timeStart: now,
+							timeEnd: now + 365 * 24 * 36 * req.body.duration
+						}
+					},
+					action: {
+						create: true
+					}
+				};
+				request.post({url: 'http://bcinsurence.herokuapp.com/tx', form: body}, (e, res, body) => {
 					if (e) {
 						console.error(e);
 					} else {
@@ -101,6 +131,7 @@ router.put('/update-order/:id', userMiddleware.authMiddleware, async (req, res) 
 				});
 			}
 		} catch (e) {
+			console.error()
 			res.json({
 				error: e.message
 			});

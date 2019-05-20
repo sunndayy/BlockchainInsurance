@@ -3,8 +3,8 @@ const router = express.Router();
 const orderController = require('./controller');
 const userMiddleware = require('../../middleware/user-middleware');
 
-route.route('/order')
-	.get(userMiddleware.authMiddleware, orderController.getOrderes);
+router.route('/orders')
+	.get(userMiddleware.authMiddleware, orderController.getOrders);
 
 router.route('/create-order')
 	.post(userMiddleware.authMiddleware, orderController.createOrder);

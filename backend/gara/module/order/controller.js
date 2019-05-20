@@ -7,13 +7,20 @@ class OrderController {
 	}
 	
 	async createOrder() {
-		let order = await OrderBusiness.createOrder(req.body);
+		let order = await OrderBusiness.createOrder(this.req.body);
 		this.res.json(order);
 	}
 	
-	async updateOrder() {
-		let order = await OrderBusiness.updateOrder(req.params.id, req.body);
-		this.res.json(order);
+	updateOrder() {
+		OrderBusiness.updateOrder(parseInt(this.req.params.id), this.req.body, (e, order) => {
+			if (e) {
+				this.res.json({
+					error: e.message
+				});
+			} else {
+				this.res.json(order);
+			}
+		});
 	}
 	
 	async getOrders() {
@@ -33,18 +40,12 @@ module.exports.createOrder = async (req, res) => {
 	}
 };
 
-module.exports.updateOrder = async (req, res) => {
-	try {
-		let controller = new OrderController(req, res);
-		await controller.updateOrder();
-	} catch (e) {
-		res.json({
-			error: e.message
-		});
-	}
+module.exports.updateOrder = (req, res) => {
+	let controller = new OrderController(req, res);
+	controller.updateOrder();
 };
 
-module.exports.getOrderes = async (req, res) => {
+module.exports.getOrders = async (req, res) => {
 	try {
 		let controller = new OrderController(req, res);
 		await controller.getOrders();

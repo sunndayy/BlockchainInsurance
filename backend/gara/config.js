@@ -8,6 +8,6 @@ module.exports = {
 		'bcinsurence3.herokuapp.com'
 	],
 	company: {
-		phhoang: 'hdinsurence.herokuapp.com'
+		phhoang: 'bcinsurence.herokuapp.com'
 	}
 };

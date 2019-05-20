@@ -16,11 +16,16 @@ const orderSchema = new Schema({
 		sex: {type: Boolean, require: true},
 		address: {type: String, require: true},
 		phoneNumber: {type: String},
-		email: {type: String, require: true, unique: true}
+		email: {type: String, require: true}
 	},
 	licensePlate: {type: String, require: true},
-	image: {type: Buffer, require: true},
-	total: {type: Number, require: true},
+	image: {type: Buffer},
+	total: {type: Number},
+	insurence: {
+		company: {type: String, require: true},
+		id: {type: String, require: true},
+		refund: {type: Number, require: true}
+	},
 	status: {type: Boolean, default: false}
 });
 
