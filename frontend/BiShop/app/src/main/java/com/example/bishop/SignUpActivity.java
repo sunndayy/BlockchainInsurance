@@ -7,10 +7,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +27,8 @@ public class SignUpActivity extends AppCompatActivity {
             edtEmail, edtPhone, edtPassword, edtRepassword;
     private TextView txtvLogin;
     private DatePickerDialog.OnDateSetListener dateSetListener;
-    private BirthDay birthDay;
+    private Birthday birthDay;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +46,15 @@ public class SignUpActivity extends AppCompatActivity {
         edtPhone = (EditText) findViewById(R.id.txt_signup_phonenumber);
         edtPassword = (EditText) findViewById(R.id.txt_signup_password);
         edtRepassword = (EditText) findViewById(R.id.txt_signup_repassword);
+        progressBar = (ProgressBar) findViewById(R.id.progress_signup);
 
+        progressBar.setVisibility(View.GONE);
 
         edtDob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar cal = null;
-                int year = 1, month = 1,day = 1970;
+                int year = 1, month = 1, day = 1970;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                     cal = Calendar.getInstance();
                     year = cal.get(Calendar.YEAR);
@@ -61,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
                         SignUpActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         dateSetListener,
-                        year,month,day);
+                        year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -74,34 +79,42 @@ public class SignUpActivity extends AppCompatActivity {
                 String date = dayOfMonth + "/" + month + "/" + year;
                 edtDob.setText(date);
 
-                birthDay = new BirthDay(dayOfMonth, month + 1, year);
+                birthDay = new Birthday(dayOfMonth, month + 1, year);
             }
         };
-
 
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
-//                finish();
 
-                ApiService apiService = ApiUtils.getApiService();
-                apiService.SignUp(
+                progressBar.setVisibility(View.VISIBLE);
+
+                User user = new User(
                         edtUserName.getText().toString(),
                         edtPassword.getText().toString(),
                         edtIdNumber.getText().toString(),
+                        edtName.getText().toString(),
                         birthDay,
                         edtAddress.getText().toString(),
                         edtPhone.getText().toString(),
-                        edtEmail.getText().toString()
-                ).enqueue(new Callback<User>() {
+                        edtEmail.getText().toString(),
+                        "",
+                        ""
+                );
+
+
+                ApiService apiService = ApiUtils.getApiService();
+
+                apiService.SignUp(user).enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         if (response.body().getError() == null) {
-                            Toast.makeText(SignUpActivity.this, "Sign up successfully", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(SignUpActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+                        } else {
+                            progressBar.setVisibility(View.GONE);
                             Toast.makeText(SignUpActivity.this, response.body().getError(), Toast.LENGTH_SHORT).show();
                         }
                     }

@@ -50,8 +50,10 @@ public class ItemsMainAdapter extends RecyclerView.Adapter<ItemsMainAdapter.MyVi
                 intent.putExtra("name", item.getName());
                 intent.putExtra("type", item.getType());
                 intent.putExtra("price", item.getPrice());
+                intent.putExtra("amount", item.getAmount());
                 intent.putExtra("producer", item.getProducer());
                 intent.putExtra("describe", item.getDescribe());
+                intent.putExtra("image", item.getImage());
 
                 context.startActivity(intent);
             }

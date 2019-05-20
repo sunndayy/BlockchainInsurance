@@ -24,6 +24,18 @@ public class InfoActivity extends AppCompatActivity {
         tvPhone = (TextView) findViewById(R.id.tv_info_phone);
         tvEmail = (TextView) findViewById(R.id.tv_info_email);
         tvAddress = (TextView) findViewById(R.id.tv_info_address);
+
+        if (Common.user != null) {
+            tvUserName.setText(Common.user.getUsername());
+            tvName.setText(Common.user.getName());
+            tvId.setText(Common.user.getIdentityCard());
+            tvBd.setText("" + Common.user.getBirthday().getDay() + "/"
+                    + Common.user.getBirthday().getMonth() + "/"
+                    + Common.user.getBirthday().getYear());
+            tvPhone.setText(Common.user.getPhoneNumber());
+            tvEmail.setText(Common.user.getEmail());
+            tvAddress.setText(Common.user.getAddress());
+        }
     }
 
     @Override

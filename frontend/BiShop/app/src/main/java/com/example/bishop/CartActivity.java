@@ -1,5 +1,6 @@
 package com.example.bishop;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,13 +8,23 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CartActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
@@ -35,7 +46,73 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CartActivity.this, PaymentActivity.class));
+                LayoutInflater layoutInflater
+                        = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                View popupView = layoutInflater.inflate(R.layout.popup_confirm, null);
+
+
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, false);
+
+                // show the popup window
+                // which view you pass in doesn't matter, it is only used for the window tolken
+                popupWindow.showAtLocation(getWindow().getDecorView().getRootView(), Gravity.CENTER, 0, 0);
+
+                Button btnYes = (Button) popupView.findViewById(R.id.btn_popup_confirm_yes);
+                Button btnNo = (Button) popupView.findViewById(R.id.btn_popup_confirm_no);
+
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+
+                        List<Order> list = new ArrayList<>();
+
+                        for (int i =0; i< Common.cart.size(); i++) {
+                            Order order = new Order(Common.cart.get(i).getId(), Common.cart.get(i).getPrice());
+                            list.add(order);
+                        }
+
+                        Orders orders = new Orders();
+                        orders.setItems(list);
+
+                        ApiService apiService = ApiUtils.getApiService();
+
+                        User user = Common.user;
+
+                        apiService.CreateOrder(Common.user.getToken(), orders).enqueue(
+                                new Callback<Orders>() {
+                                    @Override
+                                    public void onResponse(Call<Orders> call, Response<Orders> response) {
+                                        if (response.body().getError() == null) {
+                                            Toast.makeText(CartActivity.this, "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
+                                            Common.cart.clear();
+                                            finish();
+                                        }
+                                        else  {
+                                            Toast.makeText(CartActivity.this, response.body().getError(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Orders> call, Throwable t) {
+                                        Toast.makeText(CartActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                        );
+                    }
+                });
+
+                btnNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+
             }
         });
 

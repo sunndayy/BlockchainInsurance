@@ -8,157 +8,159 @@
 
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp">
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
         <ImageView
             android:id="@+id/ic_detail_item"
-            android:src="@drawable/ab"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/ab" />
 
         <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp">
 
             <TextView
-                android:text="Mã sản phẩm:"
-                android:textSize="8pt"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="Mã sản phẩm:"
+                android:textSize="8pt" />
 
             <TextView
                 android:id="@+id/tv_detail_id"
-                android:text="1"
-                android:textSize="8pt"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/jet"/>
+                android:text="1"
+                android:textColor="@color/jet"
+                android:textSize="8pt" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
 
             <TextView
-                android:text="Tên sản phẩm:"
-                android:textSize="8pt"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="Tên sản phẩm:"
+                android:textSize="8pt" />
 
             <TextView
                 android:id="@+id/tv_detail_name"
-                android:text="Air Blade 2017"
-                android:textSize="8pt"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/jet"/>
+                android:text="Air Blade 2017"
+                android:textColor="@color/jet"
+                android:textSize="8pt" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
 
             <TextView
-                android:text="Loại xe:"
-                android:textSize="8pt"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="Loại xe:"
+                android:textSize="8pt" />
 
             <TextView
                 android:id="@+id/tv_detail_type"
-                android:text="Tay ga"
-                android:textSize="8pt"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/jet" />
+                android:text="Tay ga"
+                android:textColor="@color/jet"
+                android:textSize="8pt" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
 
             <TextView
-                android:text="Nhà sản xuất:"
-                android:textSize="8pt"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="Nhà sản xuất:"
+                android:textSize="8pt" />
 
             <TextView
                 android:id="@+id/tv_detail_producer"
-                android:text="Honda"
-                android:textSize="8pt"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/jet" />
+                android:text="Honda"
+                android:textColor="@color/jet"
+                android:textSize="8pt" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
 
             <TextView
-                android:text="Giá tiền:"
-                android:textSize="8pt"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="Giá tiền:"
+                android:textSize="8pt" />
 
             <TextView
                 android:id="@+id/tv_detail_price"
-                android:text="45.000.000 đ"
-                android:textSize="8pt"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/jet" />
+                android:text="45.000.000 đ"
+                android:textColor="@color/jet"
+                android:textSize="8pt" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
 
             <TextView
-                android:text="Mô tả:"
-                android:textSize="8pt"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="Mô tả:"
+                android:textSize="8pt" />
 
             <TextView
                 android:id="@+id/tv_detail_describe"
-                android:text="asdsadasdasdsadasdsadadasdasdasd"
-                android:textSize="8pt"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/jet" />
+                android:justificationMode="inter_word"
+                android:text="asdsadasdasdsadasdsadadasdasdasd"
+                android:textColor="@color/jet"
+                android:textSize="8pt" />
 
         </LinearLayout>
 
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_detail_addcart"
-            android:text="Thêm vào giỏ hàng"
-            android:layout_marginTop="50dp"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/rounded_button"
-            android:textColor="@color/white"
-            android:layout_gravity="center_horizontal"/>
+            android:text="Thêm vào giỏ hàng"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

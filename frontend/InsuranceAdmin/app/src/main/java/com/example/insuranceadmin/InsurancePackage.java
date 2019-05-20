@@ -1,18 +1,35 @@
 package com.example.insuranceadmin;
 
-public class InsurancePackage {
-    private String id;
-    private String name;
-    private String price;
-    private String date;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public InsurancePackage(String id, String name, String price, String date) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.date = date;
+public class InsurancePackage {
+
+    @SerializedName("term")
+    @Expose
+    private Term term;
+    @SerializedName("company")
+    @Expose
+    private String company;
+    @SerializedName("id")
+    @Expose
+    private String id;
+
+    public Term getTerm() {
+        return term;
     }
 
+    public void setTerm(Term term) {
+        this.term = term;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
     public String getId() {
         return id;
@@ -22,27 +39,47 @@ public class InsurancePackage {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
+    public class Term {
 
-    public void setName(String name) {
-        this.name = name;
-    }
+        @SerializedName("state")
+        @Expose
+        private Boolean state;
+        @SerializedName("pricePerYear")
+        @Expose
+        private Integer pricePerYear;
+        @SerializedName("percentage")
+        @Expose
+        private Double percentage;
+        @SerializedName("maxRefund")
+        @Expose
+        private Integer maxRefund;
 
-    public String getPrice() {
-        return price;
-    }
+        public Boolean getState() {
+            return state;
+        }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
+        public void setState(Boolean state) {
+            this.state = state;
+        }
 
-    public String getDate() {
-        return date;
-    }
+        public Integer getPricePerYear() {
+            return pricePerYear;
+        }
 
-    public void setDate(String date) {
-        this.date = date;
+        public void setPricePerYear(Integer pricePerYear) {
+            this.pricePerYear = pricePerYear;
+        }
+
+        public Double getPercentage() {
+            return percentage;
+        }
+
+        public Integer getMaxRefund() {
+            return maxRefund;
+        }
+
+        public void setMaxRefund(Integer maxRefund) {
+            this.maxRefund = maxRefund;
+        }
     }
 }

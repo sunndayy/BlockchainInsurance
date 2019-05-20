@@ -22,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,10 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +47,7 @@ public class MainActivity extends AppCompatActivity
 
     private Button btnSignIn, btnSignUp;
     private TextView txtvUserName, txtvUserEmail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +104,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onRefresh() {
                 prepareAlbums();
-                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -156,8 +161,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(MainActivity.this, CartActivity.class));
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
-            }
-            else {
+            } else {
                 Toast.makeText(MainActivity.this, "Hãy đăng nhập !!!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, SignInActivity.class));
                 finish();
@@ -168,8 +172,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(MainActivity.this, HistoryActivity.class));
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
-            }
-            else {
+            } else {
                 Toast.makeText(MainActivity.this, "Hãy đăng nhập !!!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, SignInActivity.class));
                 finish();
@@ -179,8 +182,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(MainActivity.this, InfoActivity.class));
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
-            }
-            else {
+            } else {
                 Toast.makeText(MainActivity.this, "Hãy đăng nhập !!!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, SignInActivity.class));
                 finish();
@@ -206,46 +208,64 @@ public class MainActivity extends AppCompatActivity
         itemList2.clear();
         itemList3.clear();
 
-        int[] covers = new int[]{
-                R.drawable.ab,
-                R.drawable.blade,
-                R.drawable.lead,
-                R.drawable.msx,
-                R.drawable.pcx,
-                R.drawable.sh,
-                R.drawable.vision,
-                R.drawable.wave,
-                R.drawable.winner};
+        ApiService apiService = ApiUtils.getApiService();
 
-        Item a = new Item("1", "AB", 1,"Xe hot 2019", 45000000, 20, "Honda", covers[0]);
-        itemList1.add(a);
-        itemList2.add(a);
-        itemList3.add(a);
+        apiService.GetXeSo().enqueue(new Callback<List<Item>>() {
+            @Override
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
 
-        a = new Item("2", "Wave", 0,"Xe hot 2019", 18000000, 20, "Honda", covers[7]);
-        itemList1.add(a);
-        itemList2.add(a);
-        itemList3.add(a);
+                for (int i = 0; i < response.body().size(); i++) {
+                    Item item = response.body().get(i);
+                    item.setImage(ApiUtils.BASE_URL + "/product-image/" + item.getId());
+                    itemList1.add(item);
+                }
 
-        a = new Item("3", "Winner", 2,"Xe hot 2019", 39000000, 20, "Honda", covers[8]);
-        itemList1.add(a);
-        itemList2.add(a);
-        itemList3.add(a);
+                itemsMainAdapter1.notifyDataSetChanged();
+            }
 
-        a = new Item("4", "Lead", 1,"Xe hot 2019", 39000000, 20, "Honda", covers[2]);
-        itemList1.add(a);
-        itemList2.add(a);
-        itemList3.add(a);
+            @Override
+            public void onFailure(Call<List<Item>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        a = new Item("5", "pcx", 1,"Xe hot 2019", 90000000, 20, "Honda", covers[4]);
-        itemList1.add(a);
-        itemList2.add(a);
-        itemList3.add(a);
+        apiService.GetXeTayGa().enqueue(new Callback<List<Item>>() {
+            @Override
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                for (int i = 0; i < response.body().size(); i++) {
+                    Item item = response.body().get(i);
+                    item.setImage(ApiUtils.BASE_URL + "/product-image/" + item.getId());
+                    itemList2.add(item);
+                }
 
-        itemsMainAdapter1.notifyDataSetChanged();
-        itemsMainAdapter2.notifyDataSetChanged();
-        itemsMainAdapter3.notifyDataSetChanged();
+                itemsMainAdapter2.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onFailure(Call<List<Item>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        apiService.GetXeConTay().enqueue(new Callback<List<Item>>() {
+            @Override
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                for (int i = 0; i < response.body().size(); i++) {
+                    Item item = response.body().get(i);
+                    item.setImage(ApiUtils.BASE_URL + "/product-image/" + item.getId());
+                    itemList3.add(item);
+                }
+
+                itemsMainAdapter3.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<Item>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     private void prepareBanner() {

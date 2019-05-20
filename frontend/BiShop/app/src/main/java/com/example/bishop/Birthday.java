@@ -3,7 +3,8 @@ package com.example.bishop;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BirthDay {
+public class Birthday {
+
     @SerializedName("day")
     @Expose
     private Integer day;
@@ -13,12 +14,6 @@ public class BirthDay {
     @SerializedName("year")
     @Expose
     private Integer year;
-
-    public BirthDay(Integer day, Integer month, Integer year) {
-        this.day = day;
-        this.month = month;
-        this.year = year;
-    }
 
     public Integer getDay() {
         return day;
@@ -41,6 +36,12 @@ public class BirthDay {
     }
 
     public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public Birthday(Integer day, Integer month, Integer year) {
+        this.day = day;
+        this.month = month;
         this.year = year;
     }
 }

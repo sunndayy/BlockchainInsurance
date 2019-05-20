@@ -15,7 +15,6 @@
         android:maxLines="2"
         android:textColor="@color/black"
         android:textSize="10pt"
-        android:background="@color/white"
         android:layout_margin="10dp"
         android:paddingLeft="6dp"
         android:layout_width="match_parent"
