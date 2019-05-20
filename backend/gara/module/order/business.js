@@ -48,7 +48,7 @@ const refundToMsg = (newRefund, contract) => {
 			garaPubKeyHashes: contract.garaPubKeyHashes,
 			expireTime: contract.expireTime
 		},
-		preStateHash: crypto.hash(JSON.stringify(contract.refunds)),
+		preStateHash: crypto.hash(JSON.stringify(contract.plan.term) + JSON.stringify(contract.refunds)),
 		action: {
 			update: {
 				push: newRefund

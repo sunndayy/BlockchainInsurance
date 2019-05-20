@@ -3,35 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="ebe119c0-7738-4c00-9e5a-9fb41ef256f0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../blockchain/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../blockchain/blockchain-structure/tx.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/blockchain-structure/tx.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../blockchain/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gara/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../gara/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gara/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/bin/www" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gara/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gara/module/order/business.js" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/module/order/business.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../insurence/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/module/query-blockchain/business.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/module/query-blockchain/business.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/module/query-blockchain/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/module/query-blockchain/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/module/tx/business.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/module/tx/business.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/module/tx/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/module/tx/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/module/tx/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/module/tx/model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/module/tx/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/module/tx/route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/body-parser/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/body-parser/HISTORY.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/body-parser/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/body-parser/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/body-parser/lib/types/urlencoded.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/body-parser/lib/types/urlencoded.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/body-parser/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/body-parser/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/bytes/History.md" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/bytes/History.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/bytes/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/bytes/Readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/bytes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/bytes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/bytes/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/bytes/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/Changelog.md" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/Changelog.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/encodings/sbcs-codec.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/encodings/sbcs-codec.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/encodings/sbcs-data.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/encodings/sbcs-data.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/raw-body/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/raw-body/HISTORY.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/raw-body/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/raw-body/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/bin/www" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/module/order/route/order-route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/order/route/order-route.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -49,7 +29,7 @@
         <entry file="file://$PROJECT_DIR$/module/order/route/order-route.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="305">
-              <caret line="119" column="46" selection-start-line="119" selection-start-column="35" selection-end-line="119" selection-end-column="46" />
+              <caret line="119" column="70" selection-end-line="145" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -113,9 +93,9 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="950" />
-    <option name="width" value="979" />
+    <option name="width" value="980" />
     <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -303,11 +283,12 @@
       <workItem from="1558252229386" duration="6625000" />
       <workItem from="1558277384401" duration="28000" />
       <workItem from="1558278054394" duration="59000" />
+      <workItem from="1558366710223" duration="93000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57486000" />
+    <option name="totallyTimeSpent" value="57579000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -319,7 +300,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="760" y="0" width="783" height="832" extended-state="1" />
+    <frame x="760" y="0" width="784" height="832" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.31048387" />
@@ -508,7 +489,7 @@
     <entry file="file://$PROJECT_DIR$/module/order/route/order-route.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="305">
-          <caret line="119" column="46" selection-start-line="119" selection-start-column="35" selection-end-line="119" selection-end-column="46" />
+          <caret line="119" column="70" selection-end-line="145" selection-end-column="24" />
         </state>
       </provider>
     </entry>

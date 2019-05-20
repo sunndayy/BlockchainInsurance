@@ -117,7 +117,7 @@ router.put('/update-order/:id', userMiddleware.authMiddleware, async (req, res) 
 						create: true
 					}
 				};
-				request.post({url: 'http://bcinsurence.herokuapp.com/tx', form: body}, (e, res, body) => {
+				request.post({url: 'http://bcinsurence.herokuapp.com/contract/tx', form: body}, (e, res, body) => {
 					if (e) {
 						console.error(e);
 					} else {

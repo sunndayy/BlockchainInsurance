@@ -2,50 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b696cc9-e63a-46b7-961d-38ee5ef81080" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/contract/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/contract/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blockchain-structure/tx.js" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain-structure/tx.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../gara/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gara/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gara/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gara/middleware/user-middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/middleware/user-middleware.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gara/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/bin/www" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../gara/module/order/business.js" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/module/order/business.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gara/module/order/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/module/order/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gara/module/order/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/module/order/model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gara/module/order/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/module/order/route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gara/module/user/business.js" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/module/user/business.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gara/utils/crypto.js" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/utils/crypto.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/module/query-blockchain/business.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/module/query-blockchain/business.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/module/query-blockchain/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/module/query-blockchain/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/module/tx/business.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/module/tx/business.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/module/tx/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/module/tx/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/module/tx/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/module/tx/model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/module/tx/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/module/tx/route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/body-parser/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/body-parser/HISTORY.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/body-parser/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/body-parser/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/body-parser/lib/types/urlencoded.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/body-parser/lib/types/urlencoded.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/body-parser/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/body-parser/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/bytes/History.md" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/bytes/History.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/bytes/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/bytes/Readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/bytes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/bytes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/bytes/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/bytes/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/Changelog.md" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/Changelog.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/encodings/sbcs-codec.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/encodings/sbcs-codec.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/encodings/sbcs-data.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/encodings/sbcs-data.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/iconv-lite/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/raw-body/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/raw-body/HISTORY.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/node_modules/raw-body/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/node_modules/raw-body/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shop/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shop/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/bin/www" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shop/module/order/route/order-route.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/module/order/route/order-route.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -57,12 +19,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/module/contract/model.js">
+        <entry file="file://$PROJECT_DIR$/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            <state relative-caret-position="170">
+              <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -179,7 +141,6 @@
         <option value="$PROJECT_DIR$/module/plan/model.js" />
         <option value="$PROJECT_DIR$/module/contract/model.js" />
         <option value="$PROJECT_DIR$/model/model.js" />
-        <option value="$PROJECT_DIR$/blockchain-structure/tx.js" />
         <option value="$PROJECT_DIR$/../shop/app.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/blockchain-structure/block-header.js" />
@@ -190,15 +151,16 @@
         <option value="$PROJECT_DIR$/api/sync-blockchain-api.js" />
         <option value="$PROJECT_DIR$/blockchain-structure/state.js" />
         <option value="$PROJECT_DIR$/bin/www" />
-        <option value="$PROJECT_DIR$/config.js" />
         <option value="$PROJECT_DIR$/module/contract/route.js" />
+        <option value="$PROJECT_DIR$/blockchain-structure/tx.js" />
+        <option value="$PROJECT_DIR$/config.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="width" value="979" />
-    <option name="height" value="1040" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="951" />
+    <option name="width" value="978" />
+    <option name="height" value="1039" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -206,7 +168,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -255,12 +216,19 @@
             <path>
               <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
               <item name="blockchain" type="462c0819:PsiDirectoryNode" />
+              <item name="module" type="462c0819:PsiDirectoryNode" />
+              <item name="tx" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="blockchain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="blockchain" type="462c0819:PsiDirectoryNode" />
               <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -502,11 +470,14 @@
       <workItem from="1558330729834" duration="996000" />
       <workItem from="1558343789442" duration="63000" />
       <workItem from="1558344055985" duration="5000" />
+      <workItem from="1558345540997" duration="988000" />
+      <workItem from="1558357727700" duration="1727000" />
+      <workItem from="1558359831504" duration="5000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="298264000" />
+    <option name="totallyTimeSpent" value="300984000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -518,17 +489,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="761" y="0" width="782" height="831" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="npm" order="1" side_tool="true" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.31857237" />
+      <window_info content_ui="combo" id="Project" order="3" weight="0.48118278" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3243626" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3042857" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.44842407" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.52292264" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
@@ -694,27 +665,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/tx/route.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="19" selection-end-line="29" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="19" lean-forward="true" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/crypto.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="2" selection-start-line="24" selection-start-column="2" selection-end-line="24" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/blockchain-structure/block-data.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -757,35 +707,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/contract/route.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/blockchain-structure/state.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="19" column="2" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blockchain-structure/tx.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="221" column="42" selection-start-line="221" selection-start-column="32" selection-end-line="221" selection-end-column="42" />
-          <folding>
-            <element signature="n#Tx#0" />
-            <element signature="n#!!block;n#Verify#0;n#Tx#0" />
-            <element signature="n#!!block;n#pubKeyHash#0;n#Tx#0" />
-            <element signature="n#PlanTx#0" />
-            <element signature="n#!!block;n#constructor#0;n#PlanTx#0" />
-            <element signature="n#!!block;n#Validate#0;n#PlanTx#0" />
-            <element signature="n#!!block;n#uid#0;n#PlanTx#0" />
-            <element signature="n#!!block;n#constructor#0;n#ContractTx#0" />
-            <element signature="n#!!block;n#UpdateDB#0;n#ContractTx#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -821,6 +746,49 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/crypto.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="2" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/tx/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="17" lean-forward="true" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blockchain-structure/tx.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="241" lean-forward="true" selection-start-line="241" selection-end-line="241" />
+          <folding>
+            <element signature="n#!!block;n#Verify#0;n#Tx#0" />
+            <element signature="n#PlanTx#0" />
+            <element signature="n#!!block;n#constructor#0;n#PlanTx#0" />
+            <element signature="n#!!block;n#Validate#0;n#PlanTx#0" />
+            <element signature="n#!!block;n#uid#0;n#PlanTx#0" />
+            <element signature="n#!!block;n#UpdateDB#0;n#ContractTx#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/contract/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
         </state>
       </provider>
     </entry>

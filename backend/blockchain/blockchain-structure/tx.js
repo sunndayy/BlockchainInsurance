@@ -121,7 +121,16 @@ class ContractTx extends Tx {
 		if (plan) {
 			if (!state.txDict[this.uid]) {
 				state.txDict[this.uid] = plan.contracts.find(contract => {
-					return JSON.stringify(this.ref) === JSON.stringify(contract);
+					let contractRef = {
+						plan: {
+							company: plan.company,
+							id: plan.id
+						},
+						userInfo: contract.userInfo,
+						garaPubKeyHashes: contract.garaPubKeyHashes,
+						expireTime: contract.expireTime
+					};
+					return JSON.stringify(this.ref) === JSON.stringify(contractRef);
 				});
 			}
 			
