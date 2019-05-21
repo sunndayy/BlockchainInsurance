@@ -13,6 +13,8 @@ import android.util.Log;
 public class Common {
     public static String AccessToken = "";
 
+    public static String Buffer = "";
+
     public static String getPathFromUri(final Context context, final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;

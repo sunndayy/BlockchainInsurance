@@ -14,24 +14,52 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
-        android:text="000001" />
+        android:text="BH1" />
 
     <TextView
-        android:id="@+id/tv_name_order"
+        android:id="@+id/tv_company_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
-        android:text="Duong" />
+        android:text="phhoang" />
 
     <TextView
-        android:id="@+id/tv_type_order"
+        android:id="@+id/tv_timestart_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
-        android:text="Bao hiem A" />
+        android:text="20/12/1997" />
+
+    <TextView
+        android:id="@+id/tv_timeend_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:text="20/12/1997" />
+
+    <TextView
+        android:id="@+id/tv_userid_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:text="123456789" />
+
+    <TextView
+        android:id="@+id/tv_bienso_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:text="20/12/1997" />
+
 
 </LinearLayout>

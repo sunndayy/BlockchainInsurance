@@ -3,7 +3,7 @@ package com.example.insuranceadmin;
 public class ApiUtils {
     private ApiUtils() {}
 
-    public static final String BASE_URL = "http://192.168.1.105:3000";
+    public static final String BASE_URL = "http://bcinsurence.herokuapp.com";
 
     public static ApiService getApiService() {
 

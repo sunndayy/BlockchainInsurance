@@ -18,13 +18,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragmentOrder extends Fragment {
+public class FragmentTx extends Fragment {
+
     private RecyclerView recyclerView;
-    private OrdersAdapter ordersAdapter;
-    private List<Order> orders;
+    private TxsAdapter txsAdapter;
+    private List<Tx> txs;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    public FragmentOrder() {
+    public FragmentTx() {
 
     }
 
@@ -36,20 +37,21 @@ public class FragmentOrder extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_order, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_order);
-        orders = new ArrayList<>();
+        View rootView = inflater.inflate(R.layout.fragment_tx, container, false);
 
-        ordersAdapter = new OrdersAdapter(getActivity(), orders);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_tx);
+        txs = new ArrayList<>();
+
+        txsAdapter = new TxsAdapter(getActivity(), txs);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(ordersAdapter);
+        recyclerView.setAdapter(txsAdapter);
 
         prepareAlbums();
 
 
-        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_order);
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_tx);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -61,29 +63,33 @@ public class FragmentOrder extends Fragment {
         return rootView;
     }
 
-
     private void prepareAlbums() {
 
-        orders.clear();
+        txs.clear();
 
         ApiService apiService = ApiUtils.getApiService();
-        apiService.GetContracts(Common.AccessToken)
-                .enqueue(new Callback<List<Order>>() {
+
+        apiService.GetTxs(Common.AccessToken)
+                .enqueue(new Callback<List<Tx>>() {
                     @Override
-                    public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
-                        for (int i = 0; i <response.body().size(); i++) {
-                            Order order = response.body().get(i);
-                            orders.add(order);
+                    public void onResponse(Call<List<Tx>> call, Response<List<Tx>> response) {
+                        for (int i = 0; i < response.body().size(); i++) {
+                            Tx tx = response.body().get(i);
+                            if (tx.getType().equals("CONTRACT") && !tx.getStatus()) {
+                                txs.add(tx);
+                            }
                         }
-                        ordersAdapter.notifyDataSetChanged();
+
+                        txsAdapter.notifyDataSetChanged();
                     }
 
                     @Override
-                    public void onFailure(Call<List<Order>> call, Throwable t) {
+                    public void onFailure(Call<List<Tx>> call, Throwable t) {
                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
 
     }
+
 }
