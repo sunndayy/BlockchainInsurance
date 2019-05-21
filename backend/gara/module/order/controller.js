@@ -6,9 +6,8 @@ class OrderController {
 		this.res = res;
 	}
 	
-	async createOrder() {
-		let order = await OrderBusiness.createOrder(this.req.body);
-		this.res.json(order);
+	createOrder(cb) {
+		OrderBusiness.createOrder(this.req.body, this.req.file, cb);
 	}
 	
 	updateOrder() {
@@ -27,12 +26,37 @@ class OrderController {
 		let orders = await OrderBusiness.getOrders();
 		this.res.json(orders);
 	}
+	
+	async getImage() {
+		let buffer = await OrderBusiness.getImage(parseInt(this.req.params.id));
+		if (buffer) {
+			this.res.set({'Content-Type': 'image/gif'});
+			this.res.end(buffer);
+		} else {
+			this.res.json({
+				error: 'Image not found'
+			});
+		}
+	}
 }
 
-module.exports.createOrder = async (req, res) => {
+module.exports.createOrder = (req, res) => {
+	let controller = new OrderController(req, res);
+	controller.createOrder((e, order) => {
+		if (e) {
+			res.json({
+				error: e.message
+			});
+		} else {
+			res.json(order);
+		}
+	});
+};
+
+module.exports.getImage = async (req, res) => {
+	let controller = new OrderController(req, res);
 	try {
-		let controller = new OrderController(req, res);
-		await controller.createOrder();
+		await controller.getImage();
 	} catch (e) {
 		res.json({
 			error: e.message

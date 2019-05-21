@@ -2,9 +2,20 @@ const Order = require('./model');
 const request = require('request');
 const config = require('../../config');
 const crypto = require('../../utils/crypto');
+const fs = require('fs');
 
-module.exports.createOrder = async order => {
-	return await Order.create(order);
+module.exports.createOrder = (order, imageFile, cb) => {
+	if (imageFile) {
+		fs.readFile(imageFile.path, (e, data) => {
+			if (data) {
+				order.image = data;
+			}
+			Order.create(order, (e, order) => {
+				delete order._doc.image;
+				cb(e, order._doc);
+			});
+		});
+	}
 };
 
 const validateContract = (order, contract, curTime) => {
@@ -110,4 +121,12 @@ module.exports.updateOrder = (id, order, cb) => {
 
 module.exports.getOrders = async () => {
 	return await Order.find({});
+};
+
+module.exports.getImage = async id => {
+	let order = await Order.findOne({id: id}, 'image');
+	if (order) {
+		return order.image;
+	}
+	return null;
 };
