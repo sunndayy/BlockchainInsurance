@@ -6,6 +6,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -42,12 +43,8 @@ public interface ApiService {
                              @Part("producer") RequestBody producer);
 
     @PUT("/update-order/{id}")
-    @FormUrlEncoded
     Call<ResponseBody> UpdateOrders(@Path("id") Integer idOrder,
                                     @Header("AccessToken") String token,
-                                    @Field("status") Boolean status,
-                                    @Field("licensePlate") String licensePlate,
-                                    @Field("company") String company,
-                                    @Field("contractId") String idBH,
-                                    @Field("duration") Integer duration);
+                                    @Body ContractInfo contractInfo);
+
 }

@@ -1,16 +1,40 @@
 package com.example.insuranceadmin;
 
-public class Order {
-    private String id;
-    private String name;
-    private String type;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public Order(String id, String name, String type) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
+import java.util.List;
+
+public class Order {
+    @SerializedName("company")
+    @Expose
+    private String company;
+    @SerializedName("id")
+    @Expose
+    private String id;
+    @SerializedName("userInfo")
+    @Expose
+    private UserInfo userInfo;
+    @SerializedName("expireTime")
+    @Expose
+    private ExpireTime expireTime;
+    @SerializedName("garaPubKeyHashes")
+    @Expose
+    private List<String> garaPubKeyHashes = null;
+    @SerializedName("plan")
+    @Expose
+    private String plan;
+    @SerializedName("refunds")
+    @Expose
+    private List<Refund> refunds = null;
+
+    public String getCompany() {
+        return company;
     }
 
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
     public String getId() {
         return id;
@@ -20,19 +44,169 @@ public class Order {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public UserInfo getUserInfo() {
+        return userInfo;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 
-    public String getType() {
-        return type;
+    public ExpireTime getExpireTime() {
+        return expireTime;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setExpireTime(ExpireTime expireTime) {
+        this.expireTime = expireTime;
+    }
+
+    public List<String> getGaraPubKeyHashes() {
+        return garaPubKeyHashes;
+    }
+
+    public void setGaraPubKeyHashes(List<String> garaPubKeyHashes) {
+        this.garaPubKeyHashes = garaPubKeyHashes;
+    }
+
+    public String getPlan() {
+        return plan;
+    }
+
+    public void setPlan(String plan) {
+        this.plan = plan;
+    }
+
+    public List<Refund> getRefunds() {
+        return refunds;
+    }
+
+    public void setRefunds(List<Refund> refunds) {
+        this.refunds = refunds;
+    }
+
+    @SerializedName("timeStart")
+    @Expose
+    private Integer timeStart;
+    @SerializedName("timeEnd")
+    @Expose
+    private Integer timeEnd;
+
+    public Integer getTimeStart() {
+        return timeStart;
+    }
+
+    public void setTimeStart(Integer timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    public Integer getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(Integer timeEnd) {
+        this.timeEnd = timeEnd;
+    }
+
+    public class ExpireTime {
+
+        @SerializedName("timeStart")
+        @Expose
+        private Long timeStart;
+        @SerializedName("timeEnd")
+        @Expose
+        private Long timeEnd;
+
+        public Long getTimeStart() {
+            return timeStart;
+        }
+
+        public void setTimeStart(Long timeStart) {
+            this.timeStart = timeStart;
+        }
+
+        public Long getTimeEnd() {
+            return timeEnd;
+        }
+
+        public void setTimeEnd(Long timeEnd) {
+            this.timeEnd = timeEnd;
+        }
+
+    }
+
+    public class Refund {
+
+        @SerializedName("total")
+        @Expose
+        private Integer total;
+        @SerializedName("refund")
+        @Expose
+        private Integer refund;
+        @SerializedName("time")
+        @Expose
+        private Long time;
+        @SerializedName("garaPubKeyHash")
+        @Expose
+        private String garaPubKeyHash;
+
+        public Integer getTotal() {
+            return total;
+        }
+
+        public void setTotal(Integer total) {
+            this.total = total;
+        }
+
+        public Integer getRefund() {
+            return refund;
+        }
+
+        public void setRefund(Integer refund) {
+            this.refund = refund;
+        }
+
+        public Long getTime() {
+            return time;
+        }
+
+        public void setTime(Long time) {
+            this.time = time;
+        }
+
+        public String getGaraPubKeyHash() {
+            return garaPubKeyHash;
+        }
+
+        public void setGaraPubKeyHash(String garaPubKeyHash) {
+            this.garaPubKeyHash = garaPubKeyHash;
+        }
+
+    }
+
+    public class UserInfo {
+
+        @SerializedName("identityCard")
+        @Expose
+        private String identityCard;
+        @SerializedName("licensePlate")
+        @Expose
+        private String licensePlate;
+
+        public String getIdentityCard() {
+            return identityCard;
+        }
+
+        public void setIdentityCard(String identityCard) {
+            this.identityCard = identityCard;
+        }
+
+        public String getLicensePlate() {
+            return licensePlate;
+        }
+
+        public void setLicensePlate(String licensePlate) {
+            this.licensePlate = licensePlate;
+        }
+
     }
 }

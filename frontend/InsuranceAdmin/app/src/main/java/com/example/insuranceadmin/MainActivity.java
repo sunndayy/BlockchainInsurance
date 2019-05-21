@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentInsurance(), "Danh sách gói bảo hiểm");
         adapter.addFragment(new FragmentOrder(), "Danh sách đặt mua");
+        adapter.addFragment(new FragmentTx(), "Danh sách chờ duyệt");
         viewPager.setAdapter(adapter);
     }
 

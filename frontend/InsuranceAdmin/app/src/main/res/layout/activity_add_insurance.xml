@@ -22,13 +22,13 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Mã sản phẩm:" />
+                android:text="Ma bao hiem:" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_add_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nhập mã sản phẩm" />
+                android:hint="Nhập ma bao hiem" />
 
         </LinearLayout>
 
@@ -43,15 +43,16 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Tên sản phẩm:" />
+                android:text="Ten cong ty:" />
 
             <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edt_add_name"
+                android:id="@+id/edt_add_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nhập tên sản phẩm" />
+                android:hint="Nhap ten cong ty" />
 
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,37 +65,13 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Mô tả:" />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edt_add_describe"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nhập mô tả sản phẩm"
-                android:lines="4"
-                android:maxLines="20"
-                android:minLines="4" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp">
-
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Giá sản phẩm:" />
+                android:text="Giá goi:" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_add_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nhập giá sản phẩm"
+                android:hint="Nhập giá goi bao hiem"
                 android:inputType="number" />
 
         </LinearLayout>
@@ -110,14 +87,15 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Số lượng" />
+                android:inputType="number"
+                android:text="Phan tram" />
 
             <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edt_add_amount"
+                android:id="@+id/edt_add_percent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nhập số lượng"
-                android:inputType="number" />
+                android:hint="Nhap phan tram"
+                android:inputType="numberDecimal" />
 
         </LinearLayout>
 
@@ -132,13 +110,14 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Nhà sản xuất:" />
+                android:text="Max refund:" />
 
             <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edt_add_producer"
+                android:id="@+id/edt_add_maxrefund"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nhập nhà sản xuất" />
+                android:inputType="number"
+                android:hint="Max refund" />
 
         </LinearLayout>
 

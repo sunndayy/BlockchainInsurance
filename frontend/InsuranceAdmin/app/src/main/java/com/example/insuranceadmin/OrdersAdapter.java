@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHolder> {
@@ -32,8 +33,11 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         Order order = orders.get(i);
         myViewHolder.tvId.setText(order.getId());
-        myViewHolder.tvName.setText(order.getName());
-        myViewHolder.tvType.setText(order.getType());
+        myViewHolder.tvCompany.setText(order.getCompany());
+//        myViewHolder.tvTimeStart.setText(new Date(order.getTimeStart()).toString());
+//        myViewHolder.tvTimeEnd.setText(new Date(order.getTimeEnd()).toString());
+        myViewHolder.tvUserID.setText(order.getUserInfo().getIdentityCard());
+        myViewHolder.tvBienSo.setText(order.getUserInfo().getLicensePlate());
     }
 
     @Override
@@ -43,13 +47,17 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvId, tvName, tvType;
+        public TextView tvId, tvCompany, tvTimeStart, tvTimeEnd, tvUserID, tvBienSo;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvId = itemView.findViewById(R.id.tv_id_order);
-            tvName = itemView.findViewById(R.id.tv_name_order);
-            tvType = itemView.findViewById(R.id.tv_type_order);
+            tvCompany = itemView.findViewById(R.id.tv_company_order);
+            tvTimeStart = itemView.findViewById(R.id.tv_timestart_order);
+            tvTimeEnd = itemView.findViewById(R.id.tv_timeend_order);
+            tvUserID = itemView.findViewById(R.id.tv_userid_order);
+            tvBienSo = itemView.findViewById(R.id.tv_bienso_order);
+
         }
     }
 }
