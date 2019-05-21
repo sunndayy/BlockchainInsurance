@@ -12,6 +12,12 @@ module.exports.getOrdersByStatus = async status => {
 };
 
 module.exports.getOrdersByUser = async user => {
+	if (typeof user === 'string') {
+		user = await User.findOne({username: user});
+	}
+	if (!user) {
+		throw new Error('Invalid username');
+	}
 	return await Order.find({user}).populate('items.product', '-image');
 };
 

@@ -1,6 +1,4 @@
 const orderBusiness = require('../business/order-business');
-const mongoose = require('mongoose');
-const User = mongoose.model('user');
 
 class OrderController {
 	constructor(req, res) {
@@ -33,16 +31,11 @@ class OrderController {
 	}
 	
 	async getOrdersByUser() {
-		let user;
 		if (this.req.user.role === 0) {
-			user = await User.findOne({username: this.req.params.username});
+			return await orderBusiness.getOrdersByUser(this.req.params.username);
 		} else {
-			user = this.req.user;
+			return await orderBusiness.getOrdersByUser(this.req.user);
 		}
-		if (!user) {
-			throw new Error('Invalid username');
-		}
-		return await orderBusiness.getOrdersByUser(user);
 	}
 	
 	async createOrder() {
