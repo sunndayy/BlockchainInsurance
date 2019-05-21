@@ -1,4 +1,5 @@
 const queryBusiness = require('./business');
+const config = require('../../config');
 
 class QueryController {
 	constructor(req, res) {
@@ -13,7 +14,8 @@ class QueryController {
 			});
 		} else {
 			try {
-				this.res.json(JSON.parse(body));
+				let data = JSON.parse(body);
+				this.res.json(data);
 			} catch (e) {
 				this.res.json({
 					error: e.message
@@ -23,20 +25,89 @@ class QueryController {
 	}
 	
 	queryPlan() {
+		let failCount = 0;
+		let success = false;
 		queryBusiness.getAllPlans((e, body) => {
-			this.handleAfterQuery(e, body);
+			if (e) {
+				failCount++;
+				if (failCount === config.defaultNodes.length) {
+					this.handleAfterQuery(new Error('Cannot connect to blockchain'), null);
+				}
+			} else {
+				if (!success) {
+					success = true;
+					this.handleAfterQuery(null, body);
+				}
+			}
 		});
 	}
 	
 	queryContract() {
+		let failCount = 0;
+		let success = false;
 		queryBusiness.getAllContracts((e, body) => {
-			this.handleAfterQuery(e, body);
+			if (e) {
+				failCount++;
+				if (failCount === config.defaultNodes.length) {
+					this.handleAfterQuery(new Error('Cannot connect to blockchain'), null);
+				}
+			} else {
+				if (!success) {
+					success = true;
+					try {
+						let plans = JSON.parse(body);
+						let contracts = [];
+						for (let i = 0; i < plans.length; i++) {
+							for (let j = 0; j < plans[i].contracts.length; j++) {
+								let contract = Object.assign({
+									company: plans[i].company,
+									id: plans[i].id
+								}, plans[i].contracts[j]);
+								contracts.push(contract);
+							}
+						}
+						this.handleAfterQuery(null, JSON.stringify(contracts));
+					} catch (e) {
+						this.handleAfterQuery(e, null);
+					}
+				}
+			}
 		});
 	}
 	
 	queryContractByLicensePlate() {
-		queryBusiness.getContractsByLicensePlate(this.req.params.licensePlate, (e, body) => {
-			this.handleAfterQuery(e, body);
+		let failCount = 0;
+		let success = false;
+		queryBusiness.getAllContracts((e, body) => {
+			if (e) {
+				failCount++;
+				if (failCount === config.defaultNodes.length) {
+					this.handleAfterQuery(new Error('Cannot connect to blockchain'), null);
+				}
+			} else {
+				if (!success) {
+					success = true;
+					try {
+						let plans = JSON.parse(body);
+						let contracts = [];
+						for (let i = 0; i < plans.length; i++) {
+							for (let j = 0; j < plans[i].contracts.length; j++) {
+								let contract = Object.assign({
+									company: plans[i].company,
+									id: plans[i].id
+								}, plans[i].contracts[j]);
+								if (contract.userInfo.licensePlate === this.req.params.licensePlate) {
+									contract.plan = plans[i];
+									contracts.push(contract);
+								}
+							}
+						}
+						this.handleAfterQuery(null, JSON.stringify(contracts));
+					} catch (e) {
+						this.handleAfterQuery(e, null);
+					}
+				}
+			}
 		});
 	}
 }

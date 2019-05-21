@@ -41,13 +41,13 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
+app.use('/', require('./module/user/route'));
+app.use('/', require('./module/order/route'));
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
 	next(createError(404));
 });
-
-app.use('/', require('./module/user/route'));
-app.use('/', require('./module/order/route'));
 
 // error handler
 app.use(function (err, req, res, next) {

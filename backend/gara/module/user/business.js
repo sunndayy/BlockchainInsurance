@@ -8,7 +8,7 @@ module.exports.signIn = async (username, password) => {
 	let user = await User.findOne({username: username});
 	if (user) {
 		if (await bcrypt.compare(password, user.passwordHash)) {
-			return await jsonwebtoken.crypto({
+			return await jsonwebtoken.sign({
 				username: user.username
 			}, 'secretkey');
 		}

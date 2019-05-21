@@ -12,9 +12,10 @@ module.exports.signIn = async (username, password) => {
 	let user = await User.findOne({username: username});
 	if (user) {
 		if (await bcrypt.compare(password, user.passwordHash)) {
-			return await jsonwebtoken.sign({
+			let token = await jsonwebtoken.sign({
 				username: user.username
 			}, 'secretkey');
+			return {token};
 		}
 	}
 	
@@ -65,11 +66,8 @@ module.exports.signUp = async (userInfo, isAdmin = false) => {
 	userInfo.passwordHash = await bcrypt.hash(userInfo.password, 10);
 	
 	await User.create(userInfo);
-	return await jsonwebtoken.sign({
+	let token = await jsonwebtoken.sign({
 		username: userInfo.username
 	}, 'secretkey');
-};
-
-module.exports.forgetPassword = async user => {
-
+	return {token};
 };

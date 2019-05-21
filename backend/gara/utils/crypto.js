@@ -9,7 +9,7 @@ module.exports.sign = msg => {
 	return {
 		msg: JSON.stringify(msg),
 		pubKey: key.getPublic('hex'),
-		sign: JSON.stringify(key.crypto(msgHash))
+		sign: JSON.stringify(key.sign(msgHash))
 	};
 };
 
