@@ -8,9 +8,10 @@ module.exports.signIn = async (username, password) => {
 	let user = await User.findOne({username: username});
 	if (user) {
 		if (await bcrypt.compare(password, user.passwordHash)) {
-			return await jsonwebtoken.sign({
+			let token = await jsonwebtoken.sign({
 				username: user.username
 			}, 'secretkey');
+			return {token};
 		}
 	}
 	throw new Error('Username or password not correct');
@@ -53,7 +54,8 @@ module.exports.signUp = async (userInfo, isAdmin = false) => {
 	userInfo.birthday = new Date(userInfo.birthday.year, userInfo.birthday.month, userInfo.birthday.day);
 	
 	await User.create(userInfo);
-	return await jsonwebtoken.sign({
+	let token = await jsonwebtoken.sign({
 		username: userInfo.username
 	}, 'secretkey');
+	return {token};
 };
