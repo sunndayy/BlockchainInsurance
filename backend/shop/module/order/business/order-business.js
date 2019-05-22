@@ -75,7 +75,7 @@ module.exports.updateOrder = async (id, data) => {
 				garaPubKeyHashes: ['368a5b069220e0919d2481f07161c5625ee4167e0a886a9c5c01be81d7b7db12'],
 				expireTime: {
 					timeStart: now,
-					timeEnd: now + 365 * 24 * 3600 * data.duration
+					timeEnd: now + 365 * 24 * 3600 * 1000 * data.duration
 				}
 			},
 			action: {
