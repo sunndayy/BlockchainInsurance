@@ -4,18 +4,27 @@ const config = require('../../config');
 const crypto = require('../../utils/crypto');
 const fs = require('fs');
 
-module.exports.createOrder = (order, imageFile, cb) => {
+module.exports.createOrder = async (order, imageFile) => {
 	if (imageFile) {
-		fs.readFile(imageFile.path, (e, data) => {
-			if (data) {
-				order.image = data;
-			}
-			Order.create(order, (e, order) => {
-				delete order._doc.image;
-				cb(e, order._doc);
+		return new Promise((resolve, reject) => {
+			fs.readFile(imageFile.path, (e, data) => {
+				if (e) {
+					reject(e);
+				} else {
+					order.image = data;
+					Order.create(order, (e, order) => {
+						if (e) {
+							reject(e);
+						} else {
+							delete order._doc.image;
+							resolve(order);
+						}
+					});
+				}
 			});
 		});
 	}
+	return Order.create(order);
 };
 
 const validateContract = (order, contract, curTime) => {
@@ -68,59 +77,63 @@ const refundToMsg = (newRefund, contract) => {
 	};
 };
 
-module.exports.updateOrder = (id, order, cb) => {
+module.exports.updateOrder = async (id, order) => {
 	delete order.id;
 	
 	if (order.status) {
-		request(`http://${config.company[order.insurence.company]}/contracts-by-license-plate/${order.licensePlate}`, (e, res, body) => {
-				if (e) {
-					cb(e, null);
-				} else {
-					try {
-						let curTime = new Date().getTime();
-						
-						let contracts = JSON.parse(body);
-						for (let i = 0; i < contracts.length; i++) {
-							if (validateContract(order, contracts[i], curTime)) {
-								let newRefund = orderToRefund(order, contracts[i], curTime);
-								if (newRefund) {
-									let msg = refundToMsg(newRefund, contracts[i]);
-									let sign = crypto.sign(msg);
-									config.defaultNodes.forEach(node => {
-										request.post({url: `http://${node}/tx`, form: sign}, (e, res, body) => {
-											if (e) {
-												console.error(e);
-											} else {
-												console.log(body.toString());
-											}
-										});
-									});
-									
-									order.insurence.refund = newRefund.refund;
-									Order.findOneAndUpdate({id}, {$set: {order}}, {upsert: true}, (e, doc) => {
-										if (e) {
-											cb(e, null);
-										} else {
-											cb(null, doc);
+		return new Promise((resolve, reject) => {
+				request(`http://${config.company[order.insurence.company]}/contracts-by-license-plate/${order.licensePlate}`, (e, res, body) => {
+						if (e) {
+							reject(e);
+						} else {
+							try {
+								let curTime = new Date().getTime();
+								let contracts = JSON.parse(body);
+								
+								for (let i = 0; i < contracts.length; i++) {
+									if (validateContract(order, contracts[i], curTime)) {
+										let newRefund = orderToRefund(order, contracts[i], curTime);
+										if (newRefund) {
+											let msg = refundToMsg(newRefund, contracts[i]);
+											let sign = crypto.sign(msg);
+											config.defaultNodes.forEach(node => {
+												request.post({url: `http://${node}/tx`, form: sign}, (e, res, body) => {
+													if (e) {
+														console.error(e);
+													} else {
+														console.log(JSON.stringify(body.toString()));
+													}
+												});
+											});
+											
+											order.insurence.refund = newRefund.refund;
+											Order.findOneAndUpdate({id}, {$set: {order}}, (e, doc) => {
+												if (e) {
+													reject(e);
+												} else {
+													delete doc._doc.image;
+													resolve(doc);
+												}
+											});
 										}
-									});
-									return;
+									}
 								}
+								reject(new Error('Cannot create refund'));
+							} catch (e) {
+								reject(e);
 							}
 						}
-						
-						cb(new Error('Cannot find contract'), null);
-					} catch (e) {
-						cb(e, null);
 					}
-				}
+				);
 			}
 		);
 	}
+	
+	return await Order.findOneAndUpdate({id}, {$set: order}, '-image');
 };
 
 module.exports.getOrders = async () => {
-	return await Order.find({});
+	return await Order.find({}, '-image');
 };
 
 module.exports.getImage = async id => {

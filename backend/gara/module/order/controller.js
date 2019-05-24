@@ -1,4 +1,4 @@
-const OrderBusiness = require('./business');
+const orderBusiness = require('./business');
 
 class OrderController {
 	constructor(req, res) {
@@ -6,76 +6,56 @@ class OrderController {
 		this.res = res;
 	}
 	
-	createOrder(cb) {
-		OrderBusiness.createOrder(this.req.body, this.req.file, cb);
-	}
-	
-	updateOrder() {
-		OrderBusiness.updateOrder(parseInt(this.req.params.id), this.req.body, (e, order) => {
-			if (e) {
-				this.res.json({
-					error: e.message
-				});
+	async exec(business) {
+		try {
+			let result = await business();
+			if (Buffer.isBuffer(result)) {
+				this.res.set({'Content-Type': 'image/gif'});
+				this.res.end(result);
 			} else {
-				this.res.json(order);
+				this.res.json(result);
+				
 			}
-		});
+		} catch (e) {
+			this.res.json({
+				error: e.message
+			});
+		}
 	}
 	
-	async getOrders() {
-		let orders = await OrderBusiness.getOrders();
-		this.res.json(orders);
+	async createOrder() {
+		return await orderBusiness.createOrder(this.req.body, this.req.file);
+	}
+	
+	async updateOrder() {
+		return await orderBusiness.updateOrder(parseInt(this.req.params.id), this.req.body);
+	}
+	
+	static async getOrders() {
+		return await orderBusiness.getOrders();
 	}
 	
 	async getImage() {
-		let buffer = await OrderBusiness.getImage(parseInt(this.req.params.id));
-		if (buffer) {
-			this.res.set({'Content-Type': 'image/gif'});
-			this.res.end(buffer);
-		} else {
-			this.res.json({
-				error: 'Image not found'
-			});
-		}
+		return await orderBusiness.getImage(parseInt(this.req.params.id));
 	}
 }
 
-module.exports.createOrder = (req, res) => {
+module.exports.createOrder = async (req, res) => {
 	let controller = new OrderController(req, res);
-	controller.createOrder((e, order) => {
-		if (e) {
-			res.json({
-				error: e.message
-			});
-		} else {
-			res.json(order);
-		}
-	});
+	await controller.exec(controller.createOrder.bind(controller));
+};
+
+module.exports.updateOrder = async (req, res) => {
+	let controller = new OrderController(req, res);
+	await controller.exec(controller.updateOrder.bind(controller));
+};
+
+module.exports.getOrders = async (req, res) => {
+	let controller = new OrderController(req, res);
+	await controller.exec(OrderController.getOrders.bind(controller));
 };
 
 module.exports.getImage = async (req, res) => {
 	let controller = new OrderController(req, res);
-	try {
-		await controller.getImage();
-	} catch (e) {
-		res.json({
-			error: e.message
-		});
-	}
-};
-
-module.exports.updateOrder = (req, res) => {
-	let controller = new OrderController(req, res);
-	controller.updateOrder();
-};
-
-module.exports.getOrders = async (req, res) => {
-	try {
-		let controller = new OrderController(req, res);
-		await controller.getOrders();
-	} catch (e) {
-		res.json({
-			error: e.message
-		});
-	}
+	await controller.exec(controller.getImage.bind(controller));
 };
