@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#EEEEEE"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,6 +11,7 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
+            android:scrollbarSize="0dp"
             android:id="@+id/recycler_view_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,10 +24,9 @@
         android:id="@+id/btn_add_product"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginRight="25dp"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="25dp"
         android:layout_marginBottom="75dp"
-        android:clickable="true"
         android:background="?attr/selectableItemBackground"
         android:src="@drawable/ic_add_circle_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"

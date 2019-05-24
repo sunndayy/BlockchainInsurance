@@ -129,17 +129,17 @@ public class AddProductActivity extends AppCompatActivity implements AdapterView
                 ).enqueue(new Callback<Item>() {
                     @Override
                     public void onResponse(Call<Item> call, Response<Item> response) {
-                        Log.d("asd", "asdsad");
+                        progressBar.setVisibility(View.GONE);
                         if (response.body().getId() != null) {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(AddProductActivity.this, "successful", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddProductActivity.this, "Upload thành công", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(AddProductActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddProductActivity.this, "Upload thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Item> call, Throwable t) {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(AddProductActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -160,7 +160,7 @@ public class AddProductActivity extends AppCompatActivity implements AdapterView
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String item = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+//        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
 
         typeProduct = position;
     }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -16,6 +17,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private Button btnSignIn;
     private EditText edtUserName, edtPassword;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,30 +28,46 @@ public class SignInActivity extends AppCompatActivity {
         edtUserName = (EditText) findViewById(R.id.txt_signin_username);
         edtPassword = (EditText) findViewById(R.id.txt_signin_password);
 
+        progressBar = (ProgressBar) findViewById(R.id.progress_signin);
+        progressBar.setVisibility(View.GONE);
+
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ApiService apiService = ApiUtils.getApiService();
-                apiService.LogIn(edtUserName.getText().toString(), edtPassword.getText().toString())
-                        .enqueue(new Callback<LogInResponse>() {
-                            @Override
-                            public void onResponse(Call<LogInResponse> call, Response<LogInResponse> response) {
-                                if (response.body().getError() == null) {
-                                    Toast.makeText(SignInActivity.this, "successful", Toast.LENGTH_SHORT).show();
-                                    Common.AccessToken = response.body().getToken();
-                                    startActivity(new Intent(SignInActivity.this, MainActivity.class));
-                                    finish();
-                                }
-                                else {
-                                    Toast.makeText(SignInActivity.this, response.body().getError(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
 
-                            @Override
-                            public void onFailure(Call<LogInResponse> call, Throwable t) {
-                                Toast.makeText(SignInActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                if (edtUserName.getText().toString().equals("")
+                        || edtPassword.getText().toString().equals("")) {
+                    Toast.makeText(SignInActivity.this, "Vui lòng nhập đủ thông tin",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    progressBar.setVisibility(View.VISIBLE);
+
+                    ApiService apiService = ApiUtils.getApiService();
+                    apiService.LogIn(edtUserName.getText().toString(), edtPassword.getText().toString())
+                            .enqueue(new Callback<LogInResponse>() {
+                                @Override
+                                public void onResponse(Call<LogInResponse> call, Response<LogInResponse> response) {
+                                    if (response.body().getError() == null) {
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(SignInActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                        Common.AccessToken = response.body().getToken();
+                                        startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                                        finish();
+                                    }
+                                    else {
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(SignInActivity.this, response.body().getError(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<LogInResponse> call, Throwable t) {
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(SignInActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
             }
         });
     }

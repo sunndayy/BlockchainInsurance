@@ -77,12 +77,11 @@ public class SignInActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(Call<User> call, Throwable t) {
+                                    progressBar.setVisibility(View.GONE);
                                     Toast.makeText(SignInActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
                 }
-
-
              }
         });
 

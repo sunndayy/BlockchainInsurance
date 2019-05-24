@@ -1,5 +1,7 @@
 package com.example.bishopadmin;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,12 +36,22 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        setupTabIcons();
+    }
+
+    private void setupTabIcons() {
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_product);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_order);
+
+        tabLayout.getTabAt(0).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(1).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
     }
 
     private void setupViewPager(ViewPager viewPager) {
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragmentListProduct(), "Danh sách sản phẩm");
-        adapter.addFragment(new FragmentListOrder(), "Danh sách đơn hàng");
+        adapter.addFragment(new FragmentListProduct(), "Sản phẩm");
+        adapter.addFragment(new FragmentListOrder(), "Đơn hàng");
         viewPager.setAdapter(adapter);
     }
 

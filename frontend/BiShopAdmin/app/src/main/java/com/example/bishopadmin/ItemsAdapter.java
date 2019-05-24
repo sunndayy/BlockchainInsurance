@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -30,7 +31,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
         this.context = context;
         this.itemList = itemList;
     }
-
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -69,63 +69,69 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull ItemsAdapter.MyViewHolder myViewHolder, int i) {
         final Item item = itemList.get(i);
         myViewHolder.txtvName.setText(item.getName());
-        myViewHolder.txtvPrice.setText(Long.toString(item.getPrice()));
+        myViewHolder.txtvPrice.setText(Common.beautifyPrice(item.getPrice()));
 
         Glide.with(context).load(item.getImage()).into(myViewHolder.imgView);
 
         myViewHolder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-//                Log.d("tag", String.valueOf(position));
+
                 LayoutInflater layoutInflater
                         = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
                 View popupView = layoutInflater.inflate(R.layout.popup_window, null);
 
                 TextView tvId = (TextView) popupView.findViewById(R.id.popup_id);
-                tvId.setText("Ma san pham: " + itemList.get(position).getId());
+                tvId.setText(itemList.get(position).getId());
 
                 TextView tvName = (TextView) popupView.findViewById(R.id.popup_name);
-                tvName.setText("Ten san pham: " + itemList.get(position).getName());
+                tvName.setText(itemList.get(position).getName());
 
                 TextView tvDescribe = (TextView) popupView.findViewById(R.id.popup_describe);
-                tvDescribe.setText("Mo ta: " + itemList.get(position).getDescribe());
+                tvDescribe.setText(itemList.get(position).getDescribe());
 
                 TextView tvType = (TextView) popupView.findViewById(R.id.popup_type);
-                tvType.setText("Loai: " + String.valueOf(itemList.get(position).getType()));
+
+                if (itemList.get(position).getType() == 0) {
+                    tvType.setText("Xe số");
+                } else {
+                    if (itemList.get(position).getType() == 1) {
+                        tvType.setText("Xe tay ga");
+                    } else {
+                        if (itemList.get(position).getType() == 2) {
+                            tvType.setText("Xe côn tay");
+                        }
+                    }
+                }
 
                 TextView tvPrice = (TextView) popupView.findViewById(R.id.popup_price);
-                tvPrice.setText("Gia: " + String.valueOf(itemList.get(position).getPrice()));
+                tvPrice.setText(Common.beautifyPrice(itemList.get(position).getPrice()));
 
                 TextView tvAmount = (TextView) popupView.findViewById(R.id.popup_amount);
-                tvAmount.setText("So luong: " + String.valueOf(itemList.get(position).getAmount()));
+                tvAmount.setText(String.valueOf(itemList.get(position).getAmount()));
 
                 TextView tvProducer = (TextView) popupView.findViewById(R.id.popup_producer);
-                tvProducer.setText("Nha san xuat: " + itemList.get(position).getProducer());
+                tvProducer.setText(itemList.get(position).getProducer());
 
                 ImageView imageView = (ImageView) popupView.findViewById(R.id.popup_image);
-
 
                 Glide.with(popupView).load(itemList.get(position).getImage())
                         .into(imageView);
 
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
-                // show the popup window
-                // which view you pass in doesn't matter, it is only used for the window tolken
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                final PopupWindow popupWindow = new PopupWindow(popupView, 600, height, false);
 
-                // dismiss the popup window when touched
-                popupView.setOnTouchListener(new View.OnTouchListener() {
+                Button btnClose = (Button) popupView.findViewById(R.id.btn_popupwindow_close);
+                btnClose.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public boolean onTouch(View v, MotionEvent event) {
+                    public void onClick(View v) {
                         popupWindow.dismiss();
-                        return true;
                     }
                 });
+
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
             }
         });

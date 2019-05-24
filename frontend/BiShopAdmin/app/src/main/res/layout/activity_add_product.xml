@@ -8,63 +8,68 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginEnd="20dp">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Mã sản phẩm:" />
+                android:text="Mã sản phẩm"
+                android:textSize="17sp" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_add_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nhập mã sản phẩm" />
+                android:hint="Nhập mã sản phẩm"
+                android:textColor="@color/jet" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="20dp">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Tên sản phẩm:" />
+                android:text="Tên sản phẩm"
+                android:textSize="17sp" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_add_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nhập tên sản phẩm" />
+                android:hint="Nhập tên sản phẩm"
+                android:textColor="@color/jet" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="20dp">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Mô tả:" />
+                android:text="Mô tả"
+                android:textSize="17sp" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_add_describe"
@@ -73,22 +78,24 @@
                 android:hint="Nhập mô tả sản phẩm"
                 android:lines="4"
                 android:maxLines="20"
-                android:minLines="4" />
+                android:minLines="4"
+                android:textColor="@color/jet" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="20dp">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Loại sản phẩm:" />
+                android:text="Loại sản phẩm"
+                android:textSize="17sp" />
 
             <Spinner
                 android:id="@+id/spinner_type"
@@ -102,65 +109,71 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="20dp">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Giá sản phẩm:" />
+                android:text="Giá sản phẩm"
+                android:textSize="17sp" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_add_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nhập giá sản phẩm"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColor="@color/jet" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="20dp">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Số lượng" />
+                android:text="Số lượng"
+                android:textSize="17sp" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_add_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nhập số lượng"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColor="@color/jet" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="20dp">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Nhà sản xuất:" />
+                android:text="Nhà sản xuất"
+                android:textSize="17sp" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_add_producer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nhập nhà sản xuất" />
+                android:hint="Nhập nhà sản xuất"
+                android:textColor="@color/jet" />
 
         </LinearLayout>
 
@@ -168,9 +181,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
             android:gravity="center">
 
             <Button
@@ -178,14 +189,15 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Chọn ảnh" />
+                android:background="@drawable/rounded_button"
+                android:text="Chọn ảnh"
+                android:textColor="@color/white" />
 
             <ImageView
                 android:id="@+id/image_product"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginLeft="30dp"
-                android:contentDescription="Ảnh sản phẩm" />
+                android:layout_marginLeft="30dp" />
 
         </LinearLayout>
 
@@ -194,16 +206,18 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:text="Thêm sản phẩm" />
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_button"
+            android:text="Thêm sản phẩm"
+            android:textColor="@color/white" />
 
         <ProgressBar
             android:id="@+id/progess"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
             android:layout_width="50dp"
-            android:layout_height="50dp" />
-
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp" />
 
     </LinearLayout>
 

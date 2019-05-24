@@ -3,7 +3,7 @@
     package="com.example.bishopadmin">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,8 +14,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".AddProductActivity"
-            android:theme="@style/MyTheme"
-            android:label="Thêm sản phẩm"/>
+            android:label="Thêm sản phẩm"
+            android:theme="@style/MyTheme" />
         <activity
             android:name=".SignInActivity"
             android:theme="@style/AppTheme.Dark" />
@@ -28,7 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:label="Dashboard" />
     </application>
 
 </manifest>

@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="300dp"
-    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_popup"
     android:orientation="vertical">
 
     <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/jet"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Xac nhan don hang " />
+        android:text="Xác nhận đơn hàng" />
 
     <TextView
         android:layout_width="match_parent"
@@ -30,24 +36,32 @@
         android:id="@+id/edt_popup_dur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Nhap thoi gian" />
+        android:hint="Nhap thoi gian"
+        android:inputType="number" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/btn_confirm_yes"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Xac nhan" />
+            android:background="@drawable/rounded_button"
+            android:text="Xác nhận"
+            android:textColor="@color/white" />
 
         <Button
+            android:layout_marginLeft="20dp"
             android:id="@+id/btn_confirm_no"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Huy bo" />
+            android:background="@drawable/rounded_button"
+            android:text="Hủy bỏ"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
