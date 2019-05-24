@@ -1,35 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="100dp">
 
     <ImageView
         android:id="@+id/ic_popup_image"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/txt_item_popup_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/ic_popup_image"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toEndOf="@id/ic_popup_image"
         android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
         android:maxLines="1"
+        android:text="Xe AB 2019"
         android:textColor="@color/jet"
-        android:textSize="17dp" />
+        android:textSize="17sp" />
 
     <TextView
         android:id="@+id/txt_item_popup_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/ic_popup_image"
         android:layout_below="@+id/txt_item_popup_name"
+        android:layout_marginBottom="5dp"
+        android:layout_toEndOf="@id/ic_popup_image"
+        android:text="10000000"
         android:textColor="@color/jet"
-        android:textStyle="bold" />
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/txt_item_popup_bienso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_item_popup_price"
+        android:layout_toEndOf="@id/ic_popup_image"
+        android:text="49T8-2504"
+        android:textColor="@color/jet"
+        android:textSize="17sp" />
 
 </RelativeLayout>

@@ -39,41 +39,50 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                progressBar.setVisibility(View.VISIBLE);
+                if (edtUserName.getText().toString().equals("")
+                        || edtPassword.getText().toString().equals("")) {
+                    Toast.makeText(SignInActivity.this, "Vui lòng nhập đủ thông tin",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    progressBar.setVisibility(View.VISIBLE);
 
-                final ApiService apiService = ApiUtils.getApiService();
-                apiService.SignIn(edtUserName.getText().toString(), edtPassword.getText().toString())
-                        .enqueue(new Callback<User>() {
-                            @Override
-                            public void onResponse(Call<User> call, final Response<User> response) {
-                                if (response.body().getError() == null) {
-                                    progressBar.setVisibility(View.GONE);
-                                    Toast.makeText(SignInActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                    apiService.GetUserInfo(response.body().getToken()).enqueue(new Callback<User>() {
-                                        @Override
-                                        public void onResponse(Call<User> call1, Response<User> response1) {
-                                            Common.user = response1.body();
-                                            Common.user.setToken(response.body().getToken());
-                                            startActivity(new Intent(SignInActivity.this, MainActivity.class));
-                                        }
+                    final ApiService apiService = ApiUtils.getApiService();
+                    apiService.SignIn(edtUserName.getText().toString(), edtPassword.getText().toString())
+                            .enqueue(new Callback<User>() {
+                                @Override
+                                public void onResponse(Call<User> call, final Response<User> response) {
+                                    if (response.body().getError() == null) {
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(SignInActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                        apiService.GetUserInfo(response.body().getToken()).enqueue(new Callback<User>() {
+                                            @Override
+                                            public void onResponse(Call<User> call1, Response<User> response1) {
+                                                Common.user = response1.body();
+                                                Common.user.setToken(response.body().getToken());
+                                                startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                                            }
 
-                                        @Override
-                                        public void onFailure(Call<User> call1, Throwable t1) {
-                                            Toast.makeText(SignInActivity.this, t1.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                            @Override
+                                            public void onFailure(Call<User> call1, Throwable t1) {
+                                                Toast.makeText(SignInActivity.this, t1.getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(SignInActivity.this, response.body().getError(), Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                                else {
-                                    progressBar.setVisibility(View.GONE);
-                                    Toast.makeText(SignInActivity.this, response.body().getError(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
 
-                            @Override
-                            public void onFailure(Call<User> call, Throwable t) {
-                                Toast.makeText(SignInActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                                @Override
+                                public void onFailure(Call<User> call, Throwable t) {
+                                    Toast.makeText(SignInActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+
+
              }
         });
 

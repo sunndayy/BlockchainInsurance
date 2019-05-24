@@ -2,6 +2,8 @@ package com.example.bishop;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -56,8 +58,10 @@ public class HistoriesAdapter extends RecyclerView.Adapter<HistoriesAdapter.MyVi
 
         if (history.getStatus()) {
             myViewHolder.txtStatus.setText("Đã xử lý");
+            myViewHolder.txtStatus.setTextColor(Color.rgb(31, 168, 63));
         } else {
             myViewHolder.txtStatus.setText("Chưa xử lý");
+            myViewHolder.txtStatus.setTextColor(Color.RED);
         }
 
         long sum = 0;
@@ -102,6 +106,20 @@ public class HistoriesAdapter extends RecyclerView.Adapter<HistoriesAdapter.MyVi
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
 
                 final PopupWindow popupWindow = new PopupWindow(popupView, 600, height, false);
+
+                Button btnBuyInsurace = (Button) popupView.findViewById(R.id.btn_popup_his_buy_insurance);
+
+                if (!history.getStatus()) {
+                    btnBuyInsurace.setVisibility(View.GONE);
+                }
+
+                btnBuyInsurace.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                        context.startActivity(new Intent(context, InsuraceOrderActivity.class));
+                    }
+                });
 
                 Button btnClose = (Button) popupView.findViewById(R.id.btn_popup_his_close);
                 btnClose.setOnClickListener(new View.OnClickListener() {

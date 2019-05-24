@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,8 +24,12 @@ import retrofit2.Response;
 public class SignUpActivity extends AppCompatActivity {
 
     private Button btnSignUp;
-    private EditText edtUserName, edtName, edtDob, edtIdNumber, edtAddress,
+    private EditText edtUserName, edtName, edtIdNumber, edtAddress,
             edtEmail, edtPhone, edtPassword, edtRepassword;
+
+    private TextView tvNgaySinh;
+    private ImageView btnChooseCalendar;
+
     private TextView txtvLogin;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private Birthday birthDay;
@@ -39,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
         txtvLogin = (TextView) findViewById(R.id.txt_signup_login);
         edtUserName = (EditText) findViewById(R.id.txt_signup_username);
         edtName = (EditText) findViewById(R.id.txt_signup_name);
-        edtDob = (EditText) findViewById(R.id.txt_signup_birthday);
+        tvNgaySinh = (TextView) findViewById(R.id.tv_signup_ngaysinh);
         edtIdNumber = (EditText) findViewById(R.id.txt_signup_id);
         edtAddress = (EditText) findViewById(R.id.txt_signup_address);
         edtEmail = (EditText) findViewById(R.id.txt_signup_email);
@@ -50,7 +55,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.GONE);
 
-        edtDob.setOnClickListener(new View.OnClickListener() {
+        birthDay = new Birthday(1, 1, 1970);
+
+        btnChooseCalendar = (ImageView) findViewById(R.id.btn_signup_choose_calendar);
+
+        btnChooseCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar cal = null;
@@ -77,9 +86,9 @@ public class SignUpActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
                 String date = dayOfMonth + "/" + month + "/" + year;
-                edtDob.setText(date);
+                tvNgaySinh.setText(date);
 
-                birthDay = new Birthday(dayOfMonth, month + 1, year);
+                birthDay = new Birthday(dayOfMonth, month, year);
             }
         };
 
@@ -88,42 +97,60 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                progressBar.setVisibility(View.VISIBLE);
+                if (edtUserName.getText().toString().equals("") ||
+                        edtName.getText().toString().equals("") ||
+                        edtIdNumber.getText().toString().equals("") ||
+                        edtAddress.getText().toString().equals("") ||
+                        edtEmail.getText().toString().equals("") ||
+                        edtPhone.getText().toString().equals("") ||
+                        edtPassword.getText().toString().equals("") ||
+                        edtRepassword.getText().toString().equals("") ||
+                        edtName.getText().toString().equals("")) {
+                    Toast.makeText(SignUpActivity.this, "Vui lòng nhập đầy đủ thông tin",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    if (!edtPassword.getText().toString().equals(edtRepassword.getText().toString())) {
+                        Toast.makeText(SignUpActivity.this, "Mật khẩu nhập lại không khớp",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        progressBar.setVisibility(View.VISIBLE);
 
-                User user = new User(
-                        edtUserName.getText().toString(),
-                        edtPassword.getText().toString(),
-                        edtIdNumber.getText().toString(),
-                        edtName.getText().toString(),
-                        birthDay,
-                        edtAddress.getText().toString(),
-                        edtPhone.getText().toString(),
-                        edtEmail.getText().toString(),
-                        "",
-                        ""
-                );
+                        User user = new User(
+                                edtUserName.getText().toString(),
+                                edtPassword.getText().toString(),
+                                edtIdNumber.getText().toString(),
+                                edtName.getText().toString(),
+                                birthDay,
+                                edtAddress.getText().toString(),
+                                edtPhone.getText().toString(),
+                                edtEmail.getText().toString(),
+                                "",
+                                ""
+                        );
 
 
-                ApiService apiService = ApiUtils.getApiService();
+                        ApiService apiService = ApiUtils.getApiService();
 
-                apiService.SignUp(user).enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        if (response.body().getError() == null) {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(SignUpActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
-                        } else {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(SignUpActivity.this, response.body().getError(), Toast.LENGTH_SHORT).show();
-                        }
+                        apiService.SignUp(user).enqueue(new Callback<User>() {
+                            @Override
+                            public void onResponse(Call<User> call, Response<User> response) {
+                                if (response.body().getError() == null) {
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(SignUpActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+                                } else {
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(SignUpActivity.this, response.body().getError(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<User> call, Throwable t) {
+                                Toast.makeText(SignUpActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
-
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Toast.makeText(SignUpActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                }
             }
         });
 

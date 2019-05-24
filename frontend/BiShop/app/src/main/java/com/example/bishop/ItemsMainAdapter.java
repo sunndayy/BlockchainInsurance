@@ -19,8 +19,6 @@ public class ItemsMainAdapter extends RecyclerView.Adapter<ItemsMainAdapter.MyVi
     private Context context;
     private List<Item> itemList;
 
-
-
     public ItemsMainAdapter(Context context, List<Item> itemList) {
         this.context = context;
         this.itemList = itemList;
@@ -42,26 +40,9 @@ public class ItemsMainAdapter extends RecyclerView.Adapter<ItemsMainAdapter.MyVi
 
         Glide.with(context).load(item.getImage()).into(myViewHolder.imgView);
 
-        myViewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+        myViewHolder.setItemClickListener(new ItemClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ItemDetailActivity.class);
-                intent.putExtra("id", item.getId());
-                intent.putExtra("name", item.getName());
-                intent.putExtra("type", item.getType());
-                intent.putExtra("price", item.getPrice());
-                intent.putExtra("amount", item.getAmount());
-                intent.putExtra("producer", item.getProducer());
-                intent.putExtra("describe", item.getDescribe());
-                intent.putExtra("image", item.getImage());
-
-                context.startActivity(intent);
-            }
-        });
-
-        myViewHolder.imgView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public void onClick(View view, int position) {
                 Intent intent = new Intent(context, ItemDetailActivity.class);
                 intent.putExtra("id", item.getId());
                 intent.putExtra("name", item.getName());
@@ -82,17 +63,27 @@ public class ItemsMainAdapter extends RecyclerView.Adapter<ItemsMainAdapter.MyVi
         return itemList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView txtvName, txtvPrice;
         public ImageView imgView;
-        public CardView parentLayout;
+        private ItemClickListener itemClickListener;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             txtvName = (TextView) itemView.findViewById(R.id.item_main_name);
             txtvPrice = (TextView) itemView.findViewById(R.id.item_main_price);
             imgView = (ImageView) itemView.findViewById(R.id.item_main_imgview);
-            parentLayout = (CardView) itemView.findViewById(R.id.item_main_card);
+
+            itemView.setOnClickListener(this);
+        }
+
+        public void setItemClickListener(ItemClickListener l) {
+            this.itemClickListener = l;
+        }
+
+        @Override
+        public void onClick(View v) {
+            this.itemClickListener.onClick(v, getAdapterPosition());
         }
     }
 }

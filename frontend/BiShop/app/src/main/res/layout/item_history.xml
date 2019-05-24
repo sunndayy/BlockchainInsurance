@@ -13,76 +13,124 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_margin="5dp">
 
-        <TextView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Mã đơn hàng:" />
-
-        <TextView
-            android:id="@+id/txt_history_id"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Mã đơn hàng" />
+
+            <TextView
+                android:id="@+id/txt_history_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:padding="5dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DDDDDD" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp">
 
-        <TextView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Ngày đặt:" />
 
-        <TextView
-            android:id="@+id/txt_history_date"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Ngày đặt" />
+
+            <TextView
+                android:id="@+id/txt_history_date"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DDDDDD" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp">
 
-        <TextView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Tồng giá trị:" />
-
-        <TextView
-            android:id="@+id/txt_history_sumprice"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Tổng giá trị" />
+
+            <TextView
+                android:textColor="@color/black"
+                android:id="@+id/txt_history_sumprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DDDDDD" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp">
 
-        <TextView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Trạng thái:" />
-
-        <TextView
-            android:id="@+id/txt_history_status"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Trạng thái" />
+
+            <TextView
+                android:id="@+id/txt_history_status"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

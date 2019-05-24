@@ -83,16 +83,8 @@ public class ItemDetailActivity extends AppCompatActivity {
                         tvProducer.getText().toString(),
                         getIntent().getExtras().getString("image"));
 
-                Boolean flag = false;
-                for (int i = 0; i < Common.cart.size(); i++) {
-                    if (Common.cart.get(i).getId() == item.getId()) {
-                        flag = true;
-                        break;
-                    }
-                }
-
-                if (flag) {
-                    Toast.makeText(ItemDetailActivity.this, "Sản phẩm đã tồn tại trong giỏ hàng của bạn", Toast.LENGTH_SHORT).show();
+                if (Common.cart.size() > 0) {
+                    Toast.makeText(ItemDetailActivity.this, "Bạn chỉ được chọn tối đa 1 sản phẩm trong giỏ hàng", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Common.cart.add(item);

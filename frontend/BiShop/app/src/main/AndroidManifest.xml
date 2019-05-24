@@ -14,9 +14,6 @@
             android:name=".InsuraceOrderActivity"
             android:label="Bảo hiểm" />
         <activity
-            android:name=".PaymentActivity"
-            android:label="Thanh toán" />
-        <activity
             android:name=".InfoActivity"
             android:label="Thông tin cá nhân" />
         <activity

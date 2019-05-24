@@ -46,13 +46,14 @@ public class ItemsPopupAdapter extends RecyclerView.Adapter<ItemsPopupAdapter.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvName, tvPrice;
+        public TextView tvName, tvPrice, tvBienSo;
         public ImageView imageView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.txt_item_popup_name);
             tvPrice = (TextView) itemView.findViewById(R.id.txt_item_popup_price);
+            tvBienSo = (TextView) itemView.findViewById(R.id.txt_item_popup_bienso);
             imageView = (ImageView) itemView.findViewById(R.id.ic_popup_image);
         }
     }

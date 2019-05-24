@@ -10,7 +10,6 @@
     tools:showIn="@layout/app_bar_main">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,28 +26,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ScrollView
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="none">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:background="@color/colorPrimary"
-                        android:text="XE SỐ"
-                        android:textStyle="bold"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="13dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="5dp"
+                        android:background="@drawable/bg_banner"
                         android:paddingLeft="10dp"
+                        android:text="XE SỐ"
                         android:textColor="@color/white"
                         android:textSize="10pt"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content" />
+                        android:textStyle="bold" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view_main_1"
@@ -59,17 +58,17 @@
                         android:scrollbars="none" />
 
                     <TextView
-                        android:text="XE TAY GA"
-                        android:textSize="10pt"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:background="@color/colorPrimary"
-                        android:paddingLeft="10dp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="13dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="5dp"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content" />
+                        android:background="@drawable/bg_banner"
+                        android:paddingLeft="10dp"
+                        android:text="XE TAY GA"
+                        android:textColor="@color/white"
+                        android:textSize="10pt"
+                        android:textStyle="bold" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view_main_2"
@@ -80,17 +79,17 @@
                         android:scrollbars="none" />
 
                     <TextView
-                        android:text="XE CÔN TAY"
-                        android:textSize="10pt"
-                        android:textStyle="bold"
-                        android:background="@color/colorPrimary"
-                        android:textColor="@color/white"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="13dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="5dp"
+                        android:background="@drawable/bg_banner"
                         android:paddingLeft="10dp"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content" />
+                        android:text="XE CÔN TAY"
+                        android:textColor="@color/white"
+                        android:textSize="10pt"
+                        android:textStyle="bold" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view_main_3"
@@ -101,7 +100,7 @@
                         android:scrollbars="none" />
 
                 </LinearLayout>
-            </ScrollView>
+            </android.support.v4.widget.NestedScrollView>
         </android.support.v4.widget.SwipeRefreshLayout>
 
     </LinearLayout>

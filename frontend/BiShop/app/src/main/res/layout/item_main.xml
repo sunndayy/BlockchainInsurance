@@ -5,13 +5,13 @@
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/item_main_card"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:elevation="3dp"
-        card_view:cardCornerRadius="0dp">
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardCornerRadius="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -21,30 +21,35 @@
                 android:id="@+id/item_main_imgview"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
                 android:scaleType="fitXY" />
+
+            <View
+                android:id="@+id/view_divider"
+                android:layout_below="@+id/item_main_imgview"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DDDDDD" />
 
             <TextView
                 android:id="@+id/item_main_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/item_main_imgview"
+                android:layout_below="@id/view_divider"
                 android:paddingLeft="10dp"
+                android:paddingTop="5dp"
                 android:paddingRight="10dp"
-                android:paddingTop="10dp"
                 android:textColor="@color/jet"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/item_main_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/item_main_name"
-                android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textSize="12dp" />
+                android:paddingBottom="5dp"
+                android:textSize="12sp" />
 
         </RelativeLayout>
 

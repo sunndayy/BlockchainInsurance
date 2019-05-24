@@ -17,61 +17,216 @@
             android:id="@+id/ic_item_cart_delete"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/ic_delete_white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@id/ic_item_cart_delete"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@id/ic_item_cart_delete"
             android:text="Xóa sản phẩm"
             android:textColor="#fff"
-            android:textSize="13dp" />
+            android:textSize="13sp" />
 
     </RelativeLayout>
 
-    <RelativeLayout
+
+    <LinearLayout
         android:id="@+id/item_cart_view_foreground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:background="@android:color/white"
-        android:padding="10dp">
+        android:background="@color/white"
+        android:orientation="vertical">
+
 
         <ImageView
             android:id="@+id/ic_item_cart_bike"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginRight="16dp"
-            android:scaleType="fitXY" />
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp" />
 
-        <TextView
-            android:id="@+id/txt_item_cart_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/ic_item_cart_bike"
-            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
-            android:maxLines="1"
-            android:textColor="@color/jet"
-            android:textSize="17dp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txt_item_cart_price"
-            android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:text="Mã sản phẩm"
+                    android:textSize="8pt" />
+
+                <TextView
+                    android:id="@+id/txt_item_cart_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textColor="@color/jet"
+                    android:textSize="8pt" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#DDDDDD" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/ic_item_cart_bike"
-            android:layout_below="@+id/txt_item_cart_name"
-            android:textColor="@color/jet"
-            android:textStyle="bold" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
 
-    </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:text="Tên sản phẩm"
+                    android:textSize="8pt" />
+
+                <TextView
+                    android:id="@+id/txt_item_cart_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Air Blade 2017"
+                    android:textColor="@color/jet"
+                    android:textSize="8pt" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#DDDDDD" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:text="Loại xe"
+                    android:textSize="8pt" />
+
+                <TextView
+                    android:id="@+id/txt_item_cart_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tay ga"
+                    android:textColor="@color/jet"
+                    android:textSize="8pt" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#DDDDDD" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nhà sản xuất"
+                    android:textSize="8pt" />
+
+                <TextView
+                    android:id="@+id/txt_item_cart_producer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Honda"
+                    android:textColor="@color/jet"
+                    android:textSize="8pt" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#DDDDDD" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:text="Giá tiền"
+                    android:textSize="8pt" />
+
+                <TextView
+                    android:id="@+id/txt_item_cart_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="45.000.000 đ"
+                    android:textColor="@color/jet"
+                    android:textSize="8pt" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 </FrameLayout>

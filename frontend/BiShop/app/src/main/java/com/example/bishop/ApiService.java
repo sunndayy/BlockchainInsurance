@@ -21,14 +21,8 @@ public interface ApiService {
     @POST("/sign-up")
     Call<User> SignUp(@Body User user);
 
-    @GET("/products-by-types/0")
-    Call<List<Item>> GetXeSo();
-
-    @GET("/products-by-types/1")
-    Call<List<Item>> GetXeTayGa();
-
-    @GET("/products-by-types/2")
-    Call<List<Item>> GetXeConTay();
+    @GET("/products")
+    Call<List<Item>> GetProducts();
 
     @GET("/user-info")
     Call<User> GetUserInfo(@Header("AccessToken") String AccessToken);

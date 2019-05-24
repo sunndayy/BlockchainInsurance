@@ -13,7 +13,6 @@
         android:id="@+id/tv_cart_notifi"
         android:text="Không có sản phẩm nào trong giỏ hàng của bạn"
         android:maxLines="2"
-        android:textColor="@color/black"
         android:textSize="10pt"
         android:layout_margin="10dp"
         android:paddingLeft="6dp"
@@ -24,29 +23,18 @@
         android:layout_marginTop="10dp"
         android:id="@+id/recycler_view_cart"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:scrollbars="vertical">
 
     </android.support.v7.widget.RecyclerView>
-
-    <TextView
-        android:id="@+id/tv_cart_sum_price"
-        android:text="Tổng tiền: 20.000.000 vnđ"
-        android:textColor="@color/black"
-        android:textSize="10pt"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_order_cart"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:text="Đặt mua"
         android:textColor="@color/white"
         android:background="@drawable/rounded_button" />

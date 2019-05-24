@@ -194,8 +194,8 @@ public class MainActivity extends AppCompatActivity
             Common.cart.clear();
             btnSignUp.setVisibility(View.VISIBLE);
             btnSignIn.setVisibility(View.VISIBLE);
-            txtvUserEmail.setText("android.studio@android.com");
-            txtvUserName.setText("Android Studio");
+            txtvUserEmail.setText("bishop@gmail.com");
+            txtvUserName.setText("Bi Shop");
             Toast.makeText(this, "Đã đăng xuất", Toast.LENGTH_SHORT).show();
         }
 
@@ -210,62 +210,45 @@ public class MainActivity extends AppCompatActivity
 
         ApiService apiService = ApiUtils.getApiService();
 
-        apiService.GetXeSo().enqueue(new Callback<List<Item>>() {
+        apiService.GetProducts().enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                if (response.body() != null) {
+                    for (int i = 0; i < response.body().size(); i++) {
+                        Item item = response.body().get(i);
+                        item.setImage(ApiUtils.BASE_URL + "/product-image/" + item.getId());
+                        if (item.getType() == 0) {
+                            itemList1.add(item);
+                        } else {
+                            if (item.getType() == 1) {
+                                itemList2.add(item);
+                            } else {
+                                if (item.getType() == 2) {
+                                    itemList3.add(item);
+                                }
+                            }
+                        }
+                    }
 
-                for (int i = 0; i < response.body().size(); i++) {
-                    Item item = response.body().get(i);
-                    item.setImage(ApiUtils.BASE_URL + "/product-image/" + item.getId());
-                    itemList1.add(item);
+                    itemsMainAdapter1.notifyDataSetChanged();
+                    itemsMainAdapter2.notifyDataSetChanged();
+                    itemsMainAdapter3.notifyDataSetChanged();
+
+                    swipeRefreshLayout.setRefreshing(false);
+                } else {
+                    Toast.makeText(MainActivity.this, "Không thể lấy danh sách sản phẩm",
+                            Toast.LENGTH_SHORT).show();
+
+                    swipeRefreshLayout.setRefreshing(false);
                 }
-
-                itemsMainAdapter1.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(Call<List<Item>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
-
-        apiService.GetXeTayGa().enqueue(new Callback<List<Item>>() {
-            @Override
-            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
-                for (int i = 0; i < response.body().size(); i++) {
-                    Item item = response.body().get(i);
-                    item.setImage(ApiUtils.BASE_URL + "/product-image/" + item.getId());
-                    itemList2.add(item);
-                }
-
-                itemsMainAdapter2.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(Call<List<Item>> call, Throwable t) {
-                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        apiService.GetXeConTay().enqueue(new Callback<List<Item>>() {
-            @Override
-            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
-                for (int i = 0; i < response.body().size(); i++) {
-                    Item item = response.body().get(i);
-                    item.setImage(ApiUtils.BASE_URL + "/product-image/" + item.getId());
-                    itemList3.add(item);
-                }
-
-                itemsMainAdapter3.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(Call<List<Item>> call, Throwable t) {
-                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        swipeRefreshLayout.setRefreshing(false);
     }
 
     private void prepareBanner() {

@@ -32,7 +32,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
     private ItemsCartAdapter itemsCartAdapter;
     private List<Item> itemList;
     private Button btnOrder;
-    private TextView tvNotifi, tvSumPrice;
+    private TextView tvNotifi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,20 +117,11 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         });
 
         tvNotifi = (TextView) findViewById(R.id.tv_cart_notifi);
-        tvSumPrice = (TextView) findViewById(R.id.tv_cart_sum_price);
-
 
         if (Common.cart.size() == 0) {
             btnOrder.setVisibility(View.GONE);
-            tvSumPrice.setVisibility(View.GONE);
         } else {
             tvNotifi.setVisibility(View.GONE);
-            Long sumPrice = Long.valueOf(0);
-            for (int i = 0; i < Common.cart.size(); i++) {
-                sumPrice += Common.cart.get(i).getPrice();
-            }
-
-            tvSumPrice.setText("Tổng giá trị: " + Common.beautifyPrice(sumPrice));
         }
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_cart);
@@ -164,15 +155,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
             Common.cart.remove(position);
             if (Common.cart.size() == 0) {
                 btnOrder.setVisibility(View.GONE);
-                tvSumPrice.setVisibility(View.GONE);
                 tvNotifi.setVisibility(View.VISIBLE);
-            } else {
-                Long sumPrice = Long.valueOf(0);
-                for (int i = 0; i < Common.cart.size(); i++) {
-                    sumPrice += Common.cart.get(i).getPrice();
-                }
-
-                tvSumPrice.setText("Tổng giá trị: " + Common.beautifyPrice(sumPrice));
             }
         }
     }
