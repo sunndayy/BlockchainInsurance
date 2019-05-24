@@ -69,7 +69,6 @@ public class FragmentListProduct extends Fragment {
             @Override
             public void onRefresh() {
                 prepareAlbums();
-                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -91,12 +90,14 @@ public class FragmentListProduct extends Fragment {
                                 itemList.add(item);
                             }
                             itemsAdapter.notifyDataSetChanged();
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<Item>> call, Throwable t) {
                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }
         );

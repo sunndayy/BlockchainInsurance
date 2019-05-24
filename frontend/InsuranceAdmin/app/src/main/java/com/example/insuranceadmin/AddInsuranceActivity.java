@@ -30,7 +30,7 @@ public class AddInsuranceActivity extends AppCompatActivity {
         tvId = (EditText) findViewById(R.id.edt_add_id);
         tvCompany = (EditText) findViewById(R.id.edt_add_company);
         tvPrice = (EditText) findViewById(R.id.edt_add_price);
-        tvPer = (EditText) findViewById(R.id.edt_add_percent);
+//        tvPer = (EditText) findViewById(R.id.edt_add_percent);
         tvMaxRefund = (EditText) findViewById(R.id.edt_add_maxrefund);
 
         btnAdd = (Button) findViewById(R.id.btn_form_add);

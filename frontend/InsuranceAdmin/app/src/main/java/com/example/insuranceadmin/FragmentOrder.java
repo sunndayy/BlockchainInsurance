@@ -54,7 +54,6 @@ public class FragmentOrder extends Fragment {
             @Override
             public void onRefresh() {
                 prepareAlbums();
-                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -76,10 +75,12 @@ public class FragmentOrder extends Fragment {
                             orders.add(order);
                         }
                         ordersAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
                     public void onFailure(Call<List<Order>> call, Throwable t) {
+                        swipeRefreshLayout.setRefreshing(false);
                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

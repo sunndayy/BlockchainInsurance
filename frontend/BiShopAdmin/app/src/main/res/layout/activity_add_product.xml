@@ -117,7 +117,7 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Giá sản phẩm"
+                android:text="Giá (VNĐ)"
                 android:textSize="17sp" />
 
             <android.support.v7.widget.AppCompatEditText
@@ -217,7 +217,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
 
     </LinearLayout>
 

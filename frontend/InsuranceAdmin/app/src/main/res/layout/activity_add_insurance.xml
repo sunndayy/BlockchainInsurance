@@ -65,7 +65,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Giá goi:" />
+                android:text="Giá goi VND:" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_add_price"
@@ -90,12 +90,12 @@
                 android:inputType="number"
                 android:text="Phan tram" />
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edt_add_percent"
+            <io.apptik.widget.MultiSlider
+                android:id="@+id/slider_percent"
+                app:thumbValue1="1"
+                app:thumbValue2="100"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nhap phan tram"
-                android:inputType="numberDecimal" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

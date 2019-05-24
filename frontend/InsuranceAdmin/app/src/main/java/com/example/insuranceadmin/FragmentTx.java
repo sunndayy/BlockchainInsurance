@@ -56,7 +56,6 @@ public class FragmentTx extends Fragment {
             @Override
             public void onRefresh() {
                 prepareAlbums();
-                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -81,10 +80,12 @@ public class FragmentTx extends Fragment {
                         }
 
                         txsAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
                     public void onFailure(Call<List<Tx>> call, Throwable t) {
+                        swipeRefreshLayout.setRefreshing(false);
                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

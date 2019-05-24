@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:textColorHighlight="@color/colorPrimary"
-                android:hint="Username" />
+                android:hint="Tên đăng nhập" />
         </android.support.design.widget.TextInputLayout>
 
         <!--  Password Label -->
@@ -53,17 +53,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password"/>
+                android:hint="Mật khẩu"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_signin_login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
             android:padding="12dp"
-            android:text="Login"/>
+            android:text="Đăng nhập"/>
+
+        <ProgressBar
+            android:id="@+id/progress_signin"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
 
     </LinearLayout>
 </ScrollView>

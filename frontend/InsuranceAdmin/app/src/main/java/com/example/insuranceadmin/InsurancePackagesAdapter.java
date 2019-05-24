@@ -40,9 +40,9 @@ public class InsurancePackagesAdapter extends RecyclerView.Adapter<InsurancePack
         InsurancePackage insurancePackage = insurancePackages.get(i);
         myViewHolder.tvId.setText(insurancePackage.getId());
         myViewHolder.tvCompany.setText(insurancePackage.getCompany());
-        myViewHolder.tvPrice.setText(String.valueOf(insurancePackage.getTerm().getPricePerYear()));
-        myViewHolder.tvPercentage.setText(String.valueOf(insurancePackage.getTerm().getPercentage()));
-        myViewHolder.tvMaxRefund.setText(String.valueOf(insurancePackage.getTerm().getMaxRefund()));
+        myViewHolder.tvPrice.setText(Common.beautifyPrice(insurancePackage.getTerm().getPricePerYear()));
+        myViewHolder.tvPercentage.setText(Common.beautifyPercent(insurancePackage.getTerm().getPercentage()));
+        myViewHolder.tvMaxRefund.setText(Common.beautifyPrice(insurancePackage.getTerm().getMaxRefund()));
 
     }
 

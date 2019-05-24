@@ -1,5 +1,7 @@
 package com.example.insuranceadmin;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -33,15 +35,28 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        setupTabIcons();
     }
+
+    private void setupTabIcons() {
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_item);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_order);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_tx);
+
+        tabLayout.getTabAt(0).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(1).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(2).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+    }
+
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragmentInsurance(), "Danh sách gói bảo hiểm");
-        adapter.addFragment(new FragmentOrder(), "Danh sách đặt mua");
-        adapter.addFragment(new FragmentTx(), "Danh sách chờ duyệt");
+        adapter.addFragment(new FragmentInsurance(), "Gói bảo hiểm");
+        adapter.addFragment(new FragmentOrder(), "Đặt mua");
+        adapter.addFragment(new FragmentTx(), "Chờ duyệt");
         viewPager.setAdapter(adapter);
     }
+
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
