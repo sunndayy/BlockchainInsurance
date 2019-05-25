@@ -4,7 +4,7 @@ const authMiddleware = require('../../middleware/authMiddleware');
 const queryController = require('./controller');
 
 router.route('/plans')
-	.get(authMiddleware, queryController.queryPlan);
+	.get(queryController.queryPlan);
 
 router.route('/contracts')
 	.get(authMiddleware, queryController.queryContract);
