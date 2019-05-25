@@ -60,8 +60,8 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
         final Order order = orderList.get(i);
+
         myViewHolder.tvId.setText(String.valueOf(order.getId()));
-        myViewHolder.tvDate.setText(order.getTime());
 
         Long total = Long.valueOf(0);
         for (int k = 0; k < order.getItems().size(); k++) {
@@ -69,10 +69,8 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
         }
 
         myViewHolder.tvPrice.setText(Common.beautifyPrice(total));
-
-        myViewHolder.tvUser.setText("Phan Van Duong");
-
-        myViewHolder.tvPhone.setText("0919670338");
+        myViewHolder.tvUser.setText(order.getUser().getName());
+        myViewHolder.tvPhone.setText(order.getUser().getPhoneNumber());
 
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.CHINA).parse(order.getTime());
@@ -87,76 +85,55 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
         myViewHolder.setButtonItemClickListener(new ButtonItemClickListener() {
             @Override
             public void onClick(View v, int position) {
+                LayoutInflater layoutInflater
+                        = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-                final View view = v;
+                final View popupView = layoutInflater.inflate(R.layout.popup_info_order, null);
 
-                ApiService apiService = ApiUtils.getApiService();
+                ImageView imgItem = (ImageView) popupView.findViewById(R.id.ic_popup_order_item);
+                Glide.with(context).load(ApiUtils.BASE_URL + "/product-image/"
+                        + order.getItems().get(0).getProduct().getId()).into(imgItem);
 
-                apiService.GetProducts().enqueue(new Callback<List<Item>>() {
-                    @Override
-                    public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
-                        for (int i = 0; i < response.body().size(); i++) {
-                            Item item = response.body().get(i);
-                            if (item.getId().equals(order.getItems().get(0).getProduct().getId())) {
-                                LayoutInflater layoutInflater
-                                        = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                TextView tvId = (TextView) popupView.findViewById(R.id.tv_popup_order_id);
+                tvId.setText(order.getItems().get(0).getProduct().getId());
 
-                                final View popupView = layoutInflater.inflate(R.layout.popup_info_order, null);
+                TextView tvName = (TextView) popupView.findViewById(R.id.tv_popup_order_name);
+                tvName.setText(order.getItems().get(0).getProduct().getName());
 
-                                ImageView imgItem = (ImageView) popupView.findViewById(R.id.ic_popup_order_item);
-                                Glide.with(context).load(ApiUtils.BASE_URL + "/product-image/"
-                                        + order.getItems().get(0).getProduct().getId()).into(imgItem);
+                TextView tvType = (TextView) popupView.findViewById(R.id.tv_popup_order_type);
 
-                                TextView tvId = (TextView) popupView.findViewById(R.id.tv_popup_order_id);
-                                tvId.setText(item.getId());
-
-                                TextView tvName = (TextView) popupView.findViewById(R.id.tv_popup_order_name);
-                                tvName.setText(item.getName());
-
-                                TextView tvType = (TextView) popupView.findViewById(R.id.tv_popup_order_type);
-
-                                if (item.getType() == 0) {
-                                    tvType.setText("Xe số");
-                                } else {
-                                    if (item.getType() == 1) {
-                                        tvType.setText("Xe tay ga");
-                                    } else {
-                                        if (item.getType() == 2) {
-                                            tvType.setText("Xe côn tay");
-                                        }
-                                    }
-                                }
-
-                                TextView tvPrice = (TextView) popupView.findViewById(R.id.tv_popup_order_price);
-                                tvPrice.setText(Common.beautifyPrice(item.getPrice()));
-
-                                TextView tvProducer = (TextView) popupView.findViewById(R.id.tv_popup_order_producer);
-                                tvProducer.setText(item.getProducer());
-
-                                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-
-                                final PopupWindow popupWindow = new PopupWindow(popupView, 600, height, false);
-
-                                Button btnClose = (Button) popupView.findViewById(R.id.btn_popup_order_close);
-                                btnClose.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        popupWindow.dismiss();
-                                    }
-                                });
-
-                                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-                                break;
-                            }
+                if (order.getItems().get(0).getProduct().getType() == 0) {
+                    tvType.setText("Xe số");
+                } else {
+                    if (order.getItems().get(0).getProduct().getType() == 1) {
+                        tvType.setText("Xe tay ga");
+                    } else {
+                        if (order.getItems().get(0).getProduct().getType() == 2) {
+                            tvType.setText("Xe côn tay");
                         }
                     }
+                }
 
+                TextView tvPrice = (TextView) popupView.findViewById(R.id.tv_popup_order_price);
+                tvPrice.setText(Common.beautifyPrice(order.getItems().get(0).getProduct().getPrice()));
+
+                TextView tvProducer = (TextView) popupView.findViewById(R.id.tv_popup_order_producer);
+                tvProducer.setText(order.getItems().get(0).getProduct().getProducer());
+
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+
+                final PopupWindow popupWindow = new PopupWindow(popupView, 600, height, false);
+
+                Button btnClose = (Button) popupView.findViewById(R.id.btn_popup_order_close);
+                btnClose.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onFailure(Call<List<Item>> call, Throwable t) {
-
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
                     }
                 });
+
+                popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+
             }
         });
 

@@ -15,7 +15,7 @@ public class History {
     private List<Item> items = null;
     @SerializedName("user")
     @Expose
-    private String user;
+    private User user;
     @SerializedName("status")
     @Expose
     private Boolean status;
@@ -39,11 +39,11 @@ public class History {
         this.items = items;
     }
 
-    public String getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -68,16 +68,16 @@ public class History {
 
         @SerializedName("price")
         @Expose
-        private Integer price;
+        private Long price;
         @SerializedName("product")
         @Expose
         private Product product;
 
-        public Integer getPrice() {
+        public Long getPrice() {
             return price;
         }
 
-        public void setPrice(Integer price) {
+        public void setPrice(Long price) {
             this.price = price;
         }
 
@@ -110,7 +110,7 @@ public class History {
         private Integer type;
         @SerializedName("price")
         @Expose
-        private Integer price;
+        private Long price;
         @SerializedName("producer")
         @Expose
         private String producer;
@@ -155,11 +155,11 @@ public class History {
             this.type = type;
         }
 
-        public Integer getPrice() {
+        public Long getPrice() {
             return price;
         }
 
-        public void setPrice(Integer price) {
+        public void setPrice(Long price) {
             this.price = price;
         }
 
@@ -169,6 +169,77 @@ public class History {
 
         public void setProducer(String producer) {
             this.producer = producer;
+        }
+
+    }
+
+    public class User {
+
+        @SerializedName("username")
+        @Expose
+        private String username;
+        @SerializedName("identityCard")
+        @Expose
+        private String identityCard;
+        @SerializedName("name")
+        @Expose
+        private String name;
+        @SerializedName("address")
+        @Expose
+        private String address;
+        @SerializedName("phoneNumber")
+        @Expose
+        private String phoneNumber;
+        @SerializedName("email")
+        @Expose
+        private String email;
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getIdentityCard() {
+            return identityCard;
+        }
+
+        public void setIdentityCard(String identityCard) {
+            this.identityCard = identityCard;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getPhoneNumber() {
+            return phoneNumber;
+        }
+
+        public void setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
         }
 
     }

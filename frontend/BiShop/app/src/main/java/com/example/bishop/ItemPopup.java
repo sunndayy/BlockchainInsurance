@@ -3,9 +3,9 @@ package com.example.bishop;
 public class ItemPopup {
     private String image;
     private String name;
-    private Integer price;
+    private Long price;
 
-    public ItemPopup(String image, String name, Integer price) {
+    public ItemPopup(String image, String name, Long price) {
         this.image = image;
         this.name = name;
         this.price = price;
@@ -27,11 +27,11 @@ public class ItemPopup {
         this.name = name;
     }
 
-    public Integer getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 }

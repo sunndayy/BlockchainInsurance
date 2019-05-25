@@ -1,5 +1,6 @@
 package com.example.garaadmin;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,9 +13,17 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private ItemsAdapter itemsAdapter;
     private List<Item> items;
+    private ImageView btnAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +44,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 prepareAlbums();
-                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        btnAdd = (ImageView) findViewById(R.id.btn_add);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AddOrderActivity.class));
             }
         });
 
@@ -53,27 +70,26 @@ public class MainActivity extends AppCompatActivity {
 
         items.clear();
 
-        Item item = new Item("45123", "Phan Van Duong", (long) 0);
-        items.add(item);
+        ApiService apiService = ApiUtils.getApiService();
+        apiService.GetOrders(Common.AccessToken)
+                .enqueue(new Callback<List<Item>>() {
+                    @Override
+                    public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                        for (int i = 0; i < response.body().size(); i++) {
+                            Item item = response.body().get(i);
+                            items.add(item);
+                        }
 
-        item = new Item("45123", "Phan Van Duong", (long) 0);
-        items.add(item);
+                        itemsAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
 
-        item = new Item("45123", "Phan Van Duong", (long) 0);
-        items.add(item);
-
-        item = new Item("45123", "Phan Van Duong", (long) 0);
-        items.add(item);
-
-        item = new Item("45123", "Phan Van Duong", (long) 0);
-        items.add(item);
-
-        item = new Item("45123", "Phan Van Duong", (long) 0);
-        items.add(item);
-
-
-
-
+                    @Override
+                    public void onFailure(Call<List<Item>> call, Throwable t) {
+                        swipeRefreshLayout.setRefreshing(false);
+                        Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
     }
 }
