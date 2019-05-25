@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
+import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,7 +20,9 @@ import retrofit2.Response;
 public class AddInsuranceActivity extends AppCompatActivity {
 
     private Button btnAdd;
-    private EditText tvId, tvCompany, tvPrice, tvPer, tvMaxRefund;
+    private EditText tvId, tvCompany, tvPrice, tvMaxRefund;
+    private TextView tvPer;
+    private CrystalSeekbar crystalSeekbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +35,16 @@ public class AddInsuranceActivity extends AppCompatActivity {
         tvId = (EditText) findViewById(R.id.edt_add_id);
         tvCompany = (EditText) findViewById(R.id.edt_add_company);
         tvPrice = (EditText) findViewById(R.id.edt_add_price);
-//        tvPer = (EditText) findViewById(R.id.edt_add_percent);
+        tvPer = (TextView) findViewById(R.id.tv_add_percent);
         tvMaxRefund = (EditText) findViewById(R.id.edt_add_maxrefund);
+
+        crystalSeekbar = (CrystalSeekbar) findViewById(R.id.percent_pick);
+        crystalSeekbar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                tvPer.setText(String.valueOf(value));
+            }
+        });
 
         btnAdd = (Button) findViewById(R.id.btn_form_add);
 
@@ -45,15 +58,19 @@ public class AddInsuranceActivity extends AppCompatActivity {
                 insurancePost.getRef().setId(tvId.getText().toString());
                 insurancePost.getAction().getCreate().getTerm().setState(true);
                 insurancePost.getAction().getCreate().getTerm().setMaxRefund(Integer.parseInt(tvMaxRefund.getText().toString()));
-                insurancePost.getAction().getCreate().getTerm().setPercentage(Double.parseDouble(tvPer.getText().toString()));
                 insurancePost.getAction().getCreate().getTerm().setPricePerYear(Integer.parseInt(tvPrice.getText().toString()));
+
+                Double per = Double.parseDouble(tvPer.getText().toString());
+                per = per / 100;
+                insurancePost.getAction().getCreate().getTerm().setPercentage(per);
 
                 apiService.CreateInsurance(Common.AccessToken, insurancePost)
                         .enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                 Toast.makeText(AddInsuranceActivity.this,
-                                        response.body().toString(), Toast.LENGTH_SHORT).show();
+                                        "Thêm gói bảo hiểm thành công", Toast.LENGTH_SHORT).show();
+                                finish();
                             }
 
                             @Override

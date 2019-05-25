@@ -165,11 +165,15 @@ public class Tx {
 
     }
 
+
     public class UserInfo {
 
         @SerializedName("identityCard")
         @Expose
         private String identityCard;
+        @SerializedName("licensePlate")
+        @Expose
+        private String licensePlate;
         @SerializedName("name")
         @Expose
         private String name;
@@ -192,6 +196,14 @@ public class Tx {
 
         public void setIdentityCard(String identityCard) {
             this.identityCard = identityCard;
+        }
+
+        public String getLicensePlate() {
+            return licensePlate;
+        }
+
+        public void setLicensePlate(String licensePlate) {
+            this.licensePlate = licensePlate;
         }
 
         public String getName() {

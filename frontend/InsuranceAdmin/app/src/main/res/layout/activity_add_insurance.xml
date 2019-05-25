@@ -19,16 +19,16 @@
             android:layout_marginRight="10dp">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Ma bao hiem:" />
+                android:text="Mã bảo hiểm" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_add_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nhập ma bao hiem" />
+                android:hint="Nhập mã bảo hiểm" />
 
         </LinearLayout>
 
@@ -40,16 +40,16 @@
             android:layout_marginRight="10dp">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Ten cong ty:" />
+                android:text="Tên công ty" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_add_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nhap ten cong ty" />
+                android:hint="Nhập tên công ty" />
 
         </LinearLayout>
 
@@ -62,16 +62,16 @@
             android:layout_marginRight="10dp">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Giá goi VND:" />
+                android:text="Giá/năm (VNĐ)" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_add_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nhập giá goi bao hiem"
+                android:hint="Nhập giá gói bảo hiểm"
                 android:inputType="number" />
 
         </LinearLayout>
@@ -84,18 +84,41 @@
             android:layout_marginRight="10dp">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:inputType="number"
-                android:text="Phan tram" />
+                android:text="% Hoàn trả" />
 
-            <io.apptik.widget.MultiSlider
-                android:id="@+id/slider_percent"
-                app:thumbValue1="1"
-                app:thumbValue2="100"
+            <TextView
+                android:id="@+id/tv_add_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="50"
+                android:textColor="@color/jet" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="%"
+                android:textColor="@color/jet" />
+
+            <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
+                android:id="@+id/percent_pick"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                app:bar_color="#40E91E63"
+                app:bar_highlight_color="#E91E63"
+                app:data_type="_integer"
+                app:left_thumb_color="@color/colorPrimary"
+                app:left_thumb_color_pressed="@color/colorPrimaryDark"
+                app:max_value="100"
+                app:min_value="1" />
+
 
         </LinearLayout>
 
@@ -107,17 +130,17 @@
             android:layout_marginRight="10dp">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Max refund:" />
+                android:text="Hoàn trả tối đa" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_add_maxrefund"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:hint="Max refund" />
+                android:hint="Nhập số tiền hoàn trả tối đa"
+                android:inputType="number" />
 
         </LinearLayout>
 
@@ -127,7 +150,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
-            android:text="Thêm sản phẩm" />
+            android:background="@drawable/rounded_button"
+            android:text="Thêm gói"
+            android:textColor="@color/white" />
 
 
     </LinearLayout>

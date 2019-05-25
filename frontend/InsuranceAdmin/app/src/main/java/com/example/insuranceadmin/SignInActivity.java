@@ -36,13 +36,13 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                progressBar.setVisibility(View.VISIBLE);
-
                 if (edtUserName.getText().toString().equals("")
                         || edtPassword.getText().toString().equals("")) {
                     Toast.makeText(SignInActivity.this, "Vui lòng nhập đủ thông tin",
                             Toast.LENGTH_SHORT).show();
                 } else {
+                    progressBar.setVisibility(View.VISIBLE);
+
                     ApiService apiService = ApiUtils.getApiService();
                     apiService.LogIn(edtUserName.getText().toString(), edtPassword.getText().toString())
                             .enqueue(new Callback<LogInResponse>() {

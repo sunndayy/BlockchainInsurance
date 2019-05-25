@@ -91,23 +91,30 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
 
                 final View popupView = layoutInflater.inflate(R.layout.popup_refund, null);
                 Button btnClose = popupView.findViewById(R.id.btn_refund_close);
+                TextView tvNotifi = (TextView) popupView.findViewById(R.id.tv_refund_notifi);
                 TextView tvTotal = (TextView) popupView.findViewById(R.id.tv_refund_total);
                 TextView tvRefund = (TextView) popupView.findViewById(R.id.tv_refund_refund);
                 TextView tvTime = (TextView) popupView.findViewById(R.id.tv_refund_time);
                 TextView tvGaraPubKeyHash = (TextView) popupView.findViewById(R.id.tv_refund_pubkeyhash);
+                LinearLayout viewRefund = (LinearLayout) popupView.findViewById(R.id.refund_info_popup);
 
                 if (order.getRefunds().size() != 0) {
-                    tvTotal.setText(String.valueOf(order.getRefunds().get(0).getTotal()));
-                    tvRefund.setText(String.valueOf(order.getRefunds().get(0).getRefund()));
-                    tvTime.setText(String.valueOf(order.getRefunds().get(0).getTime()));
+                    tvNotifi.setText("Danh sách hoàn trả");
+                    tvTotal.setText(Common.beautifyPrice(order.getRefunds().get(0).getTotal()));
+                    tvRefund.setText(Common.beautifyPrice(order.getRefunds().get(0).getRefund()));
                     tvGaraPubKeyHash.setText(order.getRefunds().get(0).getGaraPubKeyHash());
 
+                    Date d = new Date(order.getRefunds().get(0).getTime());
+                    String s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(d);
+                    tvTime.setText(s);
+
+                } else {
+                    viewRefund.setVisibility(View.GONE);
                 }
 
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
 
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, false);
+                final PopupWindow popupWindow = new PopupWindow(popupView, 600, height, false);
 
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
