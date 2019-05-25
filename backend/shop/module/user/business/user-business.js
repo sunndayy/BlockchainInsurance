@@ -9,7 +9,7 @@ module.exports.signIn = async (username, password) => {
 	myValidator(username, 'string', 'username');
 	myValidator(password, 'string', 'password');
 	
-	let user = await User.findOne({username: username});
+	let user = await User.findOne({username: username}).lean();
 	if (user) {
 		if (await bcrypt.compare(password, user.passwordHash)) {
 			let token = await jsonwebtoken.sign({

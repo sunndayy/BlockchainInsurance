@@ -2,18 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="69ef5d5b-dd6f-4fc4-a623-de47d06b669a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../blockchain/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/module/order/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/order/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/32ced83a4ab498422fe43edcf177f672" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/b900257e45251df7ffcd65f35238ba12" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/dd12da5874e15c12b8f645b523002768" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../insurence/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurence/module/query-blockchain/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/../insurence/module/query-blockchain/route.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../shop/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shop/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/bin/www" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shop/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../shop/module/order/business/order-business.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/module/order/business/order-business.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shop/module/order/model/order-model.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/module/order/model/order-model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shop/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shop/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shop/module/product/business/product-business.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/module/product/business/product-business.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shop/module/user/business/user-business.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/module/user/business/user-business.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,29 +26,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/crypto.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app.js">
+        <entry file="file://$PROJECT_DIR$/module/order/business.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" lean-forward="true" selection-end-line="68" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+            <state relative-caret-position="1020">
+              <caret line="81" column="2" selection-start-line="81" selection-start-column="2" selection-end-line="81" selection-end-column="2" />
+              <folding>
+                <element signature="e#240#630#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -103,10 +88,10 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="width" value="977" />
-    <option name="height" value="1038" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-10" />
+    <option name="width" value="979" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -148,11 +133,6 @@
               <item name="gara" type="462c0819:PsiDirectoryNode" />
               <item name="module" type="462c0819:PsiDirectoryNode" />
               <item name="user" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gara" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gara" type="462c0819:PsiDirectoryNode" />
-              <item name="uploads" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="gara" type="b2602c69:ProjectViewProjectNode" />
@@ -246,11 +226,13 @@
       <workItem from="1558750230267" duration="55000" />
       <workItem from="1558750585795" duration="21000" />
       <workItem from="1558751072962" duration="132000" />
+      <workItem from="1558754689413" duration="11000" />
+      <workItem from="1558793513296" duration="18000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30499000" />
+    <option name="totallyTimeSpent" value="30528000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -262,10 +244,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="0" width="781" height="830" extended-state="0" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.35215053" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3516193" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -358,16 +339,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/order/business.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="81" column="2" selection-start-line="81" selection-start-column="2" selection-end-line="81" selection-end-column="2" />
-          <folding>
-            <element signature="e#240#630#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/module/order/route.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -389,6 +360,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/utils/crypto.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -403,10 +381,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
+    <entry file="file://$PROJECT_DIR$/module/order/business.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" lean-forward="true" selection-end-line="68" />
+        <state relative-caret-position="1020">
+          <caret line="81" column="2" selection-start-line="81" selection-start-column="2" selection-end-line="81" selection-end-column="2" />
+          <folding>
+            <element signature="e#240#630#0" />
+          </folding>
         </state>
       </provider>
     </entry>
