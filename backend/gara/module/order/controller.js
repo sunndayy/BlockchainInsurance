@@ -52,7 +52,7 @@ module.exports.updateOrder = async (req, res) => {
 
 module.exports.getOrders = async (req, res) => {
 	let controller = new OrderController(req, res);
-	await controller.exec(OrderController.getOrders.bind(controller));
+	await controller.exec(OrderController.getOrders);
 };
 
 module.exports.getImage = async (req, res) => {

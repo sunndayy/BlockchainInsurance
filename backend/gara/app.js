@@ -6,6 +6,7 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const userBusiness = require('./module/user/business');
 const config = require('./config');
+const bodyParser = require('body-parser');
 
 mongoose.connect(config.db, {useNewUrlParser: true});
 const db = mongoose.connection;
@@ -36,6 +37,8 @@ db.once('open', async () => {
 
 const app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));

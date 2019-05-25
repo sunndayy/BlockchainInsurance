@@ -10,6 +10,10 @@ let orderSchema = new Schema({
 		product: {type: Schema.Types.ObjectId, ref: 'product', require: true},
 		price: {type: Number, require: true},
 	}],
+	policeInfo: {
+		licensePlate: {type: String},
+		uid: {type: String, require: true}
+	},
 	time: {type: Date, default: new Date()},
 	status: {type: Boolean}
 });
