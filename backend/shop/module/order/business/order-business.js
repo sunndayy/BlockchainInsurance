@@ -41,7 +41,6 @@ module.exports.createOrder = async (user, data) => {
 	}
 	data.status = false;
 	let order = await Order.create(data);
-	delete order._doc.user._doc.passwordHash;
 	order._doc.items.forEach(item => {
 		delete item._doc.product._doc.image;
 	});
