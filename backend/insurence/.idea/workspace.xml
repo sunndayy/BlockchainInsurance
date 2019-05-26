@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="289c6313-42f2-4f3b-be88-cc1766f644a6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../blockchain/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../blockchain/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gara/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gara/module/order/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/../gara/module/order/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gara/uploads/32ced83a4ab498422fe43edcf177f672" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gara/uploads/b900257e45251df7ffcd65f35238ba12" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gara/uploads/dd12da5874e15c12b8f645b523002768" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/module/query-blockchain/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/query-blockchain/route.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/.bin/acorn" beforeDir="false" />
@@ -6798,9 +6798,6 @@
       <change beforePath="$PROJECT_DIR$/node_modules/yargs/package.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../shop/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../shop/module/order/business/order-business.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/module/order/business/order-business.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shop/module/order/model/order-model.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/module/order/model/order-model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shop/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shop/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/package.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -6822,11 +6819,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/module/query-blockchain/route.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
-              <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+              <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="867">
+              <caret line="51" column="18" lean-forward="true" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -6891,9 +6897,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="width" value="977" />
-    <option name="height" value="1038" />
+    <option name="x" value="-9" />
+    <option name="width" value="978" />
+    <option name="height" value="1039" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -7016,11 +7022,12 @@
       <workItem from="1558667930744" duration="52000" />
       <workItem from="1558682664723" duration="185000" />
       <workItem from="1558750612249" duration="16000" />
+      <workItem from="1558754659128" duration="15000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38580000" />
+    <option name="totallyTimeSpent" value="38595000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -7032,10 +7039,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="0" width="781" height="830" extended-state="0" />
+    <frame x="-7" y="0" width="782" height="831" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24059139" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24026845" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -7135,13 +7142,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="51" column="18" lean-forward="true" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Desktop/inventory.server.routes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -7216,7 +7216,14 @@
     <entry file="file://$PROJECT_DIR$/module/query-blockchain/route.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
-          <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+          <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="867">
+          <caret line="51" column="18" lean-forward="true" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
         </state>
       </provider>
     </entry>

@@ -5,11 +5,17 @@ const request = require('request');
 const CronJob = require('cron').CronJob;
 
 module.exports.getAllOrders = async () => {
-	return await Order.find({}).populate('items.product', '-image');
+	return await Order.find({})
+		.populate({path: 'items.product', select: '-image'})
+		.populate({path: 'user', select: '-passwordHash'})
+		.lean();
 };
 
 module.exports.getOrdersByStatus = async status => {
-	return await Order.find({status}).populate('items.product', '-image');
+	return await Order.find({status})
+		.populate({path: 'items.product', select: '-image'})
+		.populate({path: 'user', select: '-passwordHash'})
+		.lean();
 };
 
 module.exports.getOrdersByUser = async user => {
@@ -19,7 +25,10 @@ module.exports.getOrdersByUser = async user => {
 	if (!user) {
 		throw new Error('Invalid username');
 	}
-	return await Order.find({user}).populate('items.product', '-image');
+	return await Order.find({user})
+		.populate({path: 'items.product', select: '-image'})
+		.populate({path: 'user', select: '-passwordHash'})
+		.lean();
 };
 
 module.exports.createOrder = async (user, data) => {
@@ -44,8 +53,9 @@ module.exports.updateOrder = async (id, data) => {
 	}
 	
 	let order = await Order.findOneAndUpdate({id}, {$set: data}, {new: true})
-		.populate('user')
-		.populate({path: 'items.product', select: '-image'});
+		.populate({path: 'items.product', select: '-image'})
+		.populate({path: 'user', select: '-passwordHash'})
+		.lean();
 	
 	if (order.status) {
 		let msgToPolice = {
