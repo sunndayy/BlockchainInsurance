@@ -25,7 +25,7 @@ public interface ApiService {
 
     @POST("/create-order")
     Call<ResponseBody> CreateOrder(@Header("AccessToken") String AccessToken,
-                                   @Body Item item);
+                                   @Body PostOrderInfo postOrderInfo);
 
     @PUT("/update-order/{id}")
     Call<ResponseBody> UpdateOrder(@Path("id") Integer id,

@@ -149,7 +149,7 @@
             android:id="@+id/tv_insurance_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1000000"
+            android:text="0 VNĐ"
             android:textColor="@color/jet"
             android:textSize="17sp" />
 

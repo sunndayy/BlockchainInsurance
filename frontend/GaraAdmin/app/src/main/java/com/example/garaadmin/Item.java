@@ -14,12 +14,6 @@ public class Item {
     @Expose
     private Integer id;
 
-    public Item() {
-        this.status = true;
-        this.id = 100000;
-        this.user = new User();
-    }
-
     public User getUser() {
         return user;
     }
@@ -67,16 +61,6 @@ public class Item {
         @SerializedName("email")
         @Expose
         private String email;
-
-        public User() {
-            this.name = "";
-            this.identityCard = "";
-            this.sex = true;
-            this.address = "";
-            this.phoneNumber = "";
-            this.email = "";
-            this.birthday = new Birthday();
-        }
 
         public Birthday getBirthday() {
             return birthday;
@@ -147,12 +131,6 @@ public class Item {
         @SerializedName("year")
         @Expose
         private Integer year;
-
-        public Birthday() {
-            this.day = 0;
-            this.month = 0;
-            this.year = 0;
-        }
 
         public Integer getDay() {
             return day;

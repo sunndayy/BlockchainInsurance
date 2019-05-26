@@ -36,7 +36,15 @@ public class Common {
         return String.valueOf(temp) + str + " VNĐ";
     }
 
+    public static String beautifyPercent(double x) {
+        double x1 = x * 100;
+        return Integer.toString((int) x1) + "%";
+    }
+
     public static List<Item> cart = new ArrayList<>();
 
     public static User user = null;
+
+    public static String InsuranceId = "";
+    public static String InsuranceCompany = "";
 }

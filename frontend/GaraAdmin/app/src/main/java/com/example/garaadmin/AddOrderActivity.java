@@ -39,22 +39,19 @@ public class AddOrderActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ApiService apiService = ApiUtils.getApiService();
 
-                Item item = new Item();
-                item.getUser().setName(tvName.getText().toString());
-                item.getUser().getBirthday().setDay(1);
-                item.getUser().getBirthday().setMonth(1);
-                item.getUser().getBirthday().setYear(200);
-                item.getUser().setSex(true);
-                item.getUser().setIdentityCard(tvId.getText().toString());
-                item.getUser().setAddress(tvAddress.getText().toString());
-                item.getUser().setPhoneNumber(tvPhone.getText().toString());
-                item.getUser().setEmail(tvEmail.getText().toString());
 
-                apiService.CreateOrder(Common.AccessToken, item)
+                PostOrderInfo postOrderInfo = new PostOrderInfo();
+                postOrderInfo.getUser().setName(tvName.getText().toString());
+                postOrderInfo.getUser().setIdentityCard(tvId.getText().toString());
+                postOrderInfo.getUser().setAddress(tvAddress.getText().toString());
+                postOrderInfo.getUser().setPhoneNumber(tvPhone.getText().toString());
+                postOrderInfo.getUser().setEmail(tvEmail.getText().toString());
+
+                apiService.CreateOrder(Common.AccessToken, postOrderInfo)
                         .enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                Toast.makeText(AddOrderActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddOrderActivity.this, "Thêm đơn hàng thành công", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
 

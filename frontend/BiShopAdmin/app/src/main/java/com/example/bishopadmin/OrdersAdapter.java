@@ -184,7 +184,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
                                 .enqueue(new Callback<ResponseBody>() {
                                     @Override
                                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                        Toast.makeText(context, "successful", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "Xác nhận thành công", Toast.LENGTH_SHORT).show();
                                         popupWindow.dismiss();
                                     }
 

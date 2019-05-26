@@ -36,6 +36,7 @@ public class ItemsPopupAdapter extends RecyclerView.Adapter<ItemsPopupAdapter.My
         ItemPopup itemPopup = itemPopups.get(i);
         myViewHolder.tvName.setText(itemPopup.getName());
         myViewHolder.tvPrice.setText(Common.beautifyPrice(itemPopup.getPrice()));
+        myViewHolder.tvBienSo.setText(itemPopup.getBienSo());
         Glide.with(context).load(itemPopup.getImage()).into(myViewHolder.imageView);
     }
 

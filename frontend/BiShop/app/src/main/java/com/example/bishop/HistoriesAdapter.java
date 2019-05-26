@@ -26,6 +26,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class HistoriesAdapter extends RecyclerView.Adapter<HistoriesAdapter.MyViewHolder> {
     private Context context;
     private List<History> historyList;
@@ -56,7 +63,7 @@ public class HistoriesAdapter extends RecyclerView.Adapter<HistoriesAdapter.MyVi
             e.printStackTrace();
         }
 
-        if (history.getStatus()) {
+        if (history.getPoliceInfo() != null) {
             myViewHolder.txtStatus.setText("Đã xử lý");
             myViewHolder.txtStatus.setTextColor(Color.rgb(31, 168, 63));
         } else {
@@ -75,6 +82,7 @@ public class HistoriesAdapter extends RecyclerView.Adapter<HistoriesAdapter.MyVi
         myViewHolder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position) {
+
                 LayoutInflater layoutInflater
                         = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -92,13 +100,39 @@ public class HistoriesAdapter extends RecyclerView.Adapter<HistoriesAdapter.MyVi
                 recyclerView.setAdapter(itemsPopupAdapter);
 
                 for (int i = 0; i < history.getItems().size(); i++) {
-                    ItemPopup itemPopup = new ItemPopup(
-                            ApiUtils.BASE_URL + "/product-image/" + history.getItems().get(i).getProduct().getId(),
-                            history.getItems().get(i).getProduct().getName(),
-                            history.getItems().get(i).getProduct().getPrice()
-                    );
 
-                    itemPopups.add(itemPopup);
+                    if (history.getPoliceInfo() != null) {
+
+                        if (history.getPoliceInfo().getLicensePlate() == null) {
+                            ItemPopup itemPopup = new ItemPopup(
+                                    ApiUtils.BASE_URL + "/product-image/" + history.getItems().get(i).getProduct().getId(),
+                                    history.getItems().get(i).getProduct().getName(),
+                                    history.getItems().get(i).getProduct().getPrice(),
+                                    "Đang chờ cấp biển số"
+                            );
+
+                            itemPopups.add(itemPopup);
+                        } else {
+                            ItemPopup itemPopup = new ItemPopup(
+                                    ApiUtils.BASE_URL + "/product-image/" + history.getItems().get(i).getProduct().getId(),
+                                    history.getItems().get(i).getProduct().getName(),
+                                    history.getItems().get(i).getProduct().getPrice(),
+                                    history.getPoliceInfo().getLicensePlate()
+                            );
+
+                            itemPopups.add(itemPopup);
+                        }
+
+                    } else {
+                        ItemPopup itemPopup = new ItemPopup(
+                                ApiUtils.BASE_URL + "/product-image/" + history.getItems().get(i).getProduct().getId(),
+                                history.getItems().get(i).getProduct().getName(),
+                                history.getItems().get(i).getProduct().getPrice(),
+                                "Chưa có biển số"
+                        );
+
+                        itemPopups.add(itemPopup);
+                    }
                 }
 
                 itemsPopupAdapter.notifyDataSetChanged();
@@ -107,17 +141,72 @@ public class HistoriesAdapter extends RecyclerView.Adapter<HistoriesAdapter.MyVi
 
                 final PopupWindow popupWindow = new PopupWindow(popupView, 600, height, false);
 
-                Button btnBuyInsurace = (Button) popupView.findViewById(R.id.btn_popup_his_buy_insurance);
+                final LinearLayout linearLayout = (LinearLayout) popupView.findViewById(R.id.info_insurance);
 
-                if (!history.getStatus()) {
+                final Button btnBuyInsurace = (Button) popupView.findViewById(R.id.btn_popup_his_buy_insurance);
+
+                if (history.getPoliceInfo() == null || history.getPoliceInfo().getLicensePlate() == null) {
                     btnBuyInsurace.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.GONE);
+                    popupWindow.showAtLocation(((Activity) context).getWindow().getDecorView().getRootView(), Gravity.CENTER, 0, 0);
+                } else {
+                    ApiInsuranceService apiInsuranceService = new Retrofit.Builder()
+                            .baseUrl("http://bcinsurence.herokuapp.com")
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build().create(ApiInsuranceService.class);
+
+                    apiInsuranceService.GetInsuranceByLicensePlate(history.getPoliceInfo().getLicensePlate(),
+                            Common.user.getToken())
+                            .enqueue(new Callback<List<InsuranceOrder>>() {
+                                @Override
+                                public void onResponse(Call<List<InsuranceOrder>> call, Response<List<InsuranceOrder>> response) {
+                                    if (response.body().size() != 0) {
+                                        TextView tvInsuranceId = (TextView) popupView.findViewById(R.id.tv_popup_insurance_id);
+                                        TextView tvInsuranceCompany = (TextView) popupView.findViewById(R.id.tv_popup_insurance_company);
+                                        TextView tvInsuranceTimeStart = (TextView) popupView.findViewById(R.id.tv_popup_insurance_timestart);
+                                        TextView tvInsuranceTimeEnd = (TextView) popupView.findViewById(R.id.tv_popup_insurance_timeeend);
+                                        TextView tvInsurancePrice = (TextView) popupView.findViewById(R.id.tv_popup_insurance_price);
+                                        TextView tvInsurancePer = (TextView) popupView.findViewById(R.id.tv_popup_insurance_percent);
+                                        TextView tvInsuranceMaxRefund = (TextView) popupView.findViewById(R.id.tv_popup_insurance_max_refund);
+
+                                        tvInsuranceId.setText(response.body().get(0).getId());
+                                        tvInsuranceCompany.setText(response.body().get(0).getCompany());
+
+                                        Date date = new Date(response.body().get(0).getExpireTime().getTimeStart());
+                                        String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(date);
+                                        tvInsuranceTimeStart.setText(str);
+
+                                        date = new Date(response.body().get(0).getExpireTime().getTimeEnd());
+                                        str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(date);
+                                        tvInsuranceTimeEnd.setText(str);
+
+                                        tvInsurancePrice.setText(Common.beautifyPrice(response.body().get(0).getPlan().getTerm().getPricePerYear()));
+                                        tvInsuranceMaxRefund.setText(Common.beautifyPrice(response.body().get(0).getPlan().getTerm().getMaxRefund()));
+                                        tvInsurancePer.setText(Common.beautifyPercent(response.body().get(0).getPlan().getTerm().getPercentage()));
+
+
+                                        btnBuyInsurace.setVisibility(View.GONE);
+                                    } else {
+                                        linearLayout.setVisibility(View.GONE);
+                                    }
+                                    popupWindow.showAtLocation(((Activity) context).getWindow().getDecorView().getRootView(), Gravity.CENTER, 0, 0);
+                                }
+
+                                @Override
+                                public void onFailure(Call<List<InsuranceOrder>> call, Throwable t) {
+                                    linearLayout.setVisibility(View.GONE);
+                                    popupWindow.showAtLocation(((Activity) context).getWindow().getDecorView().getRootView(), Gravity.CENTER, 0, 0);
+                                }
+                            });
                 }
 
                 btnBuyInsurace.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupWindow.dismiss();
-                        context.startActivity(new Intent(context, InsuraceOrderActivity.class));
+                        Intent intent = new Intent(context, InsuraceOrderActivity.class);
+                        intent.putExtra("bienso", history.getPoliceInfo().getLicensePlate());
+                        context.startActivity(intent);
                     }
                 });
 
@@ -128,10 +217,6 @@ public class HistoriesAdapter extends RecyclerView.Adapter<HistoriesAdapter.MyVi
                         popupWindow.dismiss();
                     }
                 });
-
-                // show the popup window
-                // which view you pass in doesn't matter, it is only used for the window tolken
-                popupWindow.showAtLocation(((Activity) context).getWindow().getDecorView().getRootView(), Gravity.CENTER, 0, 0);
 
             }
         });
