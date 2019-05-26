@@ -82,7 +82,7 @@ module.exports.updateOrder = async (id, order) => {
 	
 	if (order.status) {
 		return new Promise((resolve, reject) => {
-				request(`http://${config.company[order.insurence.company]}/contracts-by-license-plate/${order.licensePlate}`, (e, res, body) => {
+				request(`http://${config.company[order.insurence.company]}/contracts-by-license-plate/${order.licensePlate}`, async (e, res, body) => {
 						if (e) {
 							reject(e);
 						} else {
@@ -107,14 +107,13 @@ module.exports.updateOrder = async (id, order) => {
 											});
 											
 											order.insurence.refund = newRefund.refund;
-											Order.findOneAndUpdate({id}, {$set: {order}}, (e, doc) => {
-												if (e) {
-													reject(e);
-												} else {
-													delete doc._doc.image;
-													resolve(doc);
+											order = await Order.findOneAndUpdate({id}, {
+												$set: {
+													insurence: order.insurence,
+													status: true
 												}
-											});
+											}, {new: true});
+											return resolve(order);
 										}
 									}
 								}

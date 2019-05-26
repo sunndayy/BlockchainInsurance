@@ -14,7 +14,6 @@ class OrderController {
 				this.res.end(result);
 			} else {
 				this.res.json(result);
-				
 			}
 		} catch (e) {
 			this.res.json({
