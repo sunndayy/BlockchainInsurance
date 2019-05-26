@@ -99,7 +99,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
                 LinearLayout viewRefund = (LinearLayout) popupView.findViewById(R.id.refund_info_popup);
 
                 if (order.getRefunds().size() != 0) {
-                    tvNotifi.setText("Danh sách hoàn trả");
+                    tvNotifi.setText("Hoàn trả");
                     tvTotal.setText(Common.beautifyPrice(order.getRefunds().get(0).getTotal()));
                     tvRefund.setText(Common.beautifyPrice(order.getRefunds().get(0).getRefund()));
                     tvGaraPubKeyHash.setText(order.getRefunds().get(0).getGaraPubKeyHash());
