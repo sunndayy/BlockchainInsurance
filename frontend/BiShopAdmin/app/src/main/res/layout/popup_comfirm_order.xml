@@ -6,56 +6,35 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_marginTop="20dp"
+        android:id="@+id/tv_notifi_popup_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
+        android:text="Xác nhận đơn hàng?"
         android:textColor="@color/jet"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Xác nhận đơn hàng" />
+        android:textSize="20sp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Chon mua goi bao hiem" />
-
-    <EditText
-        android:id="@+id/edt_popup_bienso"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nhap bien so xe" />
-
-    <Spinner
-        android:id="@+id/spinner_popup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></Spinner>
-
-    <EditText
-        android:id="@+id/edt_popup_dur"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nhap thoi gian"
-        android:inputType="number" />
 
     <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
 
         <Button
             android:id="@+id/btn_confirm_yes"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
             android:background="@drawable/rounded_button"
             android:text="Xác nhận"
             android:textColor="@color/white" />
 
         <Button
-            android:layout_marginLeft="20dp"
             android:id="@+id/btn_confirm_no"
             android:layout_width="100dp"
             android:layout_height="wrap_content"

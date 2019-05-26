@@ -1,5 +1,7 @@
 package com.example.bishopadmin;
 
+import android.content.Intent;
+
 import java.util.List;
 
 import okhttp3.MultipartBody;
@@ -43,8 +45,13 @@ public interface ApiService {
                              @Part("producer") RequestBody producer);
 
     @PUT("/update-order/{id}")
+    @FormUrlEncoded
     Call<ResponseBody> UpdateOrders(@Path("id") Integer idOrder,
                                     @Header("AccessToken") String token,
-                                    @Body ContractInfo contractInfo);
+                                    @Field("status") Boolean status,
+                                    @Field("licensePlate") String licensePlate,
+                                    @Field("company") String company,
+                                    @Field("contractId") String contractId,
+                                    @Field("duration") Integer duration);
 
 }

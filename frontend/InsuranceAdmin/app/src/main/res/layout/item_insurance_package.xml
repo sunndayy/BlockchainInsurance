@@ -6,6 +6,8 @@
     android:layout_marginTop="10dp"
     android:layout_marginRight="10dp"
     android:background="@drawable/bg_ripple"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical">
 
     <LinearLayout
