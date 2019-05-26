@@ -80,7 +80,17 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
             e.printStackTrace();
         }
 
-        myViewHolder.checkBoxPay.setChecked(order.getStatus());
+        if (order.getPoliceInfo() != null) {
+            if (order.getPoliceInfo().getLicensePlate() == null) {
+                myViewHolder.tvBienSo.setText("Đang chờ cấp biển số");
+            } else {
+                myViewHolder.tvBienSo.setText(order.getPoliceInfo().getLicensePlate());
+            }
+            myViewHolder.checkBoxPay.setChecked(true);
+        } else {
+            myViewHolder.tvBienSo.setText("Chưa có biển số");
+            myViewHolder.checkBoxPay.setChecked(false);
+        }
 
         myViewHolder.setButtonItemClickListener(new ButtonItemClickListener() {
             @Override
@@ -150,78 +160,37 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
                 boolean focusable = true;
                 final PopupWindow popupWindow = new PopupWindow(popupView, 600, height, focusable);
 
-                final Spinner spinner = (Spinner) popupView.findViewById(R.id.spinner_popup);
-                final List<String> categories = new ArrayList<String>();
-
-                ApiInsurance apiInsurance = new Retrofit.Builder()
-                        .baseUrl("http://bcinsurence.herokuapp.com")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build().create(ApiInsurance.class);
-
-                apiInsurance.GetInsuranceInfo(Common.AccessToken)
-                        .enqueue(new Callback<List<InsuranceInfo>>() {
-                            @Override
-                            public void onResponse(Call<List<InsuranceInfo>> call, Response<List<InsuranceInfo>> response) {
-                                if (response.body().size() != 0) {
-                                    for (int i = 0; i < response.body().size(); i++) {
-                                        String id = response.body().get(i).getId();
-                                        categories.add(id);
-                                    }
-
-                                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, categories);
-                                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                    spinner.setAdapter(dataAdapter);
-                                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                        @Override
-                                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                            Common.Buffer = parent.getItemAtPosition(position).toString();
-                                        }
-
-                                        @Override
-                                        public void onNothingSelected(AdapterView<?> parent) {
-
-                                        }
-                                    });
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<List<InsuranceInfo>> call, Throwable t) {
-                                Toast.makeText(popupView.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
                 Button btnYes = (Button) popupView.findViewById(R.id.btn_confirm_yes);
                 Button btnNo = (Button) popupView.findViewById(R.id.btn_confirm_no);
+                TextView tvNotifi = (TextView) popupView.findViewById(R.id.tv_notifi_popup_confirm);
 
-                final EditText edtBienSo = (EditText) popupView.findViewById(R.id.edt_popup_bienso);
-                final EditText edtDur = (EditText) popupView.findViewById(R.id.edt_popup_dur);
+                if (order.getPoliceInfo() != null) {
+                    btnYes.setVisibility(View.GONE);
+                    btnNo.setText("Đóng");
+                    tvNotifi.setText("Đơn hàng đã yêu cầu biển số");
+                }
 
                 btnYes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        ContractInfo contractInfo = new ContractInfo();
-                        contractInfo.setContractId(Common.Buffer);
-                        contractInfo.setCompany("phhoang");
-                        contractInfo.setDuration(Integer.parseInt(edtDur.getText().toString()));
-                        contractInfo.setLicensePlate(edtBienSo.getText().toString());
-                        contractInfo.setStatus(true);
 
                         ApiService apiService = ApiUtils.getApiService();
 
-                        apiService.UpdateOrders(order.getId(), Common.AccessToken, contractInfo)
+                        apiService.UpdateOrders(order.getId(),
+                                Common.AccessToken,
+                                true, "12345678",
+                                "phhoang", "BH1", 1)
                                 .enqueue(new Callback<ResponseBody>() {
                                     @Override
                                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                        Toast.makeText(popupView.getContext(), "Successful", Toast.LENGTH_SHORT).show();
-                                        myViewHolder.checkBoxPay.setChecked(true);
+                                        Toast.makeText(context, "successful", Toast.LENGTH_SHORT).show();
                                         popupWindow.dismiss();
                                     }
 
                                     @Override
                                     public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                        Toast.makeText(popupView.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
                                         popupWindow.dismiss();
                                     }
                                 });
@@ -247,7 +216,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView tvId, tvPrice, tvUser, tvPhone, tvDate;
+        public TextView tvId, tvPrice, tvUser, tvPhone, tvDate, tvBienSo;
         public CheckBox checkBoxPay;
         private ImageView btnInfo;
         private ItemClickListener itemClickListener;
@@ -260,6 +229,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
             tvDate = (TextView) itemView.findViewById(R.id.tv_date_order);
             tvUser = (TextView) itemView.findViewById(R.id.tv_user_order);
             tvPhone = (TextView) itemView.findViewById(R.id.tv_userphone_order);
+            tvBienSo = (TextView) itemView.findViewById(R.id.tv_bienso_order);
 
             checkBoxPay = (CheckBox) itemView.findViewById(R.id.check_pay);
 

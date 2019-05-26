@@ -6,7 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Order {
-
+    @SerializedName("policeInfo")
+    @Expose
+    private PoliceInfo policeInfo;
     @SerializedName("time")
     @Expose
     private String time;
@@ -22,6 +24,14 @@ public class Order {
     @SerializedName("id")
     @Expose
     private Integer id;
+
+    public PoliceInfo getPoliceInfo() {
+        return policeInfo;
+    }
+
+    public void setPoliceInfo(PoliceInfo policeInfo) {
+        this.policeInfo = policeInfo;
+    }
 
     public String getTime() {
         return time;
@@ -63,6 +73,43 @@ public class Order {
         this.id = id;
     }
 
+    public class Birthday {
+
+        @SerializedName("day")
+        @Expose
+        private Integer day;
+        @SerializedName("month")
+        @Expose
+        private Integer month;
+        @SerializedName("year")
+        @Expose
+        private Integer year;
+
+        public Integer getDay() {
+            return day;
+        }
+
+        public void setDay(Integer day) {
+            this.day = day;
+        }
+
+        public Integer getMonth() {
+            return month;
+        }
+
+        public void setMonth(Integer month) {
+            this.month = month;
+        }
+
+        public Integer getYear() {
+            return year;
+        }
+
+        public void setYear(Integer year) {
+            this.year = year;
+        }
+
+    }
 
     public class Item {
 
@@ -87,6 +134,33 @@ public class Order {
 
         public void setProduct(Product product) {
             this.product = product;
+        }
+
+    }
+
+    public class PoliceInfo {
+
+        @SerializedName("uid")
+        @Expose
+        private String uid;
+        @SerializedName("licensePlate")
+        @Expose
+        private String licensePlate;
+
+        public String getUid() {
+            return uid;
+        }
+
+        public void setUid(String uid) {
+            this.uid = uid;
+        }
+
+        public String getLicensePlate() {
+            return licensePlate;
+        }
+
+        public void setLicensePlate(String licensePlate) {
+            this.licensePlate = licensePlate;
         }
 
     }
@@ -175,6 +249,9 @@ public class Order {
 
     public class User {
 
+        @SerializedName("birthday")
+        @Expose
+        private Birthday birthday;
         @SerializedName("username")
         @Expose
         private String username;
@@ -193,6 +270,14 @@ public class Order {
         @SerializedName("email")
         @Expose
         private String email;
+
+        public Birthday getBirthday() {
+            return birthday;
+        }
+
+        public void setBirthday(Birthday birthday) {
+            this.birthday = birthday;
+        }
 
         public String getUsername() {
             return username;
