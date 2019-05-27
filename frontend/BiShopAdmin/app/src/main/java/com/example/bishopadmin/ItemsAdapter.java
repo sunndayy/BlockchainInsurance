@@ -108,9 +108,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
                 TextView tvPrice = (TextView) popupView.findViewById(R.id.popup_price);
                 tvPrice.setText(Common.beautifyPrice(itemList.get(position).getPrice()));
 
-                TextView tvAmount = (TextView) popupView.findViewById(R.id.popup_amount);
-                tvAmount.setText(String.valueOf(itemList.get(position).getAmount()));
-
                 TextView tvProducer = (TextView) popupView.findViewById(R.id.popup_producer);
                 tvProducer.setText(itemList.get(position).getProducer());
 

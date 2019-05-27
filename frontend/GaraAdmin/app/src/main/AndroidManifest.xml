@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddOrderActivity"></activity>
+        <activity
+            android:name=".AddOrderActivity"
+            android:label="Thêm đơn hàng" />
         <activity
             android:name=".SignInActivity"
             android:theme="@style/AppTheme.Dark" />
