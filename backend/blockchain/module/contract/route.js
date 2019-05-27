@@ -10,12 +10,7 @@ router.post('/get-contracts-by-company', verifyMiddleware, async (req, res) => {
 			return node.pubKeyHash === req.body.pubKeyHash;
 		});
 		if (index >= 0 && new Date() - new Date(req.body.time) < DURATION) {
-			let contracts = await FindByCompany(req.body.company);
-			if (contracts.length > 0) {
-				res.json(contracts);
-			} else {
-				res.end('No contract was found');
-			}
+			res.json(await FindByCompany(req.body.company));
 		} else {
 			res.end('Invalid node');
 		}
@@ -30,12 +25,7 @@ router.post('/get-contracts-by-license-plate', verifyMiddleware, async (req, res
 			return node.pubKeyHash === req.body.pubKeyHash;
 		});
 		if (index >= 0 && new Date() - new Date(req.body.time) < DURATION) {
-			let contracts = await FindByLicensePlate(req.body.licensePlate);
-			if (contracts.length > 0) {
-				res.json(contracts);
-			} else {
-				res.end('No contract was found');
-			}
+			res.json(await FindByLicensePlate(req.body.licensePlate));
 		} else {
 			res.end('Invalid node');
 		}
