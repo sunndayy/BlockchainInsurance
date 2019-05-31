@@ -47,6 +47,7 @@ app.use(cookieParser());
 app.use('/', require('./module/user/route/user-route'));
 app.use('/', require('./module/product/route/product-route'));
 app.use('/', require('./module/order/route/order-route'));
+app.use('/', require('./module/comment/route/comment-route'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

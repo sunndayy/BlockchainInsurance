@@ -4,6 +4,7 @@ const jsonwebtoken = require('jsonwebtoken');
 const validator = require('validator');
 const moment = require('moment');
 const myValidator = require('../../../utils/validator');
+const fs = require('fs');
 
 module.exports.signIn = async (username, password) => {
 	myValidator(username, 'string', 'username');
@@ -29,6 +30,7 @@ module.exports.signUp = async (userInfo, isAdmin = false) => {
 	myValidator(userInfo.identityCard, 'string', 'identityCard');
 	myValidator(userInfo.birthday, 'object', 'birthday');
 	myValidator(userInfo.phoneNumber, 'string', 'phone number');
+	myValidator(userInfo.address, 'string', 'address');
 	myValidator(userInfo.email, 'string', 'email');
 	
 	if (userInfo.username === '') {
@@ -70,4 +72,71 @@ module.exports.signUp = async (userInfo, isAdmin = false) => {
 		username: userInfo.username
 	}, 'secretkey');
 	return {token};
+};
+
+module.exports.update = async (userInfo, avatarFile, username) => {
+	Object.keys(userInfo).forEach(key => {
+		switch (key) {
+			case 'name':
+				if (userInfo.name.length === 0) {
+					throw new Error('Empty name');
+				}
+				break;
+			case 'identityCard':
+				if (!/^[0-9]{9}/.test(userInfo.identityCard)) {
+					throw new Error('Invalid identity card');
+				}
+				break;
+			case 'birthday':
+				if (!moment(userInfo.birthday.year + '-' + userInfo.birthday.month + '-' + userInfo.birthday.day, 'YYYY-MM-DD').isValid()) {
+					throw new Error('Invalid birthday');
+				}
+				break;
+			case 'address':
+				if (userInfo.address === '') {
+					throw new Error('Empty address');
+				}
+				break;
+			case 'phoneNumber':
+				if (!/^[0-9]{10,11}/.test(userInfo.phoneNumber)) {
+					throw new Error('Invalid phone number');
+				}
+				break;
+			case 'email':
+				if (!validator.isEmail(userInfo.email)) {
+					throw new Error('Invalid email');
+				}
+				break;
+		}
+	});
+	
+	delete userInfo.username;
+	delete userInfo.password;
+	
+	return new Promise((resolve, reject) => {
+		if (!avatarFile) {
+			avatarFile = {
+				path: ""
+			};
+		}
+		fs.readFile(avatarFile.path, (e, body) => {
+			if (e) {
+				console.error(e);
+			} else {
+				userInfo.avatar = body;
+			}
+			User.findOneAndUpdate({username}, {$set: userInfo}, {new: true, fields: '-avatar -passwordHash'}, (e, doc) => {
+				if (e) {
+					reject(e);
+				} else {
+					resolve(doc);
+				}
+			});
+		});
+	});
+};
+
+module.exports.getAvatar = async username => {
+	let user = await User.findOne({username}, 'avatar');
+	return user.avatar;
 };

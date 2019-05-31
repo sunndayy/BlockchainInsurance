@@ -9,7 +9,7 @@ router.post('/get-contracts-by-company', verifyMiddleware, async (req, res) => {
 		let index = globalState.nodes.findIndex(node => {
 			return node.pubKeyHash === req.body.pubKeyHash;
 		});
-		if (index >= 0 && new Date() - new Date(req.body.time) < DURATION) {
+		if (index >= 0) {
 			res.json(await FindByCompany(req.body.company));
 		} else {
 			res.end('Invalid node');
@@ -24,7 +24,7 @@ router.post('/get-contracts-by-license-plate', verifyMiddleware, async (req, res
 		let index = globalState.nodes.findIndex(node => {
 			return node.pubKeyHash === req.body.pubKeyHash;
 		});
-		if (index >= 0 && new Date() - new Date(req.body.time) < DURATION) {
+		if (index >= 0) {
 			res.json(await FindByLicensePlate(req.body.licensePlate));
 		} else {
 			res.end('Invalid node');

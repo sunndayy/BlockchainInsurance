@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userMiddleware = require('../../../middleware/user-middleware');
-const orderBusiness = require('../business/order-business');
 const orderController = require('../controller/order-controller');
-const request = require('request');
 
 router.get('/orders', userMiddleware.authMiddleware, orderController.getAllOrders);
 

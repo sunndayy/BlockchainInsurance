@@ -8,11 +8,17 @@ class UserController {
 	
 	async exec(business) {
 		try {
-			this.res.json(await business());
+			let result = await business();
+			if (Buffer.isBuffer(result)) {
+				this.res.set({'Content-Type': 'image/gif'});
+				this.res.end(result);
+			} else {
+				this.res.json(result);
+			}
 		} catch (e) {
 			this.res.json({
 				error: e.message
-			});
+			})
 		}
 	}
 	
@@ -22,6 +28,14 @@ class UserController {
 	
 	async signUp() {
 		return await userBusiness.signUp(this.req.body);
+	}
+	
+	async update() {
+		return await userBusiness.update(this.req.body, this.req.file, this.req.user.username);
+	}
+	
+	async getAvatar() {
+		return await userBusiness.getAvatar(this.req.user.username);
 	}
 }
 
@@ -37,4 +51,14 @@ module.exports.signUp = async (req, res) => {
 
 module.exports.getUserInfo = async (req, res) => {
 	res.json(req.user);
+};
+
+module.exports.update = async (req, res) => {
+	let controller = new UserController(req, res);
+	await controller.exec(controller.update.bind(controller));
+};
+
+module.exports.getAvatar = async (req, res) => {
+	let controller = new UserController(req, res);
+	await controller.exec(controller.getAvatar.bind(controller));
 };

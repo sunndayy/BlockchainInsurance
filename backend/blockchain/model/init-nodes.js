@@ -1,6 +1,5 @@
 require('./model');
 const mongoose = require('mongoose');
-
 let Node = mongoose.model('node');
 
 module.exports = async () => {

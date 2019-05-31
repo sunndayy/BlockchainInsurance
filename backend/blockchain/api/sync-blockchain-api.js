@@ -1,7 +1,6 @@
 const request = require('request');
 const mongoose = require('mongoose');
 const Crypto = require('../utils/crypto');
-
 const Node = mongoose.model('node');
 
 const State = require('../blockchain-structure/state');
@@ -12,8 +11,9 @@ const BlockData = require('../blockchain-structure/block-data');
  * Make a request
  */
 const MakeRequest = (url, msg, cb) => {
-	let handleResponse = async (err, res, body) => {
+	request.post({url: 'http://' + url, form: Crypto.Sign(msg)}, async (err, res, body) => {
 		if (err) {
+			console.log(err);
 		} else {
 			try {
 				let sign = JSON.parse(body);
@@ -25,9 +25,7 @@ const MakeRequest = (url, msg, cb) => {
 				console.log(e);
 			}
 		}
-	};
-	let sign = Crypto.Sign(msg);
-	request.post({url: 'http://' + url, form: sign}, handleResponse);
+	});
 };
 
 /**

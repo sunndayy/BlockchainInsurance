@@ -4,7 +4,7 @@ const autoIncrement = require('mongoose-auto-increment');
 autoIncrement.initialize(mongoose.connection);
 
 let orderSchema = new Schema({
-	id: {type: String, unique: true},
+	id: {type: Number, unique: true},
 	user: {type: Schema.Types.ObjectId, ref: 'user', require: true},
 	items: [{
 		product: {type: Schema.Types.ObjectId, ref: 'product', require: true},

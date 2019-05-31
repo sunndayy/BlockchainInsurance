@@ -37,11 +37,11 @@ module.exports = class State {
 						merkleRoot: blockData.merkleRoot
 					});
 
-					let _this = this;
 					let preBlockValPubKeyHashes = choosenBlock.blockHeader.valSigns.map(sign => {
 						return Crypto.Hash(sign.pubKey);
 					});
-
+					
+					let _this = this;
 					nodesOnTop.forEach(node => {
 						if (node.pubKeyHash !== Crypto.PUB_KEY_HASH && node.host) {
 							request.post({
@@ -49,6 +49,7 @@ module.exports = class State {
 								form: Crypto.Sign({nextBlockHash: Crypto.Hash(JSON.stringify(blockHeader.infoNeedAgree))})
 							}, async (err, res, body) => {
 								if (err) {
+									console.log(err);
 								} else {
 									try {
 										if (mySession === WAIT_TO_COLLECT_SIGN
@@ -75,6 +76,9 @@ module.exports = class State {
 														_this.nodes.forEach(node => {
 															if (node.host !== HOST && node.host) {
 																request.post('http://' + node.host + '/header', {form: Crypto.Sign(blockHeader)}, (err, res, body) => {
+																	if (err) {
+																		console.log(err);
+																	}
 																});
 															}
 														});
@@ -100,10 +104,8 @@ module.exports = class State {
 	}
 
 	async AddBlock(blockHeader, blockData) {
-		let _this = this;
 		for (let i = 0; i < blockData.txs.length; i++) {
-			let tx = blockData.txs[i];
-			await this.PushTx(tx, false);
+			await this.PushTx(blockData.txs[i], false);
 		}
 
 		if (blockHeader.creatorSign) {
@@ -113,6 +115,7 @@ module.exports = class State {
 			creator.point += CREATOR_PRIZE;
 		}
 
+		let _this = this;
 		blockHeader.valSigns.forEach(sign => {
 			let val = _this.nodes.find(node => {
 				return node.pubKeyHash === Crypto.Hash(sign.pubKey);
@@ -151,7 +154,7 @@ module.exports = class State {
 			let i = 0;
 			while (i < txCache.length) {
 				if (await txCache[i].Validate(this)) {
-					if (!await this.PushTx(txCache[i])) {
+					if (!await this.PushTx(txCache[i], true)) {
 						return;
 					}
 					txCache.splice(i, 1);

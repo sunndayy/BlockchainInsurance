@@ -16,6 +16,8 @@ const userSchema = new Schema({
 	address: {type: String, require: true},
 	phoneNumber: {type: String},
 	email: {type: String, require: true, unique: true},
+	favoriteProducts: [{type: Schema.Types.ObjectId, ref: 'product'}],
+	avatar: {type: Buffer}
 });
 
 module.exports = mongoose.model('user', userSchema);

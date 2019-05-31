@@ -17,4 +17,14 @@ router.post('/create-product', userMiddleware.authMiddleware, upload.single('ima
 
 router.put('/update-product/:id', userMiddleware.authMiddleware, upload.single('image'), productController.updateProduct);
 
+router.get('/products/best-sellers', productController.getBestSellers);
+
+router.get('/products-by-keyword/:keyword', productController.getProductsByKeyword);
+
+router.post('/like-product', userMiddleware.authMiddleware, productController.likeProduct);
+
+router.post('/unlike-product', userMiddleware.authMiddleware, productController.unlikeProduct);
+
+router.get('/favorite-products', userMiddleware.authMiddleware, productController.getFavoriteProducts);
+
 module.exports = router;

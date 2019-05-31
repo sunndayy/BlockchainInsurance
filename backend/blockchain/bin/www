@@ -79,11 +79,12 @@ db.once('open', async () => {
 		    };
 
 		    request(DNS_SERVER, (err, res, body) => {
-		        if (!err) {
+		        if (err) {
+		            console.log(err);
+		        } else {
 		            syncDNS();
                 try {
                     const { MakeConnectRequest } = require('../api/sync-blockchain-api');
-
                     /**
                      * Connect and sync blockchain from every node in network
                      */
