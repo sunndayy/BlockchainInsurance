@@ -11,7 +11,7 @@ router.post('/sign-in', userController.signIn);
 
 router.route('/user-info')
 	.get(userMiddleware.authMiddleware, userController.getUserInfo)
-	.post(userMiddleware.authMiddleware, upload.single('avatar'), userController.update);
+	.put(userMiddleware.authMiddleware, upload.single('avatar'), userController.update);
 
 router.route('/user-avatar')
 	.get(userMiddleware.authMiddleware, userController.getAvatar);

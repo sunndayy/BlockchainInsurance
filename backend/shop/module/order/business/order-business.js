@@ -3,6 +3,10 @@ const User = require('../../user/model/user-model');
 const Product = require('../../product/model/product-model');
 const request = require('request');
 const CronJob = require('cron').CronJob;
+const nodemailer = require('nodemailer');
+const mailConfig = require('../../../config/mail-config');
+const swig = require('swig');
+const moment = require('moment');
 
 module.exports.getAllOrders = async () => {
 	return await Order.find({})
@@ -57,7 +61,46 @@ module.exports.updateOrder = async (id, data) => {
 		.populate({path: 'user', select: '-passwordHash'})
 		.lean();
 	
-	if (order.status) {
+	if (data.status) {
+		let template = swig.compileFile('./template/order-confirmed.html');
+		
+		let emailInfo = {
+			name: order.user.name,
+			id: order.id,
+			product_id: order.items[0].product.id,
+			product_name: order.items[0].product.name,
+			producer: order.items[0].product.producer,
+			time: moment(new Date(order.time)).format('DD-MM-YYYY'),
+			total: order.items[0].price
+		};
+		switch (order.items[0].product.type) {
+			case 0:
+				emailInfo.type = 'Xe số';
+				break;
+			case 1:
+				emailInfo.type = 'Xe tay ga';
+				break;
+			case 2:
+				emailInfo.type = 'Xe tay côn';
+				break;
+		}
+		
+		let emailBody = template(emailInfo);
+		let transporter = nodemailer.createTransport(mailConfig);
+		let mailOptions = {
+			to: order.user.email,
+			subject: 'Đơn hàng ' + order.id + ' đã được xác nhận',
+			html: emailBody
+		};
+		
+		transporter.sendMail(mailOptions, (e, info) => {
+			if (e) {
+				console.error(e);
+			} else {
+				console.log(info.response);
+			}
+		});
+		
 		let msgToPolice = {
 			user: order.user._doc,
 			product: order.items[0].product._doc
