@@ -51,23 +51,29 @@ public class ItemsMainAdapter extends RecyclerView.Adapter<ItemsMainAdapter.MyVi
             public void onClick(View view, int position) {
 
                 if (view.getId() == R.id.btn_add_favorite) {
-                    ApiService apiService = ApiUtils.getApiService();
-                    apiService.LikeProduct(Common.user.getToken(), item.getId())
-                            .enqueue(new Callback<ResponseBody>() {
-                                @Override
-                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                    if (response.errorBody() != null) {
-                                        Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(context, "Đã thêm vào yêu thích", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
 
-                                @Override
-                                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                    Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                    if (Common.user != null) {
+                        ApiService apiService = ApiUtils.getApiService();
+                        apiService.LikeProduct(Common.user.getToken(), item.getId())
+                                .enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        if (response.errorBody() != null) {
+                                            Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(context, "Đã thêm vào yêu thích", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    } else {
+                        Toast.makeText(context, "Hãy đăng nhập", Toast.LENGTH_SHORT).show();
+                    }
+
                 } else {
                     Intent intent = new Intent(context, ItemDetailActivity.class);
                     intent.putExtra("id", item.getId());

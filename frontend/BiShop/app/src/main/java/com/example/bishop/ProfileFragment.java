@@ -17,7 +17,7 @@ import java.util.Objects;
 public class ProfileFragment extends Fragment {
 
     private Button btnSignUp, btnSignIn;
-    private TextView tvUserName;
+    private TextView tvUserName, tvUserEmail;
     private ImageView imgUserAvatar;
     private LinearLayout rowCart, rowInfo, rowFeedBack, rowLogout;
 
@@ -28,6 +28,7 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         tvUserName = (TextView) view.findViewById(R.id.tvUserName);
+        tvUserEmail = (TextView) view.findViewById(R.id.tvUserEmail);
         imgUserAvatar = (ImageView) view.findViewById(R.id.imgUserAvatar);
         btnSignIn = view.findViewById(R.id.btn_sign_in);
         btnSignUp = view.findViewById(R.id.btn_sign_up);
@@ -36,12 +37,15 @@ public class ProfileFragment extends Fragment {
             btnSignIn.setVisibility(View.GONE);
             btnSignUp.setVisibility(View.GONE);
             tvUserName.setVisibility(View.VISIBLE);
+            tvUserEmail.setVisibility(View.VISIBLE);
             imgUserAvatar.setVisibility(View.VISIBLE);
             tvUserName.setText(Common.user.getName());
+            tvUserEmail.setText(Common.user.getEmail());
         } else {
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignUp.setVisibility(View.VISIBLE);
             tvUserName.setVisibility(View.GONE);
+            tvUserEmail.setVisibility(View.GONE);
             imgUserAvatar.setVisibility(View.GONE);
         }
 
@@ -92,7 +96,11 @@ public class ProfileFragment extends Fragment {
         rowFeedBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (Common.user != null) {
+                    startActivity(new Intent(getActivity(), FeedBackActivity.class));
+                } else {
+                    Toast.makeText(getActivity(), "Hãy đăng nhập", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -101,13 +109,16 @@ public class ProfileFragment extends Fragment {
         rowLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Common.user = null;
-                Common.cart.clear();
-                btnSignUp.setVisibility(View.VISIBLE);
-                btnSignIn.setVisibility(View.VISIBLE);
-                tvUserName.setVisibility(View.GONE);
-                imgUserAvatar.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), "Đã đăng xuất", Toast.LENGTH_SHORT).show();
+                if (Common.user != null) {
+                    Common.user = null;
+                    Common.cart.clear();
+                    btnSignUp.setVisibility(View.VISIBLE);
+                    btnSignIn.setVisibility(View.VISIBLE);
+                    tvUserName.setVisibility(View.GONE);
+                    tvUserEmail.setVisibility(View.GONE);
+                    imgUserAvatar.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(), "Đã đăng xuất", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

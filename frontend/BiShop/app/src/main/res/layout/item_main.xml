@@ -55,10 +55,12 @@
                 android:id="@+id/btn_add_favorite"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_margin="5dp"
                 android:layout_below="@id/item_main_imgview"
+                android:layout_margin="5dp"
                 android:layout_toRightOf="@id/item_main_name"
-                android:src="@drawable/ic_star_yellow" />
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:src="@drawable/ic_favorite_pink" />
 
         </RelativeLayout>
 

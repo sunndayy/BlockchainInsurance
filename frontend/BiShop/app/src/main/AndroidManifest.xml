@@ -11,10 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InsuranceOrderActivity"></activity>
-        <activity android:name=".ItemDetailActivity" />
-        <activity android:name=".CartActivity" />
-        <activity android:name=".InfoActivity" />
+        <activity
+            android:name=".FeedBackActivity"
+            android:label="Feedback" />
+        <activity
+            android:name=".InsuranceOrderActivity"
+            android:label="Đặt mua bảo hiểm" />
+        <activity
+            android:name=".ItemDetailActivity"
+            android:label="Chi tiết sản phẩm" />
+        <activity
+            android:name=".CartActivity"
+            android:label="Giỏ hàng" />
+        <activity
+            android:name=".InfoActivity"
+            android:label="Thông tin cá nhân" />
         <activity
             android:name=".SignUpActivity"
             android:theme="@style/AppTheme.Dark" />
@@ -30,7 +41,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

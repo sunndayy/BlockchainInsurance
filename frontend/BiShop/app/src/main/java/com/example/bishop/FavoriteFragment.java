@@ -30,17 +30,20 @@ public class FavoriteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
 
         tvNotifi = (TextView) view.findViewById(R.id.tv_fav_notifi);
-        tvNotifi.setVisibility(View.GONE);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_fav);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                prepareFavorite();
+                if (Common.user != null) {
+                    prepareFavorite();
+                } else {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
 
@@ -56,6 +59,8 @@ public class FavoriteFragment extends Fragment {
 
         if (Common.user != null) {
             prepareFavorite();
+        } else {
+            tvNotifi.setText("Xin vui lòng đăng nhập");
         }
 
         return view;
@@ -65,8 +70,6 @@ public class FavoriteFragment extends Fragment {
     private void prepareFavorite() {
 
         itemList.clear();
-
-        tvNotifi.setVisibility(View.GONE);
 
         ApiService apiService = ApiUtils.getApiService();
 
@@ -82,9 +85,9 @@ public class FavoriteFragment extends Fragment {
                             }
                             itemsFavoriteAdapter.notifyDataSetChanged();
                             if (itemList.size() == 0) {
-                                tvNotifi.setVisibility(View.VISIBLE);
+                                tvNotifi.setText("Không có sản phẩm yêu thích nào");
                             } else {
-                                tvNotifi.setVisibility(View.GONE);
+                                tvNotifi.setText("Danh sách sản phẩm yêu thích");
                             }
                         }
                         swipeRefreshLayout.setRefreshing(false);
@@ -94,7 +97,7 @@ public class FavoriteFragment extends Fragment {
                     public void onFailure(Call<List<Item>> call, Throwable t) {
                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                         swipeRefreshLayout.setRefreshing(false);
-                        tvNotifi.setVisibility(View.VISIBLE);
+                        tvNotifi.setText("Không có sản phẩm yêu thích nào");
                     }
                 });
     }

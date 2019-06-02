@@ -33,13 +33,16 @@ public class HistoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
         tvNotifi = (TextView) view.findViewById(R.id.tv_his_notifi);
-        tvNotifi.setVisibility(View.GONE);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_history);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                prepareHistory();
+                if (Common.user != null) {
+                    prepareHistory();
+                } else {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
 
@@ -55,6 +58,8 @@ public class HistoryFragment extends Fragment {
 
         if (Common.user != null) {
             prepareHistory();
+        } else {
+            tvNotifi.setText("Xin vui lòng đăng nhập");
         }
 
         return view;
@@ -63,8 +68,6 @@ public class HistoryFragment extends Fragment {
     private void prepareHistory() {
 
         historyList.clear();
-
-        tvNotifi.setVisibility(View.GONE);
 
         ApiService apiService = ApiUtils.getApiService();
 
@@ -79,11 +82,12 @@ public class HistoryFragment extends Fragment {
                             }
                             historiesAdapter.notifyDataSetChanged();
                             if (historyList.size() == 0) {
-                                tvNotifi.setVisibility(View.VISIBLE);
+                                tvNotifi.setText("Không có đơn hàng nào bạn đã đặt");
+                            } else {
+                                tvNotifi.setText("Danh sách đơn hàng của bạn");
                             }
-                            else {
-                                tvNotifi.setVisibility(View.GONE);
-                            }
+                        } else {
+                            tvNotifi.setText("Không có đơn hàng nào bạn đã đặt");
                         }
                         swipeRefreshLayout.setRefreshing(false);
                     }
@@ -92,7 +96,7 @@ public class HistoryFragment extends Fragment {
                     public void onFailure(Call<List<History>> call, Throwable t) {
                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                         swipeRefreshLayout.setRefreshing(false);
-                        tvNotifi.setVisibility(View.VISIBLE);
+                        tvNotifi.setText("Không có đơn hàng nào bạn đã đặt");
                     }
                 });
     }

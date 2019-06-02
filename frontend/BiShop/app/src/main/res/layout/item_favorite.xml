@@ -12,8 +12,8 @@
 
     <ImageView
         android:id="@+id/img_bike_fav"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
@@ -27,10 +27,10 @@
         android:id="@+id/tvName_fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:text="AB"
         android:textColor="@color/jet"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@id/tvPrice_fav"
         app:layout_constraintLeft_toRightOf="@id/img_bike_fav"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,17 +39,19 @@
         android:id="@+id/tvPrice_fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:text="AB"
-        android:textSize="18sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/img_bike_fav"
         app:layout_constraintTop_toBottomOf="@id/tvName_fav" />
 
     <ImageView
         android:id="@+id/btn_cart_fav"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:background="?android:attr/selectableItemBackground"
         android:src="@drawable/ic_cart"
         app:layout_constraintBottom_toTopOf="@id/btn_delete_fav"
         app:layout_constraintRight_toRightOf="parent"
@@ -57,8 +59,10 @@
 
     <ImageView
         android:id="@+id/btn_delete_fav"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:background="?android:attr/selectableItemBackground"
         android:src="@drawable/ic_delete_black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"

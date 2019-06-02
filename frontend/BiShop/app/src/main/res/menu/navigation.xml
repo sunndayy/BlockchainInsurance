@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/navigation_favorite"
-        android:icon="@drawable/ic_star"
+        android:icon="@drawable/ic_favorite_white"
         android:title="Yêu thích" />
 
     <item

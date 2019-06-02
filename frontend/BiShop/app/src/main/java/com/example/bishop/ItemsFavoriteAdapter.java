@@ -49,7 +49,12 @@ public class ItemsFavoriteAdapter extends RecyclerView.Adapter<ItemsFavoriteAdap
             public void onOptionClickLisntener(View v, int position) {
                 switch (v.getId()) {
                     case R.id.btn_cart_fav:
-                        Toast.makeText(context, "add", Toast.LENGTH_SHORT).show();
+                        if (Common.cart.size() > 0) {
+                            Toast.makeText(context, "Bạn chỉ được chọn tối đa 1 sản phẩm trong giỏ hàng", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Common.cart.add(item);
+                            Toast.makeText(context, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case R.id.btn_delete_fav:
                         ApiService apiService = ApiUtils.getApiService();
