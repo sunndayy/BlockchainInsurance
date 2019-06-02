@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,7 +24,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -204,7 +201,7 @@ public class HistoriesAdapter extends RecyclerView.Adapter<HistoriesAdapter.MyVi
                     @Override
                     public void onClick(View v) {
                         popupWindow.dismiss();
-                        Intent intent = new Intent(context, InsuraceOrderActivity.class);
+                        Intent intent = new Intent(context, InsuranceOrderActivity.class);
                         intent.putExtra("bienso", history.getPoliceInfo().getLicensePlate());
                         context.startActivity(intent);
                     }

@@ -1,12 +1,9 @@
 package com.example.bishop;
 
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Common {
-
     public static String beautifyPrice(long price) {
 
         long temp = price;
@@ -42,6 +39,10 @@ public class Common {
     }
 
     public static List<Item> cart = new ArrayList<>();
+
+    public static List<Item> favorites = new ArrayList<>();
+
+    public static List<Item> allItems = new ArrayList<>();
 
     public static User user = null;
 

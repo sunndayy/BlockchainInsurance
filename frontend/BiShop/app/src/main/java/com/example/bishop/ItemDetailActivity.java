@@ -2,7 +2,6 @@ package com.example.bishop;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,10 +11,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import org.w3c.dom.Text;
-
 public class ItemDetailActivity extends AppCompatActivity {
-
 
     private TextView tvId, tvName, tvType, tvProducer, tvPrice, tvDescribe;
     private ImageView imgItem;

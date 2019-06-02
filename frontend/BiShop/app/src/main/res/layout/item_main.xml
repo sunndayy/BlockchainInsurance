@@ -25,31 +25,40 @@
 
             <View
                 android:id="@+id/view_divider"
-                android:layout_below="@+id/item_main_imgview"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_below="@+id/item_main_imgview"
                 android:background="#DDDDDD" />
 
             <TextView
                 android:id="@+id/item_main_name"
-                android:layout_width="match_parent"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/view_divider"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
                 android:paddingRight="10dp"
                 android:textColor="@color/jet"
-                android:textSize="15sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/item_main_price"
-                android:layout_width="match_parent"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/item_main_name"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
+
+            <ImageView
+                android:id="@+id/btn_add_favorite"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:layout_below="@id/item_main_imgview"
+                android:layout_toRightOf="@id/item_main_name"
+                android:src="@drawable/ic_star_yellow" />
 
         </RelativeLayout>
 

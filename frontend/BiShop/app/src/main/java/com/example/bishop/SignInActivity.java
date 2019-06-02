@@ -3,7 +3,6 @@ package com.example.bishop;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,6 +60,7 @@ public class SignInActivity extends AppCompatActivity {
                                                 Common.user = response1.body();
                                                 Common.user.setToken(response.body().getToken());
                                                 startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                                                finish();
                                             }
 
                                             @Override
@@ -82,7 +82,7 @@ public class SignInActivity extends AppCompatActivity {
                                 }
                             });
                 }
-             }
+            }
         });
 
         txtvSignUp.setOnClickListener(new View.OnClickListener() {
@@ -92,5 +92,6 @@ public class SignInActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 }

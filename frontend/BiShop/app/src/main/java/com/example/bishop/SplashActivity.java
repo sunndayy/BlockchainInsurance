@@ -9,14 +9,13 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         try {
             Thread.sleep(800);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         startActivity(new Intent(SplashActivity.this, MainActivity.class));
-
         finish();
     }
 }
