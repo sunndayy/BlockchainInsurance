@@ -16,7 +16,6 @@
                 android:endColor="@color/colorPrimary"
                 android:startColor="@color/colorPrimary"
                 android:type="linear" />
-            <corners android:radius="5dp" />
         </shape>
     </item>
 </ripple>

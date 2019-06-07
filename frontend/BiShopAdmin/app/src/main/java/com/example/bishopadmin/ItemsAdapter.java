@@ -1,35 +1,69 @@
 package com.example.bishopadmin;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder> {
+public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder> implements Filterable {
 
     private Context context;
     private List<Item> itemList;
+    private List<Item> itemListFiltered;
 
-    public ItemsAdapter(Context context, List<Item> itemList) {
+    public ItemsAdapter(Context context, List<Item> itemList, List<Item> itemListFiltered) {
         this.context = context;
         this.itemList = itemList;
+        this.itemListFiltered = itemListFiltered;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()) {
+                    itemListFiltered = itemList;
+                } else {
+                    List<Item> filteredList = new ArrayList<>();
+                    for (Item row : itemList) {
+
+                        if (row.getId().toLowerCase().contains(charString.toLowerCase())
+                                || row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    itemListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = itemListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                itemListFiltered = (ArrayList<Item>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -67,7 +101,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ItemsAdapter.MyViewHolder myViewHolder, int i) {
-        final Item item = itemList.get(i);
+        final Item item = itemListFiltered.get(i);
         myViewHolder.txtvName.setText(item.getName());
         myViewHolder.txtvPrice.setText(Common.beautifyPrice(item.getPrice()));
 
@@ -83,37 +117,37 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
                 View popupView = layoutInflater.inflate(R.layout.popup_window, null);
 
                 TextView tvId = (TextView) popupView.findViewById(R.id.popup_id);
-                tvId.setText(itemList.get(position).getId());
+                tvId.setText(itemListFiltered.get(position).getId());
 
                 TextView tvName = (TextView) popupView.findViewById(R.id.popup_name);
-                tvName.setText(itemList.get(position).getName());
+                tvName.setText(itemListFiltered.get(position).getName());
 
                 TextView tvDescribe = (TextView) popupView.findViewById(R.id.popup_describe);
-                tvDescribe.setText(itemList.get(position).getDescribe());
+                tvDescribe.setText(itemListFiltered.get(position).getDescribe());
 
                 TextView tvType = (TextView) popupView.findViewById(R.id.popup_type);
 
-                if (itemList.get(position).getType() == 0) {
+                if (itemListFiltered.get(position).getType() == 0) {
                     tvType.setText("Xe số");
                 } else {
-                    if (itemList.get(position).getType() == 1) {
+                    if (itemListFiltered.get(position).getType() == 1) {
                         tvType.setText("Xe tay ga");
                     } else {
-                        if (itemList.get(position).getType() == 2) {
+                        if (itemListFiltered.get(position).getType() == 2) {
                             tvType.setText("Xe côn tay");
                         }
                     }
                 }
 
                 TextView tvPrice = (TextView) popupView.findViewById(R.id.popup_price);
-                tvPrice.setText(Common.beautifyPrice(itemList.get(position).getPrice()));
+                tvPrice.setText(Common.beautifyPrice(itemListFiltered.get(position).getPrice()));
 
                 TextView tvProducer = (TextView) popupView.findViewById(R.id.popup_producer);
-                tvProducer.setText(itemList.get(position).getProducer());
+                tvProducer.setText(itemListFiltered.get(position).getProducer());
 
                 ImageView imageView = (ImageView) popupView.findViewById(R.id.popup_image);
 
-                Glide.with(popupView).load(itemList.get(position).getImage())
+                Glide.with(popupView).load(itemListFiltered.get(position).getImage())
                         .into(imageView);
 
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -136,6 +170,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return itemListFiltered.size();
     }
 }

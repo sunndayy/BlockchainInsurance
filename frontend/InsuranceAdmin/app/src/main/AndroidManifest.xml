@@ -14,7 +14,7 @@
         <activity
             android:name=".AddInsuranceActivity"
             android:label="Thêm gói bảo hiểm"
-            android:theme="@style/MyTheme"/>
+            android:theme="@style/MyTheme" />
         <activity
             android:name=".SignInActivity"
             android:theme="@style/AppTheme.Dark" />
@@ -27,8 +27,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-            android:label="Dashboard"/>
+        <activity
+            android:name=".MainActivity"
+            android:label="Dashboard">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

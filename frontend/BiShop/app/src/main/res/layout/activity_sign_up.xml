@@ -71,7 +71,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="2dp"
                 android:text="Ngày sinh:"
-                android:textColor="@color/iron"
+                android:textColor="@color/white"
                 android:textSize="19sp" />
 
             <TextView
@@ -81,7 +81,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:text="01/01/1970"
-                android:textColor="@color/iron"
+                android:textColor="@color/white"
                 android:textSize="19sp" />
 
             <ImageView

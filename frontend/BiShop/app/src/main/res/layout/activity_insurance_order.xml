@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".InsuranceOrderActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Biển số xe"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/tv_insurance_bienso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="49T8-2504"
+                android:textColor="@color/jet"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#DDDDDD" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="145dp"
+                android:layout_height="wrap_content"
+                android:text="Gói bảo hiểm"
+                android:textSize="17sp" />
+
+            <Spinner
+                android:id="@+id/spinner_insurance"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/btn_insurance_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:src="@drawable/ic_info" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#DDDDDD" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="146dp"
+                android:layout_height="wrap_content"
+                android:text="Thời hạn bảo hiểm"
+                android:textSize="17sp" />
+
+            <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
+                android:id="@+id/number_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:snp_buttonIconLeft="@drawable/ic_arrow_left"
+                app:snp_buttonIconRight="@drawable/ic_arrow_right"
+                app:snp_maxValue="5"
+                app:snp_minValue="1"
+                app:snp_orientation="horizontal"
+                app:snp_stepSize="1"
+                app:snp_updateInterval="10"
+                app:snp_value="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="năm"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#DDDDDD" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Tổng chi phí"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_insurance_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0 VNĐ"
+            android:textColor="@color/jet"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_insurance_confirm"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_button"
+        android:text="Xác nhận"
+        android:textColor="@color/white" />
+
+</LinearLayout>

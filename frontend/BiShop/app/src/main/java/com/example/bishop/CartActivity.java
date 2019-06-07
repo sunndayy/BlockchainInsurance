@@ -1,7 +1,6 @@
 package com.example.bishop;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,7 +10,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -26,7 +24,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CartActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
+public class CartActivity extends AppCompatActivity
+        implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
 
     private RecyclerView recyclerView;
     private ItemsCartAdapter itemsCartAdapter;

@@ -16,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -38,14 +40,17 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder> {
+public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder>
+        implements Filterable {
 
     private List<Item> itemList;
+    private List<Item> itemListFiltered;
     private Context context;
 
-    public ItemsAdapter(Context context, List<Item> itemList) {
+    public ItemsAdapter(Context context, List<Item> itemList, List<Item> itemListFiltered) {
         this.context = context;
         this.itemList = itemList;
+        this.itemListFiltered = itemListFiltered;
     }
 
     @NonNull
@@ -58,7 +63,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
-        final Item item = itemList.get(i);
+        final Item item = itemListFiltered.get(i);
         myViewHolder.tvId.setText(String.valueOf(item.getId()));
         if (item.getStatus()) {
             myViewHolder.tvStatus.setText("Đã sửa xong");
@@ -186,7 +191,42 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return itemListFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()) {
+                    itemListFiltered = itemList;
+                } else {
+                    List<Item> filteredList = new ArrayList<>();
+                    for (Item row : itemList) {
+
+                        if (String.valueOf(row.getId()).toLowerCase().contains(charString.toLowerCase())
+                                || row.getUser().getName().toLowerCase().contains(charString.toLowerCase())
+                                || row.getUser().getIdentityCard().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    itemListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = itemListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                itemListFiltered = (ArrayList<Item>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

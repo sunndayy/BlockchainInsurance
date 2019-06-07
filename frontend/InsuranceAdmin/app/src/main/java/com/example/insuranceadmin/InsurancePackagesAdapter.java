@@ -10,20 +10,27 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class InsurancePackagesAdapter extends RecyclerView.Adapter<InsurancePackagesAdapter.MyViewHolder> {
+public class InsurancePackagesAdapter extends RecyclerView.Adapter<InsurancePackagesAdapter.MyViewHolder>
+        implements Filterable {
 
     private Context context;
     private List<InsurancePackage> insurancePackages;
+    private List<InsurancePackage> insurancePackagesFiltered;
 
-    public InsurancePackagesAdapter(Context context, List<InsurancePackage> insurancePackages) {
+    public InsurancePackagesAdapter(Context context, List<InsurancePackage> insurancePackages,
+                                    List<InsurancePackage> insurancePackagesFiltered) {
         this.context = context;
         this.insurancePackages = insurancePackages;
+        this.insurancePackagesFiltered = insurancePackagesFiltered;
     }
 
     @NonNull
@@ -37,7 +44,7 @@ public class InsurancePackagesAdapter extends RecyclerView.Adapter<InsurancePack
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
 
-        InsurancePackage insurancePackage = insurancePackages.get(i);
+        InsurancePackage insurancePackage = insurancePackagesFiltered.get(i);
         myViewHolder.tvId.setText(insurancePackage.getId());
         myViewHolder.tvCompany.setText(insurancePackage.getCompany());
         myViewHolder.tvPrice.setText(Common.beautifyPrice(insurancePackage.getTerm().getPricePerYear()));
@@ -48,7 +55,39 @@ public class InsurancePackagesAdapter extends RecyclerView.Adapter<InsurancePack
 
     @Override
     public int getItemCount() {
-        return insurancePackages.size();
+        return insurancePackagesFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()) {
+                    insurancePackagesFiltered = insurancePackages;
+                } else {
+                    List<InsurancePackage> filteredList = new ArrayList<>();
+                    for (InsurancePackage row : insurancePackages) {
+                        if (row.getId().toLowerCase().contains(charString)) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    insurancePackagesFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = insurancePackagesFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                insurancePackagesFiltered = (ArrayList<InsurancePackage>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -89,5 +88,4 @@ public class ItemsCartAdapter extends RecyclerView.Adapter<ItemsCartAdapter.MyVi
             viewForeground = (LinearLayout) itemView.findViewById(R.id.item_cart_view_foreground);
         }
     }
-
 }

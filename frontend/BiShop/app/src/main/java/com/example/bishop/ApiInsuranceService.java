@@ -11,7 +11,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ApiInsuranceService {
-
     @GET("/plans")
     Call<List<InsuranceInfo>> GetInsuranceInfo(@Header("AccessToken") String AccessToken);
 
@@ -21,5 +20,5 @@ public interface ApiInsuranceService {
 
     @GET("/contracts-by-license-plate/{licenseplate}")
     Call<List<InsuranceOrder>> GetInsuranceByLicensePlate(@Path("licenseplate") String licenseplate,
-                                                        @Header("AccessToken") String Accesstoken);
+                                                          @Header("AccessToken") String Accesstoken);
 }

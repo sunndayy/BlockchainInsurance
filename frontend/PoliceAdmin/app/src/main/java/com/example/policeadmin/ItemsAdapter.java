@@ -9,11 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -21,14 +24,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder> {
+public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder>
+        implements Filterable {
 
     private Context context;
     private List<Item> items;
+    private List<Item> itemsFiltered;
 
-    public ItemsAdapter(Context context, List<Item> items) {
+    public ItemsAdapter(Context context, List<Item> items, List<Item> itemsFiltered) {
         this.context = context;
         this.items = items;
+        this.itemsFiltered = itemsFiltered;
     }
 
     @NonNull
@@ -41,7 +47,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ItemsAdapter.MyViewHolder myViewHolder, int i) {
-        final Item item = items.get(i);
+        final Item item = itemsFiltered.get(i);
 
         myViewHolder.tvUid.setText(item.getPoliceInfo().getUid());
 
@@ -140,7 +146,43 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return itemsFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()) {
+                    itemsFiltered = items;
+                } else {
+                    List<Item> filteredList = new ArrayList<>();
+                    for (Item row : items) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getUser().getName().toLowerCase().contains(charString)
+                                || row.getProduct().getName().toLowerCase().contains(charString)) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    itemsFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = itemsFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                itemsFiltered = (ArrayList<Item>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

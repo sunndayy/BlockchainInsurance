@@ -56,13 +56,11 @@ public class FragmentListProduct extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_product);
         itemList = new ArrayList<>();
 
-        itemsAdapter = new ItemsAdapter(getActivity(), itemList);
+        itemsAdapter = new ItemsAdapter(getActivity(), itemList, itemList);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(itemsAdapter);
-
-        prepareAlbums();
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_product);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -72,10 +70,16 @@ public class FragmentListProduct extends Fragment {
             }
         });
 
+        prepareAlbums();
+
         return rootView;
     }
 
     private void prepareAlbums() {
+
+        swipeRefreshLayout.setRefreshing(true);
+
+        itemList.clear();
 
         ApiService apiService = ApiUtils.getApiService();
 
@@ -101,5 +105,9 @@ public class FragmentListProduct extends Fragment {
                     }
                 }
         );
+    }
+
+    public void filterItem(String query) {
+        itemsAdapter.getFilter().filter(query);
     }
 }

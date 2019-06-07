@@ -13,8 +13,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class ItemsPopupAdapter extends RecyclerView.Adapter<ItemsPopupAdapter.MyViewHolder> {
-
+public class ItemsPopupAdapter  extends RecyclerView.Adapter<ItemsPopupAdapter.MyViewHolder> {
     private Context context;
     private List<ItemPopup> itemPopups;
 
@@ -58,4 +57,5 @@ public class ItemsPopupAdapter extends RecyclerView.Adapter<ItemsPopupAdapter.My
             imageView = (ImageView) itemView.findViewById(R.id.ic_popup_image);
         }
     }
+
 }

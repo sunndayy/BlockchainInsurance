@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -24,13 +27,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TxsAdapter extends RecyclerView.Adapter<TxsAdapter.MyViewHolder> {
+public class TxsAdapter extends RecyclerView.Adapter<TxsAdapter.MyViewHolder> implements Filterable {
     private Context context;
     private List<Tx> txs;
+    private List<Tx> txsFiltered;
 
-    public TxsAdapter(Context context, List<Tx> txs) {
+    public TxsAdapter(Context context, List<Tx> txs, List<Tx> txsFiltered) {
         this.context = context;
         this.txs = txs;
+        this.txsFiltered = txsFiltered;
     }
 
     @NonNull
@@ -43,7 +48,7 @@ public class TxsAdapter extends RecyclerView.Adapter<TxsAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TxsAdapter.MyViewHolder myViewHolder, int i) {
-        final Tx tx = txs.get(i);
+        final Tx tx = txsFiltered.get(i);
 
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.CHINA).parse(tx.getTime());
@@ -123,7 +128,41 @@ public class TxsAdapter extends RecyclerView.Adapter<TxsAdapter.MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        return txs.size();
+        return txsFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()) {
+                    txsFiltered = txs;
+                } else {
+                    List<Tx> filteredList = new ArrayList<>();
+                    for (Tx row : txs) {
+
+                        if (row.getRef().getUserInfo().getName().contains(charString)
+                                || row.getRef().getUserInfo().getLicensePlate().contains(charString)) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    txsFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = txs;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                txsFiltered = (ArrayList<Tx>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

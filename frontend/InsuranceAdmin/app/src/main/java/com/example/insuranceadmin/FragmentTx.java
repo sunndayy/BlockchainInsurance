@@ -42,14 +42,11 @@ public class FragmentTx extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_tx);
         txs = new ArrayList<>();
 
-        txsAdapter = new TxsAdapter(getActivity(), txs);
+        txsAdapter = new TxsAdapter(getActivity(), txs, txs);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(txsAdapter);
-
-        prepareAlbums();
-
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_tx);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -59,10 +56,14 @@ public class FragmentTx extends Fragment {
             }
         });
 
+        prepareAlbums();
+
         return rootView;
     }
 
     private void prepareAlbums() {
+
+        swipeRefreshLayout.setRefreshing(true);
 
         txs.clear();
 
@@ -89,8 +90,10 @@ public class FragmentTx extends Fragment {
                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
 
-
+    public void filterItem(String query) {
+        txsAdapter.getFilter().filter(query);
     }
 
 }

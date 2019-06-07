@@ -4,10 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -16,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -138,6 +138,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     progressBar.setVisibility(View.GONE);
                                     Toast.makeText(SignUpActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+                                    finish();
                                 } else {
                                     progressBar.setVisibility(View.GONE);
                                     Toast.makeText(SignUpActivity.this, response.body().getError(), Toast.LENGTH_SHORT).show();

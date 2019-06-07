@@ -8,30 +8,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHolder> {
+public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHolder> implements Filterable {
 
     private Context context;
     private List<Order> orders;
+    private List<Order> ordersFiltered;
 
-    public OrdersAdapter(Context context, List<Order> orders) {
+    public OrdersAdapter(Context context, List<Order> orders, List<Order> ordersFiltered) {
         this.context = context;
         this.orders = orders;
+        this.ordersFiltered = ordersFiltered;
     }
 
     @NonNull
@@ -44,7 +42,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        final Order order = orders.get(i);
+        final Order order = ordersFiltered.get(i);
         myViewHolder.tvId.setText(order.getId());
         myViewHolder.tvCompany.setText(order.getCompany());
 
@@ -131,7 +129,40 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        return orders.size();
+        return ordersFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()) {
+                    ordersFiltered = orders;
+                } else {
+                    List<Order> filteredList = new ArrayList<>();
+                    for (Order row : orders) {
+                        if (row.getUserInfo().getName().toLowerCase().contains(charString)
+                                || row.getUserInfo().getLicensePlate().toLowerCase().contains(charString)) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    ordersFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = ordersFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                ordersFiltered = (ArrayList<Order>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

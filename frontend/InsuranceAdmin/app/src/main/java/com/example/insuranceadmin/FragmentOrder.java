@@ -40,14 +40,11 @@ public class FragmentOrder extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_order);
         orders = new ArrayList<>();
 
-        ordersAdapter = new OrdersAdapter(getActivity(), orders);
+        ordersAdapter = new OrdersAdapter(getActivity(), orders, orders);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(ordersAdapter);
-
-        prepareAlbums();
-
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_order);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -57,11 +54,15 @@ public class FragmentOrder extends Fragment {
             }
         });
 
+        prepareAlbums();
+
         return rootView;
     }
 
 
     private void prepareAlbums() {
+
+        swipeRefreshLayout.setRefreshing(true);
 
         orders.clear();
 
@@ -85,6 +86,9 @@ public class FragmentOrder extends Fragment {
                     }
                 });
 
+    }
 
+    public void filterItem(String query) {
+        ordersAdapter.getFilter().filter(query);
     }
 }

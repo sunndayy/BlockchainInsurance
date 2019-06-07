@@ -46,13 +46,11 @@ public class FragmentInsurance extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_insurance);
         insurancePackages = new ArrayList<>();
 
-        insurancePackagesAdapter = new InsurancePackagesAdapter(getActivity(), insurancePackages);
+        insurancePackagesAdapter = new InsurancePackagesAdapter(getActivity(), insurancePackages, insurancePackages);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(insurancePackagesAdapter);
-
-        prepareAlbums();
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_insurance);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -61,6 +59,8 @@ public class FragmentInsurance extends Fragment {
                 prepareAlbums();
             }
         });
+
+        prepareAlbums();
 
         btnAddInsurance = (ImageView) rootView.findViewById(R.id.btn_add_insurance);
         btnAddInsurance.setOnClickListener(new View.OnClickListener() {
@@ -74,8 +74,9 @@ public class FragmentInsurance extends Fragment {
     }
 
     private void prepareAlbums() {
-        insurancePackages.clear();
 
+        swipeRefreshLayout.setRefreshing(true);
+        insurancePackages.clear();
 
         ApiService apiService = ApiUtils.getApiService();
         apiService.GetInsurances(Common.AccessToken)
@@ -98,5 +99,9 @@ public class FragmentInsurance extends Fragment {
                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    public void filterItem(String query) {
+        insurancePackagesAdapter.getFilter().filter(query);
     }
 }

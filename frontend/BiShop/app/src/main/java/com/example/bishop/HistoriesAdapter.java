@@ -8,16 +8,16 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,20 +26,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HistoriesAdapter extends RecyclerView.Adapter<HistoriesAdapter.MyViewHolder> {
+public class HistoriesAdapter extends RecyclerView.Adapter<HistoriesAdapter.MyViewHolder>
+        implements Filterable {
     private Context context;
     private List<History> historyList;
+    private List<History> historyListFiltered;
 
-    public HistoriesAdapter(Context context, List<History> historyList) {
+    public HistoriesAdapter(Context context, List<History> historyList, List<History> historyListFiltered) {
         this.context = context;
         this.historyList = historyList;
+        this.historyListFiltered = historyListFiltered;
     }
 
     @NonNull
@@ -52,7 +54,7 @@ public class HistoriesAdapter extends RecyclerView.Adapter<HistoriesAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        final History history = historyList.get(i);
+        final History history = historyListFiltered.get(i);
         myViewHolder.txtId.setText(String.valueOf(history.getId()));
 
         try {
@@ -204,7 +206,7 @@ public class HistoriesAdapter extends RecyclerView.Adapter<HistoriesAdapter.MyVi
                     @Override
                     public void onClick(View v) {
                         popupWindow.dismiss();
-                        Intent intent = new Intent(context, InsuraceOrderActivity.class);
+                        Intent intent = new Intent(context, InsuranceOrderActivity.class);
                         intent.putExtra("bienso", history.getPoliceInfo().getLicensePlate());
                         context.startActivity(intent);
                     }
@@ -225,7 +227,42 @@ public class HistoriesAdapter extends RecyclerView.Adapter<HistoriesAdapter.MyVi
 
     @Override
     public int getItemCount() {
-        return historyList.size();
+        return historyListFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()) {
+                    historyListFiltered = historyList;
+                } else {
+                    List<History> filteredList = new ArrayList<>();
+                    for (History row : historyList) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (String.valueOf(row.getId()).toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    historyListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = historyListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                historyListFiltered = (ArrayList<History>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
