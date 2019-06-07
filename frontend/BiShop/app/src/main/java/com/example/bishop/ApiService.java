@@ -50,4 +50,11 @@ public interface ApiService {
     @FormUrlEncoded
     Call<ResponseBody> UnLikeProduct(@Header("AccessToken") String AccessToken,
                                      @Field("id") String id);
+
+    @GET("/comments")
+    Call<List<Comment>> GetComments();
+
+    @POST("/comment")
+    Call<ResponseBody> PostComment(@Header("AccessToken") String AccessToken,
+                                   @Body CommentPost commentPost);
 }

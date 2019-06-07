@@ -12,13 +12,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
 
     private Button btnSignUp, btnSignIn;
     private TextView tvUserName, tvUserEmail;
-    private ImageView imgUserAvatar;
+    private CircleImageView imgUserAvatar;
     private LinearLayout rowCart, rowInfo, rowFeedBack, rowLogout;
 
     @Override
@@ -29,7 +33,7 @@ public class ProfileFragment extends Fragment {
 
         tvUserName = (TextView) view.findViewById(R.id.tvUserName);
         tvUserEmail = (TextView) view.findViewById(R.id.tvUserEmail);
-        imgUserAvatar = (ImageView) view.findViewById(R.id.imgUserAvatar);
+        imgUserAvatar = (CircleImageView) view.findViewById(R.id.imgUserAvatar);
         btnSignIn = view.findViewById(R.id.btn_sign_in);
         btnSignUp = view.findViewById(R.id.btn_sign_up);
 
@@ -41,6 +45,10 @@ public class ProfileFragment extends Fragment {
             imgUserAvatar.setVisibility(View.VISIBLE);
             tvUserName.setText(Common.user.getName());
             tvUserEmail.setText(Common.user.getEmail());
+
+            Glide.with(getActivity())
+                    .load(ApiUtils.BASE_URL + "/user-avatar/" + Common.user.getUsername())
+                    .into(imgUserAvatar);
         } else {
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignUp.setVisibility(View.VISIBLE);
@@ -96,11 +104,7 @@ public class ProfileFragment extends Fragment {
         rowFeedBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Common.user != null) {
-                    startActivity(new Intent(getActivity(), FeedBackActivity.class));
-                } else {
-                    Toast.makeText(getActivity(), "Hãy đăng nhập", Toast.LENGTH_SHORT).show();
-                }
+                startActivity(new Intent(getActivity(), FeedBackActivity.class));
             }
         });
 

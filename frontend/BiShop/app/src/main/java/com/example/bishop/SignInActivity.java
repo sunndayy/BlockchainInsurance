@@ -10,6 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,8 +44,7 @@ public class SignInActivity extends AppCompatActivity {
                         || edtPassword.getText().toString().equals("")) {
                     Toast.makeText(SignInActivity.this, "Vui lòng nhập đủ thông tin",
                             Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     progressBar.setVisibility(View.VISIBLE);
 
                     final ApiService apiService = ApiUtils.getApiService();
@@ -68,8 +69,25 @@ public class SignInActivity extends AppCompatActivity {
                                                 Toast.makeText(SignInActivity.this, t1.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
-                                    }
-                                    else {
+
+                                        Common.favorites.clear();
+
+                                        apiService.GetFavoriteProducts(response.body().getToken())
+                                                .enqueue(new Callback<List<Item>>() {
+                                                    @Override
+                                                    public void onResponse(Call<List<Item>> call, Response<List<Item>> response2) {
+                                                        for (int i = 0; i < response2.body().size(); i++) {
+                                                            Item item = response2.body().get(i);
+                                                            Common.favorites.add(item);
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<List<Item>> call, Throwable t) {
+
+                                                    }
+                                                });
+                                    } else {
                                         progressBar.setVisibility(View.GONE);
                                         Toast.makeText(SignInActivity.this, response.body().getError(), Toast.LENGTH_SHORT).show();
                                     }

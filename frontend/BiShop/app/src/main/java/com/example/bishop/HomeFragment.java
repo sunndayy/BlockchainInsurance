@@ -1,5 +1,6 @@
 package com.example.bishop;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -38,6 +41,7 @@ public class HomeFragment extends Fragment {
     private List<ItemSearchMain> itemSearchMains;
     private ItemsSearchMainAdapter itemsSearchMainAdapter;
     private TextView tvSearch;
+    private FrameLayout tvBanner1, tvBanner2, tvBanner3, tvBanner4;
     private ImageView btnCart;
 
 
@@ -54,12 +58,22 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 if (Common.user != null) {
                     startActivity(new Intent(getActivity(), CartActivity.class));
-                }
-                else {
+                } else {
                     Toast.makeText(getActivity(), "Hãy đăng nhập", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        // tv banner
+        tvBanner1 = (FrameLayout) view.findViewById(R.id.tv_banner1_main);
+        tvBanner2 = (FrameLayout) view.findViewById(R.id.tv_banner2_main);
+        tvBanner3 = (FrameLayout) view.findViewById(R.id.tv_banner3_main);
+        tvBanner4 = (FrameLayout) view.findViewById(R.id.tv_banner4_main);
+
+        tvBanner1.setVisibility(View.GONE);
+        tvBanner2.setVisibility(View.GONE);
+        tvBanner3.setVisibility(View.GONE);
+        tvBanner4.setVisibility(View.GONE);
 
         // search view
         searchView = (SearchView) view.findViewById(R.id.search_view_main);
@@ -100,8 +114,8 @@ public class HomeFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                closeKeyboard();
                 itemsSearchMainAdapter.getFilter().filter(query);
-                Toast.makeText(getContext(), "submit", Toast.LENGTH_SHORT).show();
                 return false;
             }
 
@@ -188,6 +202,7 @@ public class HomeFragment extends Fragment {
         itemList2.clear();
         itemList3.clear();
 
+
         ApiService apiService = ApiUtils.getApiService();
 
         apiService.GetProductsBestSellers().enqueue(new Callback<List<Item>>() {
@@ -202,6 +217,9 @@ public class HomeFragment extends Fragment {
 
                     itemsMainAdapter.notifyDataSetChanged();
                     swipeRefreshLayout.setRefreshing(false);
+
+                    tvBanner1.setVisibility(View.VISIBLE);
+
                 } else {
                     Toast.makeText(getContext(), "Không thể lấy danh sách sản phẩm",
                             Toast.LENGTH_SHORT).show();
@@ -243,6 +261,10 @@ public class HomeFragment extends Fragment {
                     itemsMainAdapter3.notifyDataSetChanged();
 
                     swipeRefreshLayout.setRefreshing(false);
+
+                    tvBanner2.setVisibility(View.VISIBLE);
+                    tvBanner3.setVisibility(View.VISIBLE);
+                    tvBanner4.setVisibility(View.VISIBLE);
                 } else {
                     Toast.makeText(getContext(), "Không thể lấy danh sách sản phẩm",
                             Toast.LENGTH_SHORT).show();
@@ -278,5 +300,13 @@ public class HomeFragment extends Fragment {
         sliderLayout.addSlider(textSliderView4);
 
         sliderLayout.setDuration(5000);
+    }
+
+    private void closeKeyboard() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

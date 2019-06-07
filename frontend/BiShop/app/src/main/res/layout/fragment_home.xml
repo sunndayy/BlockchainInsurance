@@ -9,7 +9,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <SearchView
             android:id="@+id/search_view_main"
@@ -36,6 +37,8 @@
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:src="@drawable/ic_cart" />
 
     </LinearLayout>
@@ -48,11 +51,6 @@
         android:clipToPadding="false"
         android:scrollbars="none" />
 
-
-    <com.daimajia.slider.library.SliderLayout
-        android:id="@+id/slider_main"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_main"
@@ -70,92 +68,232 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="13dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/bg_banner"
-                    android:paddingLeft="10dp"
-                    android:text="XE HOT"
-                    android:textColor="@color/white"
-                    android:textSize="10pt"
-                    android:textStyle="bold" />
+                <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/slider_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_main"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:clipToPadding="false"
-                    android:scrollbars="none" />
+                    android:layout_marginTop="15dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="13dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/bg_banner"
-                    android:paddingLeft="10dp"
-                    android:text="XE SỐ"
-                    android:textColor="@color/white"
-                    android:textSize="10pt"
-                    android:textStyle="bold" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_main_1"
+                    <FrameLayout
+                        android:id="@+id/tv_banner1_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="6dp"
+                            android:fontFamily="@font/sfui_text_bold"
+                            android:paddingLeft="10dp"
+                            android:text="Bán chạy"
+                            android:textColor="@color/jet"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|right"
+                            android:layout_marginRight="25dp"
+                            android:fontFamily="@font/sfui_text_regular"
+                            android:text="Xem thêm" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|right"
+                            android:layout_marginTop="1dp"
+                            android:src="@drawable/ic_arrow" />
+
+                    </FrameLayout>
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:clipToPadding="false"
+                        android:scrollbars="none" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:clipToPadding="false"
-                    android:scrollbars="none" />
+                    android:layout_marginTop="15dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="13dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/bg_banner"
-                    android:paddingLeft="10dp"
-                    android:text="XE TAY GA"
-                    android:textColor="@color/white"
-                    android:textSize="10pt"
-                    android:textStyle="bold" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_main_2"
+                    <FrameLayout
+                        android:id="@+id/tv_banner2_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="6dp"
+                            android:fontFamily="@font/sfui_text_bold"
+                            android:paddingLeft="10dp"
+                            android:text="Xe số"
+                            android:textColor="@color/jet"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|right"
+                            android:layout_marginRight="25dp"
+                            android:fontFamily="@font/sfui_text_regular"
+                            android:text="Xem thêm" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|right"
+                            android:layout_marginTop="1dp"
+                            android:src="@drawable/ic_arrow" />
+
+                    </FrameLayout>
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view_main_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:clipToPadding="false"
+                        android:scrollbars="none" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:clipToPadding="false"
-                    android:scrollbars="none" />
+                    android:layout_marginTop="15dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="13dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/bg_banner"
-                    android:paddingLeft="10dp"
-                    android:text="XE CÔN TAY"
-                    android:textColor="@color/white"
-                    android:textSize="10pt"
-                    android:textStyle="bold" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_main_3"
+                    <FrameLayout
+                        android:id="@+id/tv_banner3_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="6dp"
+                            android:fontFamily="@font/sfui_text_bold"
+                            android:paddingLeft="10dp"
+                            android:text="Xe tay ga"
+                            android:textColor="@color/jet"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|right"
+                            android:layout_marginRight="25dp"
+                            android:fontFamily="@font/sfui_text_regular"
+                            android:text="Xem thêm" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|right"
+                            android:layout_marginTop="1dp"
+                            android:src="@drawable/ic_arrow" />
+
+                    </FrameLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view_main_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:clipToPadding="false"
+                        android:scrollbars="none" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:clipToPadding="false"
-                    android:scrollbars="none" />
+                    android:layout_marginTop="15dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+
+                    <FrameLayout
+                        android:id="@+id/tv_banner4_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="6dp"
+                            android:fontFamily="@font/sfui_text_bold"
+                            android:paddingLeft="10dp"
+                            android:text="Xe côn tay"
+                            android:textColor="@color/jet"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|right"
+                            android:layout_marginRight="25dp"
+                            android:fontFamily="@font/sfui_text_regular"
+                            android:text="Xem thêm" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|right"
+                            android:layout_marginTop="1dp"
+                            android:src="@drawable/ic_arrow" />
+
+                    </FrameLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view_main_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:clipToPadding="false"
+                        android:scrollbars="none" />
+
+                </LinearLayout>
 
             </LinearLayout>
+
         </android.support.v4.widget.NestedScrollView>
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

@@ -44,6 +44,17 @@ public class ItemsMainAdapter extends RecyclerView.Adapter<ItemsMainAdapter.MyVi
         myViewHolder.txtvName.setText(item.getName());
         myViewHolder.txtvPrice.setText(Common.beautifyPrice(item.getPrice()));
 
+        for (int k = 0; k < Common.favorites.size(); k++) {
+            if (Common.favorites.get(k).getId().equals(item.getId())) {
+                myViewHolder.btnAddFavorite.setImageResource(R.drawable.ic_favorite_pink);
+                break;
+            }
+
+            if (k == Common.favorites.size() - 1) {
+                myViewHolder.btnAddFavorite.setImageResource(R.drawable.ic_favorite_white);
+            }
+        }
+
         Glide.with(context).load(item.getImage()).into(myViewHolder.imgView);
 
         myViewHolder.setItemClickListener(new ItemClickListener() {
@@ -53,6 +64,9 @@ public class ItemsMainAdapter extends RecyclerView.Adapter<ItemsMainAdapter.MyVi
                 if (view.getId() == R.id.btn_add_favorite) {
 
                     if (Common.user != null) {
+                        ImageView imageView = (ImageView) view;
+                        imageView.setImageResource(R.drawable.ic_favorite_pink);
+
                         ApiService apiService = ApiUtils.getApiService();
                         apiService.LikeProduct(Common.user.getToken(), item.getId())
                                 .enqueue(new Callback<ResponseBody>() {
@@ -61,6 +75,8 @@ public class ItemsMainAdapter extends RecyclerView.Adapter<ItemsMainAdapter.MyVi
                                         if (response.errorBody() != null) {
                                             Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_SHORT).show();
                                         } else {
+                                            Item temp = item;
+                                            Common.favorites.add(temp);
                                             Toast.makeText(context, "Đã thêm vào yêu thích", Toast.LENGTH_SHORT).show();
                                         }
                                     }

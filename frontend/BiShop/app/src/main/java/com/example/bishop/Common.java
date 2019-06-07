@@ -30,7 +30,7 @@ public class Common {
             temp = temp / 1000;
         }
 
-        return String.valueOf(temp) + str + " VNĐ";
+        return String.valueOf(temp) + str + " đ";
     }
 
     public static String beautifyPercent(double x) {

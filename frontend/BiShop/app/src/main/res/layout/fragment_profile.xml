@@ -14,7 +14,7 @@
             android:id="@+id/tvUserEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:text="duong@gmail.com"
@@ -27,7 +27,7 @@
             android:id="@+id/tvUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginBottom="5dp"
             android:text="Bi Shop"
             android:textColor="@color/white"
@@ -35,11 +35,11 @@
             app:layout_constraintBottom_toTopOf="@id/tvUserEmail"
             app:layout_constraintLeft_toLeftOf="parent" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgUserAvatar"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginBottom="5dp"
             android:src="@drawable/ic_account"
             app:layout_constraintBottom_toTopOf="@id/tvUserName"
@@ -51,7 +51,7 @@
             android:layout_height="40dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="50dp"
-            android:background="@color/white"
+            android:background="@drawable/rounded_button_signup"
             android:text="Đăng ký"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="12sp"
@@ -66,7 +66,7 @@
             android:layout_height="40dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="50dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/rounded_button_signin"
             android:text="Đăng nhập"
             android:textColor="@color/white"
             android:textSize="12sp"
@@ -91,7 +91,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:src="@drawable/ic_cart" />
 
         <TextView
@@ -105,8 +105,8 @@
 
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="200dp"
             android:src="@drawable/ic_arrow" />
@@ -131,7 +131,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:src="@drawable/ic_info" />
 
         <TextView
@@ -145,8 +145,8 @@
 
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="130dp"
             android:src="@drawable/ic_arrow" />
@@ -171,7 +171,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:src="@drawable/ic_feedback_black_24dp" />
 
         <TextView
@@ -185,10 +185,10 @@
 
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="190dp"
+            android:layout_marginLeft="192dp"
             android:src="@drawable/ic_arrow" />
 
     </LinearLayout>
@@ -211,7 +211,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:src="@drawable/ic_logout" />
 
         <TextView
