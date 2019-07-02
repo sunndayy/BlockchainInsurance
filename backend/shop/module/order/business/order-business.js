@@ -73,6 +73,7 @@ module.exports.updateOrder = async (id, data) => {
 			time: moment(new Date(order.time)).format('DD-MM-YYYY'),
 			total: order.items[0].price
 		};
+		
 		switch (order.items[0].product.type) {
 			case 0:
 				emailInfo.type = 'Xe số';
@@ -102,8 +103,8 @@ module.exports.updateOrder = async (id, data) => {
 		});
 		
 		let msgToPolice = {
-			user: order.user._doc,
-			product: order.items[0].product._doc
+			user: order.user,
+			product: order.items[0].product
 		};
 		
 		request.post({url: 'http://bcpolice.herokuapp.com/order', form: msgToPolice}, async (e, res, body) => {

@@ -13,7 +13,6 @@ router.route('/user-info')
 	.get(userMiddleware.authMiddleware, userController.getUserInfo)
 	.put(userMiddleware.authMiddleware, upload.single('avatar'), userController.update);
 
-router.route('/user-avatar')
-	.get(userMiddleware.authMiddleware, userController.getAvatar);
+router.get('/user-avatar/:username', userController.getAvatar);
 
 module.exports = router;

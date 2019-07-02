@@ -16,9 +16,10 @@ class UserController {
 				this.res.json(result);
 			}
 		} catch (e) {
+			console.error(e);
 			this.res.json({
 				error: e.message
-			})
+			});
 		}
 	}
 	
@@ -35,7 +36,7 @@ class UserController {
 	}
 	
 	async getAvatar() {
-		return await userBusiness.getAvatar(this.req.user.username);
+		return await userBusiness.getAvatar(this.req.params.username);
 	}
 }
 
