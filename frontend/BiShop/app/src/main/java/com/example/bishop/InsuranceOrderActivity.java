@@ -31,7 +31,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class InsuranceOrderActivity extends AppCompatActivity {
+public class InsuranceOrderActivity extends AppCompatActivity implements AdapterView.OnClickListener {
 
     private TextView tvBienSo, tvPrice;
     private Button btnConfirm;
@@ -212,5 +212,15 @@ public class InsuranceOrderActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
