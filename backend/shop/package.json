@@ -22,7 +22,7 @@
     "pug": "2.0.0-beta11",
     "request": "^2.88.0",
     "swig": "^1.4.2",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   },
   "engines": {
     "node": "12.2.0"
